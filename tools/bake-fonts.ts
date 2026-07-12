@@ -204,15 +204,34 @@ const manifest: Array<{ key: string; file: string }> = existsSync(manifestPath)
 
 for (const slot of [0, 7]) {
   const bytes = assemble(slot, slot === 7);
-  const file = `fonts/win98-font.${slot}.bin`;
+  const file = `fonts/w95fa.${slot}.bin`;
   await Bun.write(`${repo}app/${file}`, bytes);
-  const key = `shell:font.${slot}`;
+  const key = `shell:font.w95fa.${slot}`;
   const existing = manifest.find((e) => e.key === key);
   if (existing) existing.file = file;
   else manifest.push({ key, file });
   console.log(
     `font: slot ${slot} W95FA@${NATIVE_PX}px${slot === 7 ? " +gdi-bold" : ""} ${baked.length + 1} glyphs, cell ${cellW}x${cellH}, baseline ${baseline}, ${bytes.length} bytes -> app/${file}`,
   );
+}
+
+// Inter pair (win7/aqua/xfce): the vendored default faces at 12px, AA kept
+// (these looks are not pixel-era). Baked via the vendored bakeSlot.
+{
+  const { bakeSlot, DEFAULT_BOLD, DEFAULT_REGULAR } = await import("../vendor/pocketjs/compiler/bake-font.ts");
+  const { parse: parseTtf } = await import("opentype.js");
+  for (const slot of [0, 7]) {
+    const ttf = slot === 7 ? DEFAULT_BOLD : DEFAULT_REGULAR;
+    const f = parseTtf(await Bun.file(ttf).arrayBuffer());
+    const atlas = bakeSlot(f, slot, 12, slot === 7, chars);
+    const file = `fonts/inter.${slot}.bin`;
+    await Bun.write(`${repo}app/${file}`, atlas.bytes);
+    const key = `shell:font.inter.${slot}`;
+    const existing = manifest.find((e) => e.key === key);
+    if (existing) existing.file = file;
+    else manifest.push({ key, file });
+    console.log(`font: slot ${slot} Inter@12px${slot === 7 ? " bold" : ""} -> app/${file}`);
+  }
 }
 
 await Bun.write(manifestPath, JSON.stringify(manifest, null, 2) + "\n");

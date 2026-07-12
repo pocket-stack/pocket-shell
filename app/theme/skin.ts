@@ -10,6 +10,16 @@ export interface ThemeSkin {
   classes: Record<string, string>;
   /** Fixed pixel metrics (post-density). */
   metrics: Record<string, number>;
+  /** Baked artwork paths (control glyphs, file icons incl. per-ext) — every
+   *  value is a full literal so the build's asset scan bakes it. */
+  glyphs: Record<string, string>;
+  /** part-key -> baked gradient-strip image (multi-stop bridge until the
+   *  engine gradient PR); rendered by <GradientStrip> under the part. */
+  strips: Record<string, string>;
+  /** Era font atlas pak keys (regular, bold) for the runtime slot swap. */
+  fonts: { regular: string; bold: string };
+  /** Caption-control layout from sheru chrome. */
+  chrome: { side: "left" | "right"; order: string[] };
 }
 
 /** Look up a part's literal, preferring the first matching state variant:

@@ -5,6 +5,30 @@
 // so the parity reference renders the same geometry.
 
 export const DENSITY: Record<string, Record<string, string>> = {
+  xfce: {
+    "--titlebar-h": "18px", //  26 → 18
+    "--toolbar-h": "26px",
+    "--sidebar-w": "96px",
+    "--row-h": "17px",
+  },
+  winxp: {
+    "--titlebar-h": "18px", //  28 → 18
+    "--toolbar-h": "26px",
+    "--sidebar-w": "96px",
+    "--row-h": "17px",
+  },
+  win7: {
+    "--titlebar-h": "18px", //  28 → 18
+    "--toolbar-h": "26px",
+    "--sidebar-w": "96px",
+    "--row-h": "17px",
+  },
+  aqua: {
+    "--titlebar-h": "18px", //  22 → 18
+    "--toolbar-h": "26px",
+    "--sidebar-w": "96px",
+    "--row-h": "17px",
+  },
   win98: {
     "--titlebar-h": "18px", // 22 → 18
     "--toolbar-h": "26px", //  30 → 26

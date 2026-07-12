@@ -1,0 +1,232 @@
+{
+  "provenance": {
+    "repo": "https://github.com/doodlewind/sheru",
+    "commit": "49d35621ae5b7a777cde207171c4ebcdaaca7f9f",
+    "dirty": false,
+    "module": "packages/themes/src/aqua/index.ts"
+  },
+  "theme": {
+    "id": "aqua",
+    "name": "Aqua",
+    "engines": {
+      "sheruUiContract": "^1.1"
+    },
+    "tokens": {
+      "--bg": "#e8e8e8",
+      "--surface": "#e8e8e8",
+      "--surface-raised": "#f5f5f5",
+      "--surface-sunken": "#ffffff",
+      "--fg": "#000000",
+      "--fg-muted": "#5d5d5d",
+      "--fg-disabled": "#9b9b9b",
+      "--border": "#b8b8b8",
+      "--border-strong": "#888888",
+      "--accent": "#2f6fde",
+      "--accent-on": "#ffffff",
+      "--selection-bg": "#3875d7",
+      "--selection-fg": "#ffffff",
+      "--font-ui": "\"Lucida Grande\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "--font-mono": "Monaco, Menlo, \"Courier New\", monospace",
+      "--font-size": "13px",
+      "--titlebar-h": "22px",
+      "--titlebar-bg": "linear-gradient(to bottom, #ffffff 0%, #f0f0f0 8%, #d8d8d8 50%, #c6c6c6 51%, #d2d2d2 100%)",
+      "--titlebar-bg-inactive": "linear-gradient(to bottom, #fbfbfb 0%, #f0f0f0 50%, #e4e4e4 100%)",
+      "--titlebar-fg": "#1e1e1e",
+      "--titlebar-fg-inactive": "#7f7f7f",
+      "--window-bg": "var(--x-aqua-pinstripe)",
+      "--window-radius": "8px",
+      "--window-border": "1px solid rgba(0, 0, 0, 0.3)",
+      "--window-shadow": "0 22px 55px rgba(0, 0, 0, 0.45)",
+      "--window-frame-w": "0px",
+      "--bevel-lighter": "#ffffff",
+      "--bevel-light": "#f4f4f4",
+      "--bevel-dark": "#b9b9b9",
+      "--bevel-darker": "#8c8c8c",
+      "--control-bg": "linear-gradient(to bottom, #ffffff 0%, #f4f4f4 45%, #e0e0e0 50%, #f5f5f5 100%)",
+      "--control-fg": "#000000",
+      "--control-border": "#9a9a9a",
+      "--control-radius": "11px",
+      "--control-shadow": "inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 1px 1px rgba(0, 0, 0, 0.18)",
+      "--control-bg-hover": "linear-gradient(to bottom, #ffffff 0%, #f8fbff 45%, #e4eefb 50%, #f6faff 100%)",
+      "--control-bg-active": "linear-gradient(to bottom, #d4d4d4 0%, #c6c6c6 45%, #b5b5b5 50%, #cccccc 100%)",
+      "--input-bg": "#ffffff",
+      "--input-fg": "#000000",
+      "--input-border": "#9a9a9a",
+      "--input-radius": "2px",
+      "--toolbar-bg": "linear-gradient(to bottom, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 60%), var(--x-aqua-pinstripe)",
+      "--toolbar-h": "40px",
+      "--toolbar-border": "#9f9f9f",
+      "--sidebar-bg": "#dee3e9",
+      "--sidebar-fg": "#1e1e1e",
+      "--sidebar-selected-bg": "var(--x-aqua-selection-grad)",
+      "--sidebar-selected-fg": "#ffffff",
+      "--sidebar-w": "192px",
+      "--list-bg": "#ffffff",
+      "--list-zebra": "#edf3fe",
+      "--list-header-bg": "linear-gradient(to bottom, #ffffff 0%, #f0f0f0 55%, #dcdcdc 100%)",
+      "--list-header-fg": "#4a4a4a",
+      "--row-h": "20px",
+      "--terminal-bg": "#000000",
+      "--terminal-fg": "#cccccc",
+      "--terminal-cursor": "#7f7f7f",
+      "--terminal-selection": "rgba(178, 215, 255, 0.4)",
+      "--terminal-ansi-black": "#000000",
+      "--terminal-ansi-red": "#c23621",
+      "--terminal-ansi-green": "#25bc24",
+      "--terminal-ansi-yellow": "#adad27",
+      "--terminal-ansi-blue": "#492ee1",
+      "--terminal-ansi-magenta": "#d338d3",
+      "--terminal-ansi-cyan": "#33bbc8",
+      "--terminal-ansi-white": "#cbcccd",
+      "--terminal-ansi-bright-black": "#818383",
+      "--terminal-ansi-bright-red": "#fc391f",
+      "--terminal-ansi-bright-green": "#31e722",
+      "--terminal-ansi-bright-yellow": "#eaec23",
+      "--terminal-ansi-bright-blue": "#5833ff",
+      "--terminal-ansi-bright-magenta": "#f935f8",
+      "--terminal-ansi-bright-cyan": "#14f0f0",
+      "--terminal-ansi-bright-white": "#e9ebeb",
+      "--marquee-bg": "rgba(120, 120, 120, 0.18)",
+      "--marquee-border": "1px solid rgba(90, 90, 90, 0.6)",
+      "--scrollbar-size": "15px",
+      "--scrollbar-thumb": "linear-gradient(to right, #cfe2fb 0%, #93bcf4 25%, #4d8be4 50%, #93bcf4 75%, #cfe2fb 100%)",
+      "--scrollbar-track": "var(--x-aqua-scroll-track-v)",
+      "--focus-ring": "3px solid rgba(123, 170, 230, 0.65)",
+      "--x-aqua-pinstripe": "repeating-linear-gradient(to bottom, #ececec 0px, #ececec 2px, #e4e4e4 2px, #e4e4e4 4px)",
+      "--x-aqua-selection-grad": "linear-gradient(to bottom, #6c9ef0 0%, #3875d7 100%)",
+      "--x-aqua-selection-grad-inactive": "linear-gradient(to bottom, #c4c4c4 0%, #a8a8a8 100%)",
+      "--x-aqua-gel-close": "radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.3) 30%, rgba(255, 255, 255, 0) 48%), radial-gradient(circle at 50% 100%, rgba(255, 158, 143, 0.9) 0%, transparent 60%), linear-gradient(to bottom, #e8584b, #b8241a)",
+      "--x-aqua-gel-minimize": "radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.3) 30%, rgba(255, 255, 255, 0) 48%), radial-gradient(circle at 50% 100%, rgba(255, 235, 160, 0.9) 0%, transparent 60%), linear-gradient(to bottom, #f6b620, #cf8d12)",
+      "--x-aqua-gel-zoom": "radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.3) 30%, rgba(255, 255, 255, 0) 48%), radial-gradient(circle at 50% 100%, rgba(190, 245, 170, 0.9) 0%, transparent 60%), linear-gradient(to bottom, #4fc94f, #1da522)",
+      "--x-aqua-gel-inactive": "radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.3) 30%, rgba(255, 255, 255, 0) 48%), radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.4) 0%, transparent 60%), linear-gradient(to bottom, #cfcfcf, #a8a8a8)",
+      "--x-aqua-gel-blue": "radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 60%), linear-gradient(to bottom, #a7cdf6 0%, #5a9bee 45%, #2f6fde 50%, #71b3f4 100%)",
+      "--x-aqua-glyph": "rgba(0, 0, 0, 0.55)",
+      "--x-aqua-header-sorted": "linear-gradient(to bottom, #e2ecfb 0%, #cfe0f7 55%, #b9d0f0 100%)",
+      "--x-aqua-scroll-thumb-h": "linear-gradient(to bottom, #cfe2fb 0%, #93bcf4 25%, #4d8be4 50%, #93bcf4 75%, #cfe2fb 100%)",
+      "--x-aqua-scroll-track-v": "repeating-linear-gradient(to right, #f5f5f5 0px, #f5f5f5 2px, #e8e8e8 2px, #e8e8e8 4px)",
+      "--x-aqua-scroll-track-h": "repeating-linear-gradient(to bottom, #f5f5f5 0px, #f5f5f5 2px, #e8e8e8 2px, #e8e8e8 4px)",
+      "--x-aqua-hover-wash": "rgba(0, 0, 0, 0.08)",
+      "--x-aqua-inset-shadow": "inset 0 1px 2px rgba(0, 0, 0, 0.28), 0 1px 0 rgba(255, 255, 255, 0.6)",
+      "--x-aqua-menu-shadow": "0 6px 18px rgba(0, 0, 0, 0.35)",
+      "--x-aqua-emboss": "0 1px 0 rgba(255, 255, 255, 0.6)",
+      "--x-aqua-engrave": "0 1px 1px rgba(0, 0, 0, 0.35)"
+    },
+    "stylesheet": "\n/* ── Window frame ────────────────────────────────────────────────────────── */\n/* Aqua rounds only the top corners; the native layer mirrors the radius for\n   the OS shadow, so the CSS shape must match. */\n[data-theme=\"aqua\"] [data-part=\"window\"] {\n  border-radius: var(--window-radius) var(--window-radius) 0 0;\n}\n\n/* ── Titlebar ────────────────────────────────────────────────────────────── */\n[data-theme=\"aqua\"] [data-part=\"titlebar\"] {\n  background: var(--titlebar-bg);\n  border-bottom: 1px solid var(--border-strong);\n  color: var(--titlebar-fg);\n}\n\n[data-theme=\"aqua\"] [data-part=\"title\"] {\n  font-weight: bold;\n  text-shadow: var(--x-aqua-emboss);\n  padding: 0 8px;\n}\n\n[data-theme=\"aqua\"] [data-part=\"title-icon\"] {\n  margin-right: 4px;\n  color: var(--fg-muted);\n}\n\n/* Unfocused windows lose the gloss and go matte — the signature Aqua cue. */\n[data-theme=\"aqua\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"titlebar\"] {\n  background: var(--titlebar-bg-inactive);\n  color: var(--titlebar-fg-inactive);\n}\n[data-theme=\"aqua\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"title\"] {\n  text-shadow: none;\n}\n\n/* ── Traffic lights ──────────────────────────────────────────────────────── */\n[data-theme=\"aqua\"] [data-part=\"controls\"] {\n  gap: 8px;\n  padding: 0 8px;\n}\n\n[data-theme=\"aqua\"] [data-part=\"control\"] {\n  width: 13px;\n  height: 13px;\n  border-radius: 50%;\n  border: 1px solid;\n  padding: 0;\n}\n\n[data-theme=\"aqua\"] [data-part=\"control\"][data-action=\"close\"] {\n  background: var(--x-aqua-gel-close);\n  border-color: #9a2b22;\n}\n[data-theme=\"aqua\"] [data-part=\"control\"][data-action=\"minimize\"] {\n  background: var(--x-aqua-gel-minimize);\n  border-color: #97700f;\n}\n[data-theme=\"aqua\"] [data-part=\"control\"][data-action=\"zoom\"] {\n  background: var(--x-aqua-gel-zoom);\n  border-color: #1d7322;\n}\n\n[data-theme=\"aqua\"] [data-part=\"control\"]:active {\n  filter: brightness(0.85);\n}\n\n/* Glyphs are hidden until the pointer reaches the cluster (any of the three). */\n[data-theme=\"aqua\"] [data-part=\"control\"] > span {\n  font-size: 10px;\n  font-weight: bold;\n  line-height: 1;\n  color: var(--x-aqua-glyph);\n  opacity: 0;\n  transition: opacity var(--motion-fast) var(--ease);\n  /* Flexbox centres the glyph a hair low for the gel buttons' optical centre;\n     nudge the ×/−/+ up 1px so they sit dead-centre. */\n  transform: translateY(-1px);\n}\n[data-theme=\"aqua\"] [data-part=\"controls\"]:hover [data-part=\"control\"] > span {\n  opacity: 1;\n}\n\n/* Inactive window: all three turn matte gray; hovering the cluster restores\n   the gels (the higher-specificity rules below win over the gray). */\n[data-theme=\"aqua\"] [data-part=\"control\"][data-focused=\"false\"] {\n  background: var(--x-aqua-gel-inactive);\n  border-color: #8f8f8f;\n}\n[data-theme=\"aqua\"] [data-part=\"controls\"]:hover [data-part=\"control\"][data-action=\"close\"] {\n  background: var(--x-aqua-gel-close);\n  border-color: #9a2b22;\n}\n[data-theme=\"aqua\"] [data-part=\"controls\"]:hover [data-part=\"control\"][data-action=\"minimize\"] {\n  background: var(--x-aqua-gel-minimize);\n  border-color: #97700f;\n}\n[data-theme=\"aqua\"] [data-part=\"controls\"]:hover [data-part=\"control\"][data-action=\"zoom\"] {\n  background: var(--x-aqua-gel-zoom);\n  border-color: #1d7322;\n}\n\n/* ── Toolbar ─────────────────────────────────────────────────────────────── */\n[data-theme=\"aqua\"] [data-part=\"toolbar\"] {\n  background: var(--toolbar-bg);\n  border-bottom: 1px solid var(--toolbar-border);\n}\n\n/* Gel pill buttons: white gel face, blue gel when toggled on / menu open. */\n[data-theme=\"aqua\"] [data-part=\"toolbar-button\"],\n[data-theme=\"aqua\"] [data-part=\"button\"],\n[data-theme=\"aqua\"] [data-part=\"icon-button\"] {\n  height: 22px;\n  padding: 0 10px;\n  border: 1px solid var(--control-border);\n  border-radius: var(--control-radius);\n  background: var(--control-bg);\n  color: var(--control-fg);\n  box-shadow: var(--control-shadow);\n}\n\n[data-theme=\"aqua\"] [data-part=\"icon-button\"] {\n  width: 26px;\n  padding: 0;\n}\n\n[data-theme=\"aqua\"] [data-part=\"toolbar-button\"]:hover,\n[data-theme=\"aqua\"] [data-part=\"button\"]:hover,\n[data-theme=\"aqua\"] [data-part=\"icon-button\"]:hover {\n  background: var(--control-bg-hover);\n}\n\n[data-theme=\"aqua\"] [data-part=\"toolbar-button\"]:active,\n[data-theme=\"aqua\"] [data-part=\"button\"]:active,\n[data-theme=\"aqua\"] [data-part=\"icon-button\"]:active {\n  background: var(--control-bg-active);\n  box-shadow: var(--x-aqua-inset-shadow);\n}\n\n[data-theme=\"aqua\"] [data-part=\"toolbar-button\"][data-state=\"active\"],\n[data-theme=\"aqua\"] [data-part=\"button\"][data-state=\"open\"] {\n  background: var(--x-aqua-gel-blue);\n  border-color: #2a5fbe;\n  color: var(--accent-on);\n  text-shadow: var(--x-aqua-engrave);\n}\n\n/* ── Segmented control (lozenge) ─────────────────────────────────────────── */\n[data-theme=\"aqua\"] [data-part=\"segmented\"] {\n  border: 1px solid var(--control-border);\n  border-radius: var(--control-radius);\n  background: var(--control-bg);\n  box-shadow: var(--control-shadow);\n  overflow: hidden;\n}\n\n[data-theme=\"aqua\"] [data-part=\"segment\"] {\n  height: 20px;\n  padding: 0 12px;\n  border-left: 1px solid var(--control-border);\n  color: var(--control-fg);\n}\n[data-theme=\"aqua\"] [data-part=\"segment\"]:first-child {\n  border-left: none;\n}\n[data-theme=\"aqua\"] [data-part=\"segment\"]:active {\n  background: var(--control-bg-active);\n}\n[data-theme=\"aqua\"] [data-part=\"segment\"][data-state=\"selected\"] {\n  background: var(--x-aqua-gel-blue);\n  color: var(--accent-on);\n  text-shadow: var(--x-aqua-engrave);\n}\n\n/* ── Breadcrumbs ─────────────────────────────────────────────────────────── */\n[data-theme=\"aqua\"] [data-part=\"breadcrumbs\"] {\n  color: var(--fg-muted);\n}\n\n[data-theme=\"aqua\"] [data-part=\"breadcrumb\"] {\n  height: 18px;\n  padding: 0 6px;\n  border-radius: 9px;\n  color: var(--fg);\n}\n[data-theme=\"aqua\"] [data-part=\"breadcrumb\"]:hover {\n  background: var(--x-aqua-hover-wash);\n}\n[data-theme=\"aqua\"] [data-part=\"breadcrumb\"][data-state=\"current\"] {\n  font-weight: bold;\n}\n\n/* ── Search field (round Aqua well) ──────────────────────────────────────── */\n[data-theme=\"aqua\"] [data-part=\"search-field\"] {\n  height: 20px;\n  padding: 0 8px;\n  border: 1px solid var(--input-border);\n  border-radius: 10px;\n  background: var(--input-bg);\n  box-shadow: var(--x-aqua-inset-shadow);\n  color: var(--fg-muted);\n}\n[data-theme=\"aqua\"] [data-part=\"search-field\"] input {\n  color: var(--input-fg);\n  font-size: 12px;\n}\n[data-theme=\"aqua\"] [data-part=\"search-field\"]:focus-within {\n  outline: var(--focus-ring);\n  outline-offset: 0;\n}\n\n/* ── Sidebar ─────────────────────────────────────────────────────────────── */\n[data-theme=\"aqua\"] [data-part=\"sidebar\"] {\n  background: var(--sidebar-bg);\n  color: var(--sidebar-fg);\n  padding: 6px 0;\n}\n\n[data-theme=\"aqua\"] [data-part=\"sidebar-heading\"] {\n  padding: 8px 12px 2px;\n  font-size: 11px;\n  font-weight: bold;\n  color: var(--fg-muted);\n  text-shadow: var(--x-aqua-emboss);\n}\n\n[data-theme=\"aqua\"] [data-part=\"sidebar-item\"] {\n  padding: 0 12px;\n  color: var(--sidebar-fg);\n}\n[data-theme=\"aqua\"] [data-part=\"sidebar-item-icon\"] {\n  color: var(--fg-muted);\n}\n[data-theme=\"aqua\"] [data-part=\"sidebar-item\"][data-state=\"selected\"] {\n  background: var(--sidebar-selected-bg);\n  color: var(--sidebar-selected-fg);\n  text-shadow: var(--x-aqua-engrave);\n}\n[data-theme=\"aqua\"] [data-part=\"sidebar-item\"][data-state=\"selected\"] [data-part=\"sidebar-item-icon\"] {\n  color: var(--sidebar-selected-fg);\n}\n/* Era rule: selection desaturates to gray in a background window. */\n[data-theme=\"aqua\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"sidebar-item\"][data-state=\"selected\"] {\n  background: var(--x-aqua-selection-grad-inactive);\n  text-shadow: none;\n}\n/* Inline eject on removable-volume rows — the tab-close treatment. */\n[data-theme=\"aqua\"] [data-part=\"sidebar-item-action\"] {\n  width: 14px;\n  height: 14px;\n  border-radius: 50%;\n  color: var(--fg-muted);\n}\n[data-theme=\"aqua\"] [data-part=\"sidebar-item-action\"]:hover {\n  background: rgba(0, 0, 0, 0.14);\n  color: var(--fg);\n}\n[data-theme=\"aqua\"] [data-part=\"sidebar-item\"][data-state=\"selected\"] [data-part=\"sidebar-item-action\"] {\n  color: var(--sidebar-selected-fg);\n}\n\n/* The divider's 5px hit area paints a single hairline at its center. */\n[data-theme=\"aqua\"] [data-part=\"split-divider\"] {\n  background: linear-gradient(\n    to right,\n    transparent 2px,\n    var(--border-strong) 2px,\n    var(--border-strong) 3px,\n    transparent 3px\n  );\n}\n\n/* ── File list ───────────────────────────────────────────────────────────── */\n[data-theme=\"aqua\"] [data-part=\"file-list\"] {\n  background: var(--list-bg);\n}\n\n[data-theme=\"aqua\"] [data-part=\"file-list-header\"] {\n  background: var(--list-header-bg);\n  color: var(--list-header-fg);\n  border-bottom: 1px solid var(--border);\n  font-size: 11px;\n}\n[data-theme=\"aqua\"] [data-part=\"file-list-col\"] {\n  border-right: 1px solid var(--border);\n  text-shadow: var(--x-aqua-emboss);\n}\n[data-theme=\"aqua\"] [data-part=\"file-list-col\"]:last-child {\n  border-right: none;\n}\n[data-theme=\"aqua\"] [data-part=\"file-list-col\"][data-state=\"sorted\"] {\n  background: var(--x-aqua-header-sorted);\n}\n\n[data-theme=\"aqua\"] [data-part=\"file-row\"] {\n  font-size: 12px;\n}\n/* Classic Finder stripes: first row white, every second tinted blue. */\n[data-theme=\"aqua\"] [data-part=\"file-row\"][data-zebra=\"even\"] {\n  background: var(--list-zebra);\n}\n[data-theme=\"aqua\"] [data-part=\"file-icon\"] {\n  color: var(--fg-muted);\n}\n[data-theme=\"aqua\"] [data-part=\"file-row\"][data-state=\"selected\"] {\n  background: var(--x-aqua-selection-grad);\n  color: var(--selection-fg);\n  text-shadow: var(--x-aqua-engrave);\n}\n[data-theme=\"aqua\"] [data-part=\"file-row\"][data-state=\"selected\"] [data-part=\"file-icon\"] {\n  color: var(--selection-fg);\n}\n[data-theme=\"aqua\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"file-row\"][data-state=\"selected\"] {\n  background: var(--x-aqua-selection-grad-inactive);\n  text-shadow: none;\n}\n\n/* ── Icon grid: Finder-style label pill + icon backplate when selected ───── */\n[data-theme=\"aqua\"] [data-part=\"icon-grid\"] {\n  background: var(--list-bg);\n}\n[data-theme=\"aqua\"] [data-part=\"icon-grid-label\"] {\n  font-size: 12px;\n  padding: 1px 6px;\n  border-radius: 8px;\n}\n[data-theme=\"aqua\"] [data-part=\"icon-grid-item\"][data-state=\"selected\"] [data-part=\"icon-grid-label\"] {\n  background: var(--x-aqua-selection-grad);\n  color: var(--selection-fg);\n  text-shadow: var(--x-aqua-engrave);\n}\n[data-theme=\"aqua\"] [data-part=\"icon-grid-item\"][data-state=\"selected\"] [data-part=\"icon-grid-icon\"] {\n  background: rgba(0, 0, 0, 0.14);\n  border-radius: 5px;\n}\n[data-theme=\"aqua\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"icon-grid-item\"][data-state=\"selected\"] [data-part=\"icon-grid-label\"] {\n  background: var(--x-aqua-selection-grad-inactive);\n  text-shadow: none;\n}\n\n[data-theme=\"aqua\"] [data-part=\"list-empty\"] {\n  background: var(--list-bg);\n  color: var(--fg-disabled);\n}\n\n/* ── Terminal panel ──────────────────────────────────────────────────────── */\n[data-theme=\"aqua\"] [data-part=\"terminal-panel\"] {\n  /* Chrome surface, not terminal black: the resize grip + header are window\n     chrome; only the host paints the terminal background. */\n  background: var(--surface);\n  border-top: 1px solid var(--border-strong);\n}\n[data-theme=\"aqua\"] [data-part=\"terminal-panel\"][data-state=\"closed\"] {\n  border-top: none;\n}\n\n[data-theme=\"aqua\"] [data-part=\"terminal-header\"] {\n  height: 20px;\n  padding: 0 8px;\n  background: var(--titlebar-bg);\n  border-bottom: 1px solid var(--border);\n  font-size: 11px;\n  color: var(--fg-muted);\n  text-shadow: var(--x-aqua-emboss);\n}\n\n[data-theme=\"aqua\"] [data-part=\"terminal-host\"] {\n  background: var(--terminal-bg);\n  color: var(--terminal-fg);\n  font-family: var(--font-mono);\n  padding: 4px 6px;\n}\n\n/* ── Status bar ──────────────────────────────────────────────────────────── */\n[data-theme=\"aqua\"] [data-part=\"status-bar\"] {\n  height: 20px;\n  justify-content: center;\n  background: var(--x-aqua-pinstripe);\n  border-top: 1px solid var(--border);\n  font-size: 11px;\n  color: var(--fg-muted);\n  text-shadow: var(--x-aqua-emboss);\n}\n\n/* ── Menus ───────────────────────────────────────────────────────────────── */\n[data-theme=\"aqua\"] [data-part=\"menu\"] {\n  margin-top: 2px;\n  padding: 4px 0;\n  background: var(--surface-sunken);\n  border: 1px solid rgba(0, 0, 0, 0.3);\n  border-radius: 5px;\n  box-shadow: var(--x-aqua-menu-shadow);\n}\n\n[data-theme=\"aqua\"] [data-part=\"menu-item\"] {\n  height: 19px;\n  padding: 0 20px 0 12px;\n}\n[data-theme=\"aqua\"] [data-part=\"menu-item\"]:hover,\n[data-theme=\"aqua\"] [data-part=\"menu-item\"]:focus-visible {\n  background: var(--x-aqua-selection-grad);\n  color: var(--selection-fg);\n  text-shadow: var(--x-aqua-engrave);\n  outline: none;\n}\n[data-theme=\"aqua\"] [data-part=\"menu-item\"][aria-disabled=\"true\"] {\n  background: transparent;\n  color: var(--fg-disabled);\n  text-shadow: none;\n}\n\n[data-theme=\"aqua\"] [data-part=\"menu-separator\"] {\n  height: 1px;\n  margin: 4px 1px;\n  background: var(--border);\n}\n\n/* ── Scrollbars (blue gel scroller in a pinstriped track) ────────────────── */\n/* Base CSS paints the vertical orientation from --scrollbar-thumb/-track;\n   the horizontal orientation needs its gradients rotated. */\n[data-theme=\"aqua\"] ::-webkit-scrollbar-thumb {\n  border-radius: 8px;\n  border: 2px solid transparent;\n  background-clip: padding-box;\n}\n[data-theme=\"aqua\"] ::-webkit-scrollbar-thumb:horizontal {\n  background: var(--x-aqua-scroll-thumb-h);\n  border: 2px solid transparent;\n  background-clip: padding-box;\n}\n[data-theme=\"aqua\"] ::-webkit-scrollbar-track:horizontal {\n  background: var(--x-aqua-scroll-track-h);\n}\n[data-theme=\"aqua\"] ::-webkit-scrollbar-button {\n  display: none;\n}\n[data-theme=\"aqua\"] ::-webkit-scrollbar-corner {\n  background: var(--scrollbar-track);\n}\n\n/* ── In-page tabs (⌘T) — Safari 1.0 posture: metal strip, gel document tabs */\n[data-theme=\"aqua\"] [data-part=\"tab-bar\"] {\n  background: var(--titlebar-bg-inactive);\n  border-bottom: 1px solid var(--border-strong);\n  padding: 4px 6px 0;\n  gap: 3px;\n}\n\n[data-theme=\"aqua\"] [data-part=\"tab\"] {\n  height: 23px;\n  min-height: 23px;\n  font-size: 11px;\n  color: var(--fg-muted);\n  border: 1px solid var(--border-strong);\n  border-bottom: none;\n  border-radius: 5px 5px 0 0;\n  /* Unselected tabs recede into the strip like background gel buttons. */\n  background: linear-gradient(#d4d4d4, #c2c2c2 55%, #b9b9b9);\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);\n}\n\n[data-theme=\"aqua\"] [data-part=\"tab\"][data-state=\"selected\"] {\n  color: var(--fg);\n  background: linear-gradient(#fdfdfd, #ececec 55%, #e3e3e3);\n  text-shadow: var(--x-aqua-emboss);\n}\n\n[data-theme=\"aqua\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"tab\"] {\n  color: var(--titlebar-fg-inactive);\n}\n\n[data-theme=\"aqua\"] [data-part=\"tab-label\"] {\n  text-align: center;\n}\n\n[data-theme=\"aqua\"] [data-part=\"tab-close\"],\n[data-theme=\"aqua\"] [data-part=\"tab-add\"] {\n  width: 14px;\n  height: 14px;\n  border-radius: 50%;\n  font-size: 11px;\n  line-height: 1;\n  color: var(--fg-muted);\n}\n\n[data-theme=\"aqua\"] [data-part=\"tab-close\"]:hover,\n[data-theme=\"aqua\"] [data-part=\"tab-add\"]:hover {\n  background: rgba(0, 0, 0, 0.14);\n  color: var(--fg);\n}\n\n[data-theme=\"aqua\"] [data-part=\"tab-add\"] {\n  align-self: center;\n  margin: 0 2px 4px;\n}\n\n/* ── Modal dialogs (Get Info, Go to Folder, New File) ───────────────────── */\n[data-theme=\"aqua\"] [data-part=\"dialog-overlay\"] {\n  background: rgba(0, 0, 0, 0.12);\n}\n\n[data-theme=\"aqua\"] [data-part=\"dialog\"] {\n  /* An Aqua alert: white rounded panel floating on a deep soft shadow. */\n  background: #f6f6f6;\n  border: 1px solid rgba(0, 0, 0, 0.28);\n  border-radius: 10px;\n  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.9);\n}\n\n[data-theme=\"aqua\"] [data-part=\"dialog-title\"] {\n  text-align: center;\n  font-size: 13px;\n  font-weight: 700;\n}\n\n[data-theme=\"aqua\"] [data-part=\"text-input\"] {\n  border: 1px solid #9a9a9a;\n  border-radius: 2px;\n  box-shadow: var(--x-aqua-inset-shadow);\n  padding: 4px 6px;\n}\n",
+    "chrome": {
+      "controlsSide": "left",
+      "controlsOrder": [
+        "close",
+        "minimize",
+        "zoom"
+      ],
+      "controlGlyphs": {
+        "glyphs": {},
+        "spanChar": {
+          "close": "×",
+          "minimize": "−",
+          "zoom": "+"
+        },
+        "labels": {
+          "close": "Close",
+          "minimize": "Minimize",
+          "zoom": "Zoom"
+        }
+      },
+      "windowRadius": 8
+    },
+    "iconGlyphs": {
+      "folder": {
+        "viewBox": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "defs": [
+          {
+            "id": "sheru-aqua-folder",
+            "kind": "linear",
+            "x1": 0,
+            "y1": 0,
+            "x2": 0,
+            "y2": 1,
+            "stops": [
+              {
+                "offset": 0,
+                "color": "#b5d6f6"
+              },
+              {
+                "offset": 0.5,
+                "color": "#6ba4e8"
+              },
+              {
+                "offset": 0.52,
+                "color": "#5b96e0"
+              },
+              {
+                "offset": 1,
+                "color": "#7db1ee"
+              }
+            ]
+          }
+        ],
+        "shapes": [
+          {
+            "kind": "path",
+            "d": "M3.5 9.5a2 2 0 0 1 2-2h6.6l2.6 3h12.8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-22a2 2 0 0 1-2-2z",
+            "fill": "url:#sheru-aqua-folder",
+            "stroke": "#3a6db1",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M4.5 10.5h23v5.5a40 40 0 0 1-23 0z",
+            "fill": "rgba:255,255,255,0.4"
+          }
+        ]
+      },
+      "file": {
+        "viewBox": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "shapes": [
+          {
+            "kind": "path",
+            "d": "M8 3.5h11l5 5v20H8z",
+            "fill": "#ffffff",
+            "stroke": "#8c8c8c",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M19 3.5v5h5",
+            "fill": "#e3e3e3",
+            "stroke": "#8c8c8c",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M11 13h10M11 16h10M11 19h6",
+            "stroke": "#b9cdea",
+            "strokeWidth": 1.4
+          },
+          {
+            "kind": "text",
+            "x": 16,
+            "y": 26.5,
+            "source": "ext-upper",
+            "maxChars": 4,
+            "fontFamily": "'Lucida Grande', sans-serif",
+            "fontSize": 6,
+            "fontWeight": "bold",
+            "fill": "#3a6db1",
+            "textAnchor": "middle"
+          }
+        ]
+      }
+    }
+  }
+}

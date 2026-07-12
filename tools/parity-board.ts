@@ -18,11 +18,12 @@ import { mkdir } from "node:fs/promises";
 import { SCENES, WINDOW_RECT } from "../app/scenes.ts";
 
 const repo = new URL("..", import.meta.url).pathname;
-const THEME_IDS = ["win98"] as const;
+const THEME_IDS = ["win98", "winxp", "win7", "aqua", "xfce"] as const;
 const PARITY = `${repo}docs/parity/`;
 
 interface SceneResult {
   scene: string;
+  ref: string;
   rmse: number;
   region: [number, number, number, number];
 }
@@ -95,9 +96,11 @@ for (const id of THEME_IDS) {
   await mkdir(`${PARITY}shots/${id}`, { recursive: true });
   await mkdir(`${PARITY}diff/${id}`, { recursive: true });
   results[id] = [];
-
+}
+{
   for (const scene of SCENES) {
-    const refPath = `${PARITY}ref/${id}/${scene.name}.png`;
+    const id = scene.theme ?? "win98";
+    const refPath = `${PARITY}ref/${id}/${scene.refName ?? scene.name}.png`;
     const goldenPath = `${repo}test/goldens/${scene.name}.png`;
     if (!existsSync(refPath) || !existsSync(goldenPath)) {
       console.error(`parity ${id}/${scene.name}: missing ${!existsSync(refPath) ? refPath : goldenPath}`);
@@ -117,7 +120,7 @@ for (const id of THEME_IDS) {
       `${PARITY}diff/${id}/${scene.name}.png`,
       diffImage(ref.data.data, shot.data.data, ref.w, ref.h, scene.region),
     );
-    results[id].push({ scene: scene.name, rmse: Math.round(rmse * 100) / 100, region: scene.region });
+    results[id].push({ scene: scene.name, ref: scene.refName ?? scene.name, rmse: Math.round(rmse * 100) / 100, region: scene.region });
     console.log(`parity ${id}/${scene.name}: RMSE ${rmse.toFixed(2)} over [${scene.region.join(",")}]`);
   }
 }
@@ -161,7 +164,7 @@ const rows = THEME_IDS.flatMap((id) =>
     <tr>
       <td><code>${id}</code></td>
       <td><code>${r.scene}</code></td>
-      <td><img src="ref/${id}/${r.scene}.png" width="464"></td>
+      <td><img src="ref/${id}/${r.ref}.png" width="464"></td>
       <td><img src="shots/${id}/${r.scene}.png" width="464"></td>
       <td><img src="diff/${id}/${r.scene}.png" width="464"></td>
       <td class="rmse">${r.rmse.toFixed(2)}</td>

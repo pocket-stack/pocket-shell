@@ -1,0 +1,320 @@
+{
+  "provenance": {
+    "repo": "https://github.com/doodlewind/sheru",
+    "commit": "49d35621ae5b7a777cde207171c4ebcdaaca7f9f",
+    "dirty": false,
+    "module": "packages/themes/src/win7/index.ts"
+  },
+  "theme": {
+    "id": "win7",
+    "name": "Seven",
+    "engines": {
+      "sheruUiContract": "^1.1"
+    },
+    "tokens": {
+      "--bg": "#f0f0f0",
+      "--surface": "#eef2f7",
+      "--surface-raised": "#fdfdfd",
+      "--surface-sunken": "#ffffff",
+      "--fg": "#1e1e1e",
+      "--fg-muted": "#6d6d6d",
+      "--fg-disabled": "#a0a0a0",
+      "--border": "#e5e5e5",
+      "--border-strong": "#979797",
+      "--accent": "#3399ff",
+      "--accent-on": "#ffffff",
+      "--selection-bg": "#c1dbfc",
+      "--selection-fg": "#1e1e1e",
+      "--font-ui": "\"Segoe UI\", \"Segoe UI Variable\", \"Helvetica Neue\", Tahoma, sans-serif",
+      "--font-mono": "Consolas, \"Cascadia Mono\", Menlo, monospace",
+      "--font-size": "12px",
+      "--titlebar-h": "30px",
+      "--titlebar-bg": "linear-gradient(180deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0.28) 45%, rgba(160, 190, 220, 0.18) 52%, rgba(255, 255, 255, 0.22) 100%)",
+      "--titlebar-bg-inactive": "linear-gradient(180deg, rgba(255, 255, 255, 0.52) 0%, rgba(243, 246, 249, 0.28) 50%, rgba(255, 255, 255, 0.2) 100%)",
+      "--titlebar-fg": "#1e1e1e",
+      "--titlebar-fg-inactive": "#56606a",
+      "--window-bg": "linear-gradient(165deg, rgba(189, 212, 236, 0.96) 0%, rgba(148, 178, 209, 0.96) 45%, rgba(118, 150, 186, 0.96) 100%)",
+      "--window-radius": "6px",
+      "--window-border": "1px solid rgba(28, 48, 70, 0.78)",
+      "--window-shadow": "inset 0 0 0 1px rgba(255, 255, 255, 0.6)",
+      "--window-frame-w": "6px",
+      "--bevel-lighter": "rgba(255, 255, 255, 0.85)",
+      "--bevel-light": "rgba(255, 255, 255, 0.55)",
+      "--bevel-dark": "#cdd5de",
+      "--bevel-darker": "#8e99a5",
+      "--control-bg": "linear-gradient(180deg, #f2f2f2 0%, #ebebeb 45%, #dddddd 46%, #cfcfcf 100%)",
+      "--control-fg": "#1e1e1e",
+      "--control-border": "#707070",
+      "--control-radius": "3px",
+      "--control-shadow": "inset 0 0 0 1px rgba(255, 255, 255, 0.75)",
+      "--control-bg-hover": "linear-gradient(180deg, #eaf6fd 0%, #d9f0fc 45%, #bee6fd 46%, #a7d9f5 100%)",
+      "--control-bg-active": "linear-gradient(180deg, #e5f4fc 0%, #c4e5f6 30%, #98d1ef 31%, #68b3db 100%)",
+      "--input-bg": "#ffffff",
+      "--input-fg": "#1e1e1e",
+      "--input-border": "#abadb3",
+      "--input-radius": "2px",
+      "--toolbar-bg": "linear-gradient(180deg, #fdfeff 0%, #e6f0fa 100%)",
+      "--toolbar-h": "38px",
+      "--toolbar-border": "#d5e3f0",
+      "--sidebar-bg": "#f7fbff",
+      "--sidebar-fg": "#1e1e1e",
+      "--sidebar-selected-bg": "linear-gradient(180deg, #ebf4fc 0%, #cfe4f7 100%)",
+      "--sidebar-selected-fg": "#1e1e1e",
+      "--sidebar-w": "200px",
+      "--list-bg": "#ffffff",
+      "--list-zebra": "#f7fafd",
+      "--list-header-bg": "#ffffff",
+      "--list-header-fg": "#454545",
+      "--row-h": "20px",
+      "--terminal-bg": "#000000",
+      "--terminal-fg": "#f0f0f0",
+      "--terminal-cursor": "#f0f0f0",
+      "--terminal-selection": "rgba(255, 255, 255, 0.35)",
+      "--terminal-ansi-black": "#000000",
+      "--terminal-ansi-red": "#800000",
+      "--terminal-ansi-green": "#008000",
+      "--terminal-ansi-yellow": "#808000",
+      "--terminal-ansi-blue": "#000080",
+      "--terminal-ansi-magenta": "#800080",
+      "--terminal-ansi-cyan": "#008080",
+      "--terminal-ansi-white": "#c0c0c0",
+      "--terminal-ansi-bright-black": "#808080",
+      "--terminal-ansi-bright-red": "#ff0000",
+      "--terminal-ansi-bright-green": "#00ff00",
+      "--terminal-ansi-bright-yellow": "#ffff00",
+      "--terminal-ansi-bright-blue": "#0000ff",
+      "--terminal-ansi-bright-magenta": "#ff00ff",
+      "--terminal-ansi-bright-cyan": "#00ffff",
+      "--terminal-ansi-bright-white": "#ffffff",
+      "--marquee-bg": "rgba(51, 153, 255, 0.22)",
+      "--marquee-border": "1px solid rgba(51, 153, 255, 0.85)",
+      "--scrollbar-size": "14px",
+      "--scrollbar-thumb": "#c2cad2",
+      "--scrollbar-track": "#f0f0f0",
+      "--focus-ring": "1px dotted #4d4d4d",
+      "--motion-fast": "100ms",
+      "--motion-base": "160ms",
+      "--x-win7-frame-inactive": "linear-gradient(165deg, rgba(222, 228, 235, 0.96) 0%, rgba(196, 205, 215, 0.96) 100%)",
+      "--x-win7-client-edge": "rgba(49, 76, 106, 0.65)",
+      "--x-win7-inner-highlight": "rgba(255, 255, 255, 0.6)",
+      "--x-win7-caption-border": "rgba(24, 44, 66, 0.78)",
+      "--x-win7-caption-glyph": "#ffffff",
+      "--x-win7-caption-glyph-inactive": "rgba(255, 255, 255, 0.85)",
+      "--x-win7-title-glow": "0 0 10px #ffffff, 0 0 10px #ffffff, 0 0 4px #ffffff",
+      "--x-win7-title-glow-inactive": "0 0 9px rgba(255, 255, 255, 0.85), 0 0 9px rgba(255, 255, 255, 0.7)",
+      "--x-win7-hover-border": "#3c7fb1",
+      "--x-win7-pressed-border": "#2c628b",
+      "--x-win7-sel-bg": "linear-gradient(180deg, #dcebfc 0%, #c1dbfc 100%)",
+      "--x-win7-sel-border": "#7da2ce",
+      "--x-win7-sel-border-soft": "#84acdd",
+      "--x-win7-hover-bg": "linear-gradient(180deg, #f8fbfe 0%, #eaf3fb 100%)",
+      "--x-win7-hover-border-soft": "#d8e6f3",
+      "--x-win7-menu-hover-border": "#aecff7"
+    },
+    "stylesheet": "\n/* ── Window frame: faked Aero glass ─────────────────────────────────────── */\n[data-theme=\"win7\"] [data-part=\"window\"] {\n  /* White sheen over the translucent blue frame sells the glass. */\n  background:\n    radial-gradient(130% 70% at 28% 0%, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0) 62%),\n    linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 45%),\n    var(--window-bg);\n  /* --window-shadow carries the 1px inner white highlight; the native\n     borderless NSWindow draws the actual drop shadow. */\n  box-shadow: var(--window-shadow);\n}\n\n[data-theme=\"win7\"] [data-part=\"window\"][data-focused=\"false\"] {\n  background:\n    linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 50%),\n    var(--x-win7-frame-inactive);\n}\n\n/* Client area sits inside the 6px glass frame, ringed by the dark client\n   edge plus the Aero white hairline just outside it. */\n[data-theme=\"win7\"] [data-part=\"window-body\"] {\n  margin: 0 var(--window-frame-w) var(--window-frame-w);\n  background: linear-gradient(180deg, #f4f6f8 0%, #ebeef1 100%);\n  border: 1px solid var(--x-win7-client-edge);\n  box-shadow: 0 0 0 1px var(--x-win7-inner-highlight);\n}\n\n/* ── Titlebar ───────────────────────────────────────────────────────────── */\n[data-theme=\"win7\"] [data-part=\"titlebar\"] {\n  background: var(--titlebar-bg);\n}\n\n[data-theme=\"win7\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"titlebar\"] {\n  background: var(--titlebar-bg-inactive);\n}\n\n[data-theme=\"win7\"] [data-part=\"title\"] {\n  /* Segoe UI with the signature white glow (alignment is chrome.titleAlign). */\n  padding: 0 8px;\n  font-size: 13px;\n  color: var(--titlebar-fg);\n  text-shadow: var(--x-win7-title-glow);\n}\n\n[data-theme=\"win7\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"title\"] {\n  color: var(--titlebar-fg-inactive);\n  text-shadow: var(--x-win7-title-glow-inactive);\n}\n\n[data-theme=\"win7\"] [data-part=\"title-icon\"] {\n  margin-left: 9px;\n}\n\n/* ── Caption buttons: one connected glass pill, hung from the top edge ──── */\n[data-theme=\"win7\"] [data-part=\"controls\"] {\n  align-self: flex-start;\n  margin: 0 var(--window-frame-w) 0 10px;\n}\n\n[data-theme=\"win7\"] [data-part=\"control\"] {\n  width: 30px;\n  height: 19px;\n  /* Shared 1px outline between neighbors; no top border — the group reads\n     as attached to the window's own top edge. */\n  margin-left: -1px;\n  border: 1px solid var(--x-win7-caption-border);\n  border-top: none;\n  background:\n    linear-gradient(\n      180deg,\n      rgba(255, 255, 255, 0.55) 0%,\n      rgba(255, 255, 255, 0.2) 45%,\n      rgba(112, 134, 156, 0.22) 50%,\n      rgba(255, 255, 255, 0.22) 100%\n    );\n  /* A bright 1px inner ring just inside the dark caption border — the glass\n     \"thickness\" that makes the buttons read as real Aero (not a flat dark\n     outline). The brighter top keeps the glossy top sheen. */\n  box-shadow:\n    inset 0 1px 0 var(--x-win7-inner-highlight),\n    inset 0 0 0 1px rgba(255, 255, 255, 0.4);\n  /* Caption glyphs stay white-on-glass; --titlebar-fg is the (dark) caption\n     text, so the buttons pin their own color. */\n  color: var(--x-win7-caption-glyph);\n  transition: background var(--motion-fast) var(--ease);\n}\n\n[data-theme=\"win7\"] [data-part=\"control\"] svg {\n  filter: drop-shadow(0 1px 1px rgba(8, 24, 44, 0.7));\n}\n\n/* Outer bottom corners only — the pill shape. Order is fixed by the theme's\n   chrome config (minimize · zoom · close), so per-action rounding is safe. */\n[data-theme=\"win7\"] [data-part=\"control\"][data-action=\"minimize\"] {\n  margin-left: 0;\n  border-bottom-left-radius: 4px;\n}\n[data-theme=\"win7\"] [data-part=\"control\"][data-action=\"close\"] {\n  width: 46px;\n  border-bottom-right-radius: 4px;\n}\n\n/* Focused close: the solid Aero red — a glossy fill with a bright top half and\n   a darker bottom half (a white sheen over a top-light → bottom-dark red base).\n   Only when the window is key; the unfocused look stays the pale glass below.\n   :hover / :active (later) still brighten/press it. */\n[data-theme=\"win7\"] [data-part=\"control\"][data-action=\"close\"][data-focused=\"true\"] {\n  background:\n    linear-gradient(\n      180deg,\n      rgba(255, 255, 255, 0.5) 0%,\n      rgba(255, 255, 255, 0.12) 46%,\n      rgba(255, 255, 255, 0) 52%,\n      rgba(255, 255, 255, 0.1) 100%\n    ),\n    linear-gradient(180deg, #ec6a5f 0%, #d6463c 49%, #bf3830 51%, #a62820 100%);\n  color: var(--x-win7-caption-glyph);\n}\n\n/* Inactive window: the glass goes pale and the glyphs dim. */\n[data-theme=\"win7\"] [data-part=\"control\"][data-focused=\"false\"] {\n  background:\n    linear-gradient(\n      180deg,\n      rgba(255, 255, 255, 0.42) 0%,\n      rgba(238, 242, 246, 0.18) 48%,\n      rgba(202, 210, 218, 0.2) 52%,\n      rgba(255, 255, 255, 0.18) 100%\n    );\n  color: var(--x-win7-caption-glyph-inactive);\n}\n\n/* Hover lifts the SAME glass — brighter, with an Aero-blue lower half — keeping\n   the convex top-light/bottom-dark form. (Not a bottom-centered glow, which\n   read as the button caving in.) */\n[data-theme=\"win7\"] [data-part=\"control\"]:hover {\n  background:\n    linear-gradient(\n      180deg,\n      rgba(255, 255, 255, 0.88) 0%,\n      rgba(235, 246, 253, 0.55) 45%,\n      rgba(150, 201, 237, 0.5) 50%,\n      rgba(200, 230, 250, 0.55) 100%\n    );\n  color: var(--x-win7-caption-glyph);\n}\n\n/* Close hover: the same red glass, just brighter. */\n[data-theme=\"win7\"] [data-part=\"control\"][data-action=\"close\"]:hover {\n  background:\n    linear-gradient(\n      180deg,\n      rgba(255, 255, 255, 0.6) 0%,\n      rgba(255, 255, 255, 0.2) 46%,\n      rgba(255, 255, 255, 0) 52%,\n      rgba(255, 255, 255, 0.16) 100%\n    ),\n    linear-gradient(180deg, #ff8e80 0%, #f0604f 49%, #dd463b 51%, #c4352c 100%);\n}\n\n/* Pressed: the same glass, darker, sunk in with an inset shadow (a press DOES\n   recess — that's where a darker, inset look belongs, not on hover). */\n[data-theme=\"win7\"] [data-part=\"control\"]:active {\n  background:\n    linear-gradient(\n      180deg,\n      rgba(176, 201, 223, 0.75) 0%,\n      rgba(150, 180, 206, 0.55) 50%,\n      rgba(124, 154, 183, 0.55) 100%\n    );\n  box-shadow: inset 0 1px 3px rgba(8, 24, 44, 0.55);\n}\n\n[data-theme=\"win7\"] [data-part=\"control\"][data-action=\"close\"]:active {\n  background: linear-gradient(180deg, #c4453a 0%, #a52c23 50%, #891c17 100%);\n  box-shadow: inset 0 1px 3px rgba(40, 0, 0, 0.6);\n}\n\n/* ── Toolbar: the Explorer command bar ──────────────────────────────────── */\n[data-theme=\"win7\"] [data-part=\"toolbar\"] {\n  background: var(--toolbar-bg);\n  border-bottom: 1px solid var(--toolbar-border);\n}\n\n[data-theme=\"win7\"] [data-part=\"toolbar-button\"] {\n  min-height: 26px;\n  padding: 3px 10px;\n  border: 1px solid transparent;\n  border-radius: 3px;\n  color: var(--control-fg);\n}\n\n[data-theme=\"win7\"] [data-part=\"toolbar-button\"]:hover {\n  background: var(--control-bg-hover);\n  border-color: var(--x-win7-hover-border);\n  box-shadow: inset 0 0 0 1px var(--x-win7-inner-highlight);\n}\n\n[data-theme=\"win7\"] [data-part=\"toolbar-button\"]:active,\n[data-theme=\"win7\"] [data-part=\"toolbar-button\"][data-state=\"active\"] {\n  background: var(--control-bg-active);\n  border-color: var(--x-win7-pressed-border);\n  box-shadow: inset 0 1px 2px rgba(8, 40, 70, 0.3);\n}\n\n/* ── Breadcrumbs: the Win7 address bar ──────────────────────────────────── */\n[data-theme=\"win7\"] [data-part=\"breadcrumbs\"] {\n  flex: 1;\n  height: 26px;\n  padding: 0 2px;\n  background: var(--input-bg);\n  border: 1px solid var(--input-border);\n  border-radius: var(--input-radius);\n}\n\n[data-theme=\"win7\"] [data-part=\"breadcrumbs\"] svg {\n  color: var(--fg-muted);\n}\n\n[data-theme=\"win7\"] [data-part=\"breadcrumb\"] {\n  height: 20px;\n  padding: 0 7px;\n  border: 1px solid transparent;\n  border-radius: 2px;\n  color: var(--fg);\n}\n\n[data-theme=\"win7\"] [data-part=\"breadcrumb\"]:hover {\n  background: var(--control-bg-hover);\n  border-color: var(--x-win7-hover-border);\n}\n\n[data-theme=\"win7\"] [data-part=\"breadcrumb\"]:active {\n  background: var(--control-bg-active);\n  border-color: var(--x-win7-pressed-border);\n}\n\n/* ── Search field ───────────────────────────────────────────────────────── */\n[data-theme=\"win7\"] [data-part=\"search-field\"] {\n  height: 26px;\n  padding: 0 7px;\n  background: var(--input-bg);\n  border: 1px solid var(--input-border);\n  border-radius: var(--input-radius);\n  color: var(--input-fg);\n}\n\n[data-theme=\"win7\"] [data-part=\"search-field\"] svg {\n  color: var(--fg-muted);\n}\n\n[data-theme=\"win7\"] [data-part=\"search-field\"] input::placeholder {\n  /* Win7 search boxes show their hint in italic gray. */\n  color: var(--fg-disabled);\n  font-style: italic;\n}\n\n/* ── Generic Aero buttons ───────────────────────────────────────────────── */\n[data-theme=\"win7\"] [data-part=\"button\"],\n[data-theme=\"win7\"] [data-part=\"icon-button\"],\n[data-theme=\"win7\"] [data-part=\"segment\"] {\n  min-height: 23px;\n  padding: 2px 12px;\n  background: var(--control-bg);\n  border: 1px solid var(--control-border);\n  border-radius: var(--control-radius);\n  box-shadow: var(--control-shadow);\n  color: var(--control-fg);\n  transition: background var(--motion-fast) var(--ease), border-color var(--motion-fast) var(--ease);\n}\n\n[data-theme=\"win7\"] [data-part=\"icon-button\"] {\n  padding: 2px 6px;\n}\n\n[data-theme=\"win7\"] [data-part=\"button\"]:hover,\n[data-theme=\"win7\"] [data-part=\"icon-button\"]:hover,\n[data-theme=\"win7\"] [data-part=\"segment\"]:hover {\n  background: var(--control-bg-hover);\n  border-color: var(--x-win7-hover-border);\n}\n\n[data-theme=\"win7\"] [data-part=\"button\"]:active,\n[data-theme=\"win7\"] [data-part=\"icon-button\"]:active,\n[data-theme=\"win7\"] [data-part=\"segment\"]:active,\n[data-theme=\"win7\"] [data-part=\"segment\"][data-state=\"selected\"] {\n  background: var(--control-bg-active);\n  border-color: var(--x-win7-pressed-border);\n  box-shadow: inset 0 1px 2px rgba(8, 40, 70, 0.3);\n}\n\n/* Segments join into one control, sharing the 1px border. */\n[data-theme=\"win7\"] [data-part=\"segment\"] {\n  margin-left: -1px;\n  border-radius: 0;\n}\n[data-theme=\"win7\"] [data-part=\"segment\"]:first-child {\n  margin-left: 0;\n  border-radius: var(--control-radius) 0 0 var(--control-radius);\n}\n[data-theme=\"win7\"] [data-part=\"segment\"]:last-child {\n  border-radius: 0 var(--control-radius) var(--control-radius) 0;\n}\n\n/* ── Sidebar: the Explorer navigation pane ──────────────────────────────── */\n[data-theme=\"win7\"] [data-part=\"sidebar\"] {\n  background: var(--sidebar-bg);\n  padding-top: 4px;\n}\n\n[data-theme=\"win7\"] [data-part=\"sidebar-heading\"] {\n  padding: 8px 10px 3px;\n  font-size: 12px;\n  color: var(--fg-muted);\n}\n\n[data-theme=\"win7\"] [data-part=\"sidebar-item\"] {\n  width: calc(100% - 8px);\n  margin: 0 4px;\n  padding: 0 4px 0 12px;\n  border-radius: 2px;\n  color: var(--sidebar-fg);\n}\n\n[data-theme=\"win7\"] [data-part=\"sidebar-item-icon\"] {\n  color: var(--fg-muted);\n}\n\n[data-theme=\"win7\"] [data-part=\"sidebar-item\"]:hover {\n  background: var(--x-win7-hover-bg);\n  box-shadow: inset 0 0 0 1px var(--x-win7-hover-border-soft);\n}\n\n[data-theme=\"win7\"] [data-part=\"sidebar-item\"][data-state=\"selected\"] {\n  background: var(--sidebar-selected-bg);\n  box-shadow: inset 0 0 0 1px var(--x-win7-sel-border-soft);\n  color: var(--sidebar-selected-fg);\n}\n\n/* Inline eject on removable-volume rows — the tab-close treatment. */\n[data-theme=\"win7\"] [data-part=\"sidebar-item-action\"] {\n  width: 15px;\n  height: 15px;\n  border-radius: 3px;\n  color: var(--fg-muted);\n}\n\n[data-theme=\"win7\"] [data-part=\"sidebar-item-action\"]:hover {\n  background: linear-gradient(#fdfdfd, #e5f1fb);\n  box-shadow: inset 0 0 0 1px #8e9cad;\n  color: var(--fg);\n}\n\n[data-theme=\"win7\"] [data-part=\"sidebar-item\"][data-state=\"selected\"] [data-part=\"sidebar-item-action\"] {\n  color: var(--sidebar-selected-fg);\n}\n\n/* ── Split divider ──────────────────────────────────────────────────────── */\n[data-theme=\"win7\"] [data-part=\"split-divider\"] {\n  background: linear-gradient(\n    90deg,\n    transparent calc(50% - 0.5px),\n    var(--toolbar-border) calc(50% - 0.5px),\n    var(--toolbar-border) calc(50% + 0.5px),\n    transparent calc(50% + 0.5px)\n  );\n}\n\n/* ── File list ──────────────────────────────────────────────────────────── */\n[data-theme=\"win7\"] [data-part=\"file-list\"] {\n  background: var(--list-bg);\n}\n\n[data-theme=\"win7\"] [data-part=\"file-list-header\"] {\n  background: var(--list-header-bg);\n  border-bottom: 1px solid var(--border);\n  color: var(--list-header-fg);\n  font-size: 12px;\n}\n\n[data-theme=\"win7\"] [data-part=\"file-list-col\"] {\n  height: 100%;\n  display: flex;\n  align-items: center;\n  border-right: 1px solid var(--border);\n}\n[data-theme=\"win7\"] [data-part=\"file-list-col\"][data-col=\"size\"] {\n  justify-content: flex-end;\n}\n\n/* Column-header hover: the white-to-blue Aero wash. */\n[data-theme=\"win7\"] [data-part=\"file-list-col\"]:hover {\n  background: linear-gradient(180deg, #f4f9fd 0%, #dceefb 100%);\n}\n\n[data-theme=\"win7\"] [data-part=\"file-row\"] {\n  border-radius: 2px;\n  font-size: 12px;\n}\n\n[data-theme=\"win7\"] [data-part=\"file-row\"][data-zebra=\"even\"] {\n  background: var(--list-zebra);\n}\n\n[data-theme=\"win7\"] [data-part=\"file-row\"]:hover {\n  background: var(--x-win7-hover-bg);\n  box-shadow: inset 0 0 0 1px var(--x-win7-hover-border-soft);\n}\n\n[data-theme=\"win7\"] [data-part=\"file-row\"][data-state=\"selected\"] {\n  background: var(--x-win7-sel-bg);\n  box-shadow: inset 0 0 0 1px var(--x-win7-sel-border);\n  color: var(--selection-fg);\n}\n\n/* Unfocused window: selection falls back to the flat gray Win7 uses. */\n[data-theme=\"win7\"]\n  [data-part=\"window\"][data-focused=\"false\"]\n  [data-part=\"file-row\"][data-state=\"selected\"] {\n  background: var(--surface);\n  box-shadow: inset 0 0 0 1px var(--border);\n}\n\n[data-theme=\"win7\"] [data-part=\"file-cell\"][data-col=\"date\"],\n[data-theme=\"win7\"] [data-part=\"file-cell\"][data-col=\"size\"],\n[data-theme=\"win7\"] [data-part=\"file-cell\"][data-col=\"kind\"] {\n  color: var(--fg-muted);\n}\n\n/* ── Icon grid: glassy selection plate, like Explorer's icon view ────────── */\n[data-theme=\"win7\"] [data-part=\"icon-grid\"] {\n  background: var(--list-bg);\n}\n[data-theme=\"win7\"] [data-part=\"icon-grid-item\"] {\n  border: 1px solid transparent;\n  border-radius: 3px;\n}\n[data-theme=\"win7\"] [data-part=\"icon-grid-item\"]:hover {\n  background: var(--x-win7-row-hover, rgba(229, 243, 251, 0.6));\n}\n[data-theme=\"win7\"] [data-part=\"icon-grid-item\"][data-state=\"selected\"] {\n  background: var(--x-win7-sel-bg);\n  border-color: var(--x-win7-sel-border);\n}\n\n[data-theme=\"win7\"] [data-part=\"list-empty\"] {\n  color: var(--fg-muted);\n}\n\n/* ── Terminal: cmd.exe ──────────────────────────────────────────────────── */\n[data-theme=\"win7\"] [data-part=\"terminal-panel\"] {\n  /* Chrome surface, not terminal black: the resize grip + header are window\n     chrome; only the host paints the terminal background. */\n  background: var(--surface);\n  border-top: 1px solid var(--x-win7-client-edge);\n}\n\n[data-theme=\"win7\"] [data-part=\"terminal-header\"] {\n  height: 26px;\n  padding: 0 8px;\n  background: var(--toolbar-bg);\n  border-bottom: 1px solid var(--toolbar-border);\n  font-size: 12px;\n  color: var(--fg-muted);\n}\n\n[data-theme=\"win7\"] [data-part=\"terminal-host\"] {\n  background: var(--terminal-bg);\n  color: var(--terminal-fg);\n  font-family: var(--font-mono);\n  padding: 4px 6px;\n}\n\n/* ── Status bar: the details-pane blue wash ─────────────────────────────── */\n[data-theme=\"win7\"] [data-part=\"status-bar\"] {\n  height: 26px;\n  background: linear-gradient(180deg, #f2f7fc 0%, #e0ebf6 100%);\n  border-top: 1px solid var(--toolbar-border);\n  font-size: 12px;\n  color: var(--fg-muted);\n}\n\n/* ── Menus ──────────────────────────────────────────────────────────────── */\n[data-theme=\"win7\"] [data-part=\"menu\"] {\n  padding: 2px;\n  background: var(--bg);\n  border: 1px solid var(--border-strong);\n  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);\n}\n\n[data-theme=\"win7\"] [data-part=\"menu-item\"] {\n  height: 22px;\n  padding: 0 18px 0 8px;\n  border-radius: 2px;\n  color: var(--fg);\n}\n\n[data-theme=\"win7\"] [data-part=\"menu-item\"]:hover {\n  background: var(--x-win7-hover-bg);\n  box-shadow: inset 0 0 0 1px var(--x-win7-menu-hover-border);\n}\n\n[data-theme=\"win7\"] [data-part=\"menu-separator\"] {\n  height: 1px;\n  margin: 3px 1px;\n  background: var(--border);\n}\n\n/* ── Scrollbars: slim light-gray rounded thumbs in a flat track ─────────── */\n[data-theme=\"win7\"] ::-webkit-scrollbar-thumb {\n  border-radius: 7px;\n  /* Track-colored border + padding-box clip floats the rounded thumb. */\n  border: 3px solid var(--scrollbar-track);\n  background-clip: padding-box;\n}\n\n[data-theme=\"win7\"] ::-webkit-scrollbar-thumb:hover {\n  background-color: var(--fg-disabled);\n}\n\n/* ── In-page tabs (⌘T) — IE8-style document tabs on a soft Aero wash ────── */\n[data-theme=\"win7\"] [data-part=\"tab-bar\"] {\n  background: linear-gradient(180deg, #eef3f9 0%, #dce7f3 100%);\n  border-bottom: 1px solid var(--toolbar-border);\n  padding: 4px 6px 0;\n  gap: 2px;\n}\n\n[data-theme=\"win7\"] [data-part=\"tab\"] {\n  height: 24px;\n  min-height: 24px;\n  font-size: 12px;\n  color: var(--fg);\n  border: 1px solid #8e9cad;\n  border-bottom: none;\n  border-radius: 3px 3px 0 0;\n  /* The Aero glass split: bright top half, dimmer bottom half. */\n  background: linear-gradient(#f5f8fb, #e8eef5 50%, #d8e2ee 50%, #e4ecf5);\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);\n}\n\n[data-theme=\"win7\"] [data-part=\"tab\"]:hover {\n  background: linear-gradient(#fbfdfe, #f0f6fb 50%, #e2ecf6 50%, #ecf4fb);\n}\n\n[data-theme=\"win7\"] [data-part=\"tab\"][data-state=\"selected\"] {\n  background: linear-gradient(#ffffff, #f6fafd 50%, #ecf3fa 50%, #f8fbfe);\n  box-shadow:\n    inset 0 1px 0 rgba(255, 255, 255, 0.95),\n    0 1px 0 rgba(255, 255, 255, 0.9);\n}\n\n[data-theme=\"win7\"] [data-part=\"tab-label\"] {\n  text-align: center;\n}\n\n[data-theme=\"win7\"] [data-part=\"tab-close\"],\n[data-theme=\"win7\"] [data-part=\"tab-add\"] {\n  width: 15px;\n  height: 15px;\n  border-radius: 3px;\n  font-size: 12px;\n  line-height: 1;\n  color: var(--fg-muted);\n}\n\n[data-theme=\"win7\"] [data-part=\"tab-close\"]:hover,\n[data-theme=\"win7\"] [data-part=\"tab-add\"]:hover {\n  background: linear-gradient(#fdfdfd, #e5f1fb);\n  box-shadow: inset 0 0 0 1px #8e9cad;\n  color: var(--fg);\n}\n\n[data-theme=\"win7\"] [data-part=\"tab-add\"] {\n  align-self: center;\n  margin: 0 3px 4px;\n}\n\n/* ── Modal dialogs: the Aero task dialog — white body, gray command row ──── */\n[data-theme=\"win7\"] [data-part=\"dialog-overlay\"] {\n  background: rgba(0, 0, 0, 0.15);\n}\n\n[data-theme=\"win7\"] [data-part=\"dialog\"] {\n  background: #ffffff;\n  border: 1px solid rgba(28, 48, 70, 0.7);\n  border-radius: 6px;\n  padding: 0;\n  gap: 0;\n  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6), 0 14px 40px rgba(0, 0, 0, 0.45);\n  overflow: hidden;\n}\n\n[data-theme=\"win7\"] [data-part=\"dialog-title\"] {\n  /* Win7's \"main instruction\" line: large, blue, no caption strip. */\n  color: #003399;\n  font-size: 15px;\n  font-weight: 400;\n  padding: 14px 16px 6px;\n}\n\n[data-theme=\"win7\"] [data-part=\"dialog-body\"] {\n  padding: 4px 16px 14px;\n}\n\n[data-theme=\"win7\"] [data-part=\"dialog-actions\"] {\n  background: linear-gradient(180deg, #f6f6f6, #efefef);\n  border-top: 1px solid #dfdfdf;\n  padding: 10px 16px;\n}\n\n[data-theme=\"win7\"] [data-part=\"text-input\"] {\n  background: #ffffff;\n  border: 1px solid #abadb3;\n  border-radius: 2px;\n  padding: 4px 6px;\n}\n",
+    "chrome": {
+      "controlsSide": "right",
+      "controlsOrder": [
+        "minimize",
+        "zoom",
+        "close"
+      ],
+      "titleAlign": "leading",
+      "controlGlyphs": {
+        "glyphs": {
+          "minimize": {
+            "viewBox": [
+              0,
+              0,
+              10,
+              10
+            ],
+            "shapes": [
+              {
+                "kind": "rect",
+                "x": 0.5,
+                "y": 6.5,
+                "width": 9,
+                "height": 3,
+                "fill": "currentColor"
+              }
+            ]
+          },
+          "zoom": {
+            "viewBox": [
+              0,
+              0,
+              10,
+              10
+            ],
+            "shapes": [
+              {
+                "kind": "path",
+                "d": "M0.5 0.5 h9 v9 h-9 Z M0.5 2.5 h9",
+                "fill": "none",
+                "stroke": "currentColor",
+                "strokeWidth": 1.4
+              }
+            ]
+          },
+          "close": {
+            "viewBox": [
+              0,
+              0,
+              11,
+              9
+            ],
+            "shapes": [
+              {
+                "kind": "path",
+                "d": "M1.5 1 L9.5 8 M9.5 1 L1.5 8",
+                "fill": "none",
+                "stroke": "currentColor",
+                "strokeWidth": 1.9,
+                "strokeLinecap": "round"
+              }
+            ]
+          }
+        },
+        "labels": {
+          "zoom": "Maximize"
+        }
+      },
+      "windowRadius": 6,
+      "iconControls": "flush"
+    },
+    "iconGlyphs": {
+      "folder": {
+        "viewBox": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "defs": [
+          {
+            "id": "sheru-win7-folder",
+            "kind": "linear",
+            "x1": 0,
+            "y1": 0,
+            "x2": 0,
+            "y2": 1,
+            "stops": [
+              {
+                "offset": 0,
+                "color": "#fbe289"
+              },
+              {
+                "offset": 0.55,
+                "color": "#f4c64f"
+              },
+              {
+                "offset": 1,
+                "color": "#e8ad2e"
+              }
+            ]
+          },
+          {
+            "id": "sheru-win7-folder-back",
+            "kind": "linear",
+            "x1": 0,
+            "y1": 0,
+            "x2": 0,
+            "y2": 1,
+            "stops": [
+              {
+                "offset": 0,
+                "color": "#d9a02e"
+              },
+              {
+                "offset": 1,
+                "color": "#c08418"
+              }
+            ]
+          }
+        ],
+        "shapes": [
+          {
+            "kind": "path",
+            "d": "M3.5 8.5a2 2 0 0 1 2-2h6.7l2.5 3h12.8a2 2 0 0 1 2 2v2h-26z",
+            "fill": "url:#sheru-win7-folder-back"
+          },
+          {
+            "kind": "path",
+            "d": "M2.8 25.5 5.6 12.6a1.8 1.8 0 0 1 1.76-1.42h21.2a1.4 1.4 0 0 1 1.37 1.7l-2.6 11.5a1.8 1.8 0 0 1-1.76 1.42H4.2a1.4 1.4 0 0 1-1.4-.3z",
+            "fill": "url:#sheru-win7-folder",
+            "stroke": "#b88a1f",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M6.4 12.4h22.4l-.5 2.2H5.9z",
+            "fill": "rgba:255,255,255,0.5"
+          }
+        ]
+      },
+      "file": {
+        "viewBox": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "defs": [
+          {
+            "id": "sheru-win7-file",
+            "kind": "linear",
+            "x1": 0,
+            "y1": 0,
+            "x2": 0,
+            "y2": 1,
+            "stops": [
+              {
+                "offset": 0,
+                "color": "#ffffff"
+              },
+              {
+                "offset": 1,
+                "color": "#eef3fa"
+              }
+            ]
+          }
+        ],
+        "shapes": [
+          {
+            "kind": "path",
+            "d": "M8 3.5h11l5 5v20H8z",
+            "fill": "url:#sheru-win7-file",
+            "stroke": "#8da3bd",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M19 3.5v5h5",
+            "fill": "#d6e1f0",
+            "stroke": "#8da3bd",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M11 13h10M11 16h10M11 19h6",
+            "stroke": "#a9bdd6",
+            "strokeWidth": 1.3
+          },
+          {
+            "kind": "text",
+            "x": 16,
+            "y": 26.5,
+            "source": "ext-upper",
+            "maxChars": 4,
+            "fontFamily": "'Segoe UI', Tahoma, sans-serif",
+            "fontSize": 6,
+            "fontWeight": "bold",
+            "fill": "#1f63b0",
+            "textAnchor": "middle"
+          }
+        ]
+      }
+    }
+  }
+}

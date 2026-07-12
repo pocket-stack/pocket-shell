@@ -20,7 +20,7 @@ const repo = new URL("..", import.meta.url).pathname;
 const sheruDir = (process.env.SHERU_DIR ?? `${process.env.HOME}/code/sheru`).replace(/\/$/, "");
 
 // M1: win98. Append ids as their paint specs land (xp, win7, aqua, xfce).
-const THEME_IDS = ["win98"] as const;
+const THEME_IDS = ["win98", "winxp", "win7", "aqua", "xfce"] as const;
 
 const commit = (await $`git -C ${sheruDir} rev-parse HEAD`.text()).trim();
 const dirty = (await $`git -C ${sheruDir} status --porcelain`.text()).trim().length > 0;
