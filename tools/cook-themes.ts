@@ -129,18 +129,27 @@ function cookRule(
     const h = typeof rule.h === "number" ? rule.h : px(resolve(rule.h), `${what}.h`);
     parts.push(`h-[${h}]`);
   }
+  if (rule.w !== undefined) {
+    const w = typeof rule.w === "number" ? rule.w : px(resolve(rule.w), `${what}.w`);
+    parts.push(`w-[${w}]`);
+  }
   if (rule.pad) {
     const [t, r, b, l] = rule.pad;
     if (t === r && r === b && b === l) parts.push(`p-[${t}]`);
     else parts.push(`pt-[${t}]`, `pr-[${r}]`, `pb-[${b}]`, `pl-[${l}]`);
   }
   if (rule.bg) parts.push(`bg-[${hexColor(resolve(rule.bg), `${what}.bg`)}]`);
+  if (rule.bgFocus) parts.push(`focus:bg-[${hexColor(resolve(rule.bgFocus), `${what}.bgFocus`)}]`);
   if (rule.gradient) parts.push(lowerGradient(resolve(rule.gradient), `${what}.gradient`));
   if (rule.bevel) {
-    parts.push(lowerBevelStack(resolve(rule.bevel.stack), `${what}.bevel`));
+    if (rule.bevel.stack) {
+      parts.push(lowerBevelStack(resolve(rule.bevel.stack), `${what}.bevel`));
+    }
+    if (rule.bevel.focus) {
+      parts.push(`focus:${lowerBevelStack(resolve(rule.bevel.focus), `${what}.bevel.focus`)}`);
+    }
     if (rule.bevel.pressed) {
-      const pressed = lowerBevelStack(resolve(rule.bevel.pressed), `${what}.bevel.pressed`);
-      parts.push(`active:${pressed}`);
+      parts.push(`active:${lowerBevelStack(resolve(rule.bevel.pressed), `${what}.bevel.pressed`)}`);
     }
   }
   if (rule.text) {

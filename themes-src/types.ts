@@ -17,12 +17,14 @@ export type ColorValue = TokenRef | `#${string}`;
 /** px number, or a token whose value is `<n>px`. */
 export type SizeValue = TokenRef | number;
 
-/** A box-shadow bevel stack to lower into the engine's bevel ring props:
- *  either a `--x-<id>-bevel-*` token or an inline stack string (some rules,
- *  e.g. win98's window-frame-edge, inline the stack in css.ts). The optional
- *  pressed-state stack lands in the `active:` variant. */
+/** Box-shadow bevel stacks to lower into the engine's bevel ring props:
+ *  each is a `--x-<id>-bevel-*` token or an inline stack string (some rules,
+ *  e.g. win98's window-frame-edge, inline the stack in css.ts). `stack` lands
+ *  in the base variant, `focus` in `focus:` (sheru :hover — d-pad focus is
+ *  the PSP's hover), `pressed` in `active:`. */
 export interface BevelRef {
-  stack: TokenRef | string;
+  stack?: TokenRef | string;
+  focus?: TokenRef | string;
   pressed?: TokenRef | string;
 }
 
@@ -45,6 +47,10 @@ export interface PartRule {
   text?: TextRule;
   /** Fixed height in px, or a px-valued token (density-overridable). */
   h?: SizeValue;
+  /** Fixed width in px, or a px-valued token (density-overridable). */
+  w?: SizeValue;
+  /** Background under d-pad focus (sheru :hover / [data-state=selected]). */
+  bgFocus?: ColorValue;
   /** Padding [t, r, b, l] in px (post-density). */
   pad?: [number, number, number, number];
   /** Extra utilities appended verbatim (margins, gaps — the escape hatch). */

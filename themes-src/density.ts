@@ -7,5 +7,8 @@
 export const DENSITY: Record<string, Record<string, string>> = {
   win98: {
     "--titlebar-h": "18px", // 22 → 18
+    "--toolbar-h": "26px", //  30 → 26
+    "--sidebar-w": "96px", //  180 → 96
+    "--row-h": "17px", //      20 → 17
   },
 };

@@ -84,6 +84,136 @@ export const win98Paint: PaintSpec = {
       extra: "ml-[2]",
     },
 
+    // css.ts toolbar (IE4 idiom): thin-raised strip; buttons are FLAT until
+    // hover (= d-pad focus here), pressed shows the thin-sunken bevel.
+    toolbar: {
+      layout: "flex-row items-center",
+      h: "--toolbar-h",
+      bg: "--toolbar-bg",
+      bevel: { stack: "--x-win98-bevel-thin-raised" },
+      pad: [0, 4, 0, 4],
+      extra: "gap-[4]",
+    },
+    "toolbar-button": {
+      layout: "flex-col justify-center items-center",
+      h: 22,
+      text: { color: "--control-fg", px: "--font-size", bold: true },
+      bevel: { focus: "--x-win98-bevel-thin-raised", pressed: "--x-win98-bevel-thin-sunken" },
+      pad: [0, 5, 0, 5],
+      extra: "min-w-[22]",
+    },
+    // css.ts breadcrumbs: the Explorer address bar — a sunken white well.
+    breadcrumbs: {
+      layout: "flex-1 flex-row items-center",
+      h: 18,
+      bg: "--input-bg",
+      bevel: { stack: "--x-win98-bevel-sunken" },
+      pad: [2, 4, 2, 4],
+    },
+    breadcrumb: {
+      text: { color: "--fg", px: "--font-size" },
+      pad: [0, 3, 0, 3],
+    },
+
+    // css.ts split-view: 2px gray gutters between white sunken wells.
+    split: {
+      layout: "flex-1 flex-row",
+      pad: [2, 2, 2, 2],
+      extra: "gap-[2] overflow-hidden",
+    },
+
+    // css.ts sidebar: the Explorer tree pane, a sunken white well.
+    sidebar: {
+      layout: "flex-col",
+      w: "--sidebar-w",
+      bg: "--sidebar-bg",
+      bevel: { stack: "--x-win98-bevel-sunken" },
+      pad: [2, 2, 2, 2],
+      extra: "overflow-hidden",
+    },
+    "sidebar-heading": {
+      layout: "flex-row items-center",
+      h: 16,
+      bg: "--surface",
+      bevel: { stack: "--x-win98-bevel-thin-raised" },
+      text: { color: "--fg", px: "--font-size" },
+      pad: [0, 6, 0, 6],
+      extra: "mb-[2] shrink-0",
+    },
+    "sidebar-item": {
+      layout: "flex-row items-center",
+      h: "--row-h",
+      bgFocus: "--sidebar-selected-bg",
+      pad: [0, 4, 0, 4],
+      extra: "shrink-0",
+    },
+
+    // css.ts file-list: sunken white well; header cells are raised gray
+    // buttons stretched so the bevels meet.
+    "file-list": {
+      layout: "flex-1 flex-col",
+      bg: "--list-bg",
+      bevel: { stack: "--x-win98-bevel-sunken" },
+      extra: "overflow-hidden",
+    },
+    "file-list-header": {
+      layout: "flex-row items-center",
+      h: 17,
+      extra: "shrink-0",
+    },
+    "file-list-col": {
+      layout: "flex-row items-center h-full",
+      bg: "--list-header-bg",
+      bevel: { stack: "--x-win98-bevel-raised" },
+      text: { color: "--list-header-fg", px: "--font-size" },
+      pad: [0, 6, 0, 6],
+    },
+    // css.ts [data-state=sorted]: pressed bevel + the 1px content nudge.
+    "file-list-col/sorted": {
+      layout: "flex-row items-center h-full",
+      bg: "--list-header-bg",
+      bevel: { stack: "--x-win98-bevel-pressed" },
+      text: { color: "--list-header-fg", px: "--font-size" },
+      pad: [1, 5, 0, 7],
+    },
+    // css.ts segment (the grid/list view toggle): raised; selected = pressed
+    // (the dither wash needs the pattern-fill engine PR — tracked deviation).
+    segment: {
+      layout: "flex-col justify-center items-center",
+      w: 33,
+      h: 22,
+      bg: "--control-bg",
+      bevel: { stack: "--x-win98-bevel-raised" },
+    },
+    "segment/selected": {
+      layout: "flex-col justify-center items-center",
+      w: 33,
+      h: 22,
+      bg: "--control-bg",
+      bevel: { stack: "--x-win98-bevel-pressed" },
+    },
+    "file-row": {
+      layout: "flex-row items-center",
+      h: "--row-h",
+      bgFocus: "--selection-bg",
+      pad: [0, 2, 0, 2],
+      extra: "shrink-0",
+    },
+
+    // css.ts status-bar: gray strip of thin-sunken cells; first cell flexes.
+    "status-bar": {
+      layout: "flex-row items-center",
+      h: 20,
+      bg: "--surface",
+      pad: [2, 2, 2, 2],
+      extra: "gap-[2] shrink-0",
+    },
+    "status-item": {
+      layout: "flex-row items-center h-full",
+      bevel: { stack: "--x-win98-bevel-thin-sunken" },
+      pad: [0, 6, 0, 6],
+    },
+
     // css.ts button (generic controls; used by later milestones' dialogs —
     // cooked now so the vocabulary is pinned).
     button: {
