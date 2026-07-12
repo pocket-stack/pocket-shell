@@ -15,11 +15,11 @@ import { existsSync, mkdirSync } from "node:fs";
 
 const repo = new URL("..", import.meta.url).pathname;
 
-// The ext badge renders in the era font (sheru's text shape asks for the
-// Tahoma stack); registered from the system like tools/bake-fonts.ts.
-const TAHOMA_BOLD = "/System/Library/Fonts/Supplemental/Tahoma Bold.ttf";
-const BADGE_FONT = existsSync(TAHOMA_BOLD) && GlobalFonts.registerFromPath(TAHOMA_BOLD, "ShellTahomaBold")
-  ? "ShellTahomaBold"
+// The ext badge renders in the vendored era font (W95FA, same source as
+// tools/bake-fonts.ts).
+const W95FA_PATH = new URL("../assets/fonts/W95FA/W95FA.otf", import.meta.url).pathname;
+const BADGE_FONT = existsSync(W95FA_PATH) && GlobalFonts.registerFromPath(W95FA_PATH, "ShellW95FA")
+  ? "ShellW95FA"
   : "sans-serif";
 
 const CANVAS_W = 16;

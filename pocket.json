@@ -30,11 +30,11 @@
     "prebaked": ["app/pak.json", "app/theme/cooked", "themes-src/sheru"],
     "sources": [
       {
-        "name": "Tahoma (system font, bake-time only)",
-        "origin": "/System/Library/Fonts/Supplemental/ on macOS",
-        "author": "Microsoft Corporation",
-        "license": "not redistributed",
-        "note": "The TTF is read from the SYSTEM at bake time and never committed; only rendered fixed-size bitmap coverage atlases ship (app/fonts/*.bin) — the same class of artifact as the committed reference screenshots. Absent Tahoma, tools/bake-fonts.ts falls back to the vendored Inter (OFL)."
+        "name": "W95FA",
+        "origin": "https://fontsarena.com/w95fa-by-alina-sava/",
+        "author": "Alina Sava (FontsArena)",
+        "license": "SIL OFL 1.1",
+        "note": "OpenType recreation of the Windows 95 bitmap MS Sans Serif; vendored with its license under assets/fonts/W95FA/ and baked to bi-level atlases at its native 12.5px grid by tools/bake-fonts.ts."
       },
       {
         "name": "sheru theme system",

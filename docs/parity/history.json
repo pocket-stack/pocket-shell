@@ -444,5 +444,73 @@
         }
       ]
     }
+  },
+  {
+    "date": "2026-07-12",
+    "milestone": "M3-w95fa",
+    "results": {
+      "win98": [
+        {
+          "scene": "list-selection",
+          "rmse": 72.19,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "navigate",
+          "rmse": 58.45,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "sidebar-selected",
+          "rmse": 70.98,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "chrome-focused",
+          "rmse": 36.81,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "chrome-unfocused",
+          "rmse": 18.07,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "control-pressed",
+          "rmse": 37.29,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        }
+      ]
+    }
   }
 ]
