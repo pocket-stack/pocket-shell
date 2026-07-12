@@ -43,6 +43,9 @@ export const aquaSkin: ThemeSkin = {
     "controlH": 14
   },
   "glyphs": {
+    "close": "glyphs/aqua-close.png",
+    "minimize": "glyphs/aqua-minimize.png",
+    "zoom": "glyphs/aqua-zoom.png",
     "folder": "glyphs/aqua-icon-folder.png",
     "file": "glyphs/aqua-icon-file.png",
     "file-md": "glyphs/aqua-icon-file-md.png",
@@ -54,14 +57,38 @@ export const aquaSkin: ThemeSkin = {
     "file-json": "glyphs/aqua-icon-file-json.png"
   },
   "strips": {
-    "titlebar": "strips/aqua-titlebar.png",
-    "titlebar/inactive": "strips/aqua-titlebar_inactive.png",
-    "toolbar-button": "strips/aqua-toolbar-button.png",
-    "file-list-header": "strips/aqua-file-list-header.png",
-    "file-list-col/sorted": "strips/aqua-file-list-col_sorted.png",
-    "segment": "strips/aqua-segment.png",
-    "segment/selected": "strips/aqua-segment_selected.png",
-    "button": "strips/aqua-button.png"
+    "titlebar": {
+      "src": "strips/aqua-titlebar.png",
+      "cls": "absolute inset-0"
+    },
+    "titlebar/inactive": {
+      "src": "strips/aqua-titlebar_inactive.png",
+      "cls": "absolute inset-0"
+    },
+    "toolbar-button": {
+      "src": "strips/aqua-toolbar-button.png",
+      "cls": "absolute inset-0 rounded-[11]"
+    },
+    "file-list-header": {
+      "src": "strips/aqua-file-list-header.png",
+      "cls": "absolute inset-0"
+    },
+    "file-list-col/sorted": {
+      "src": "strips/aqua-file-list-col_sorted.png",
+      "cls": "absolute inset-0"
+    },
+    "segment": {
+      "src": "strips/aqua-segment.png",
+      "cls": "absolute inset-0 rounded-[11]"
+    },
+    "segment/selected": {
+      "src": "strips/aqua-segment_selected.png",
+      "cls": "absolute inset-0 rounded-[11]"
+    },
+    "button": {
+      "src": "strips/aqua-button.png",
+      "cls": "absolute inset-0 rounded-[11]"
+    }
   },
   "fonts": {
     "regular": "shell:font.inter.0",

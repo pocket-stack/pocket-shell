@@ -48,10 +48,20 @@ for (const spec of SPECS) {
   const snap = await Bun.file(`${repo}themes-src/sheru/${spec.id}.json`).json();
   const { classes, stripMap, strips } = await cookTheme(spec);
   allStrips.push(...strips);
+  // Strip underlays inherit the part radius (a square strip image would
+  // cover rounded corners — the aqua segments read as blue blocks).
+  const stripEntries: Record<string, { src: string; cls: string }> = {};
+  for (const [key, v] of Object.entries(stripMap)) {
+    const [src, r] = (v as string).split("|");
+    stripEntries[key] = { src, cls: r ? `absolute inset-0 rounded-[${r}]` : "absolute inset-0" };
+  }
 
   const chrome = snap.theme.chrome;
   const glyphs: Record<string, string> = {};
-  for (const name of Object.keys(chrome?.controlGlyphs?.glyphs ?? {})) {
+  // Control artwork is keyed by the ACTIONS rendered (controlsOrder), not by
+  // the symbol-glyph table — aqua ships an EMPTY glyphs object (bare gels at
+  // rest) and its faces are baked separately by gen-assets.
+  for (const name of chrome?.controlsOrder ?? ["minimize", "zoom", "close"]) {
     glyphs[name] = `glyphs/${spec.id}-${name}.png`;
   }
   glyphs.folder = `glyphs/${spec.id}-icon-folder.png`;
@@ -64,7 +74,7 @@ for (const spec of SPECS) {
     classes,
     metrics: spec.metrics,
     glyphs,
-    strips: stripMap,
+    strips: stripEntries,
     fonts: {
       regular: `shell:font.${FONTS[spec.id]}.0`,
       bold: `shell:font.${FONTS[spec.id]}.7`,

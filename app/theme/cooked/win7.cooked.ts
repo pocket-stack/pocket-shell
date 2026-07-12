@@ -57,12 +57,30 @@ export const win7Skin: ThemeSkin = {
     "file-json": "glyphs/win7-icon-file-json.png"
   },
   "strips": {
-    "window": "strips/win7-window.png",
-    "titlebar": "strips/win7-titlebar.png",
-    "titlebar/inactive": "strips/win7-titlebar_inactive.png",
-    "segment": "strips/win7-segment.png",
-    "segment/selected": "strips/win7-segment_selected.png",
-    "button": "strips/win7-button.png"
+    "window": {
+      "src": "strips/win7-window.png",
+      "cls": "absolute inset-0 rounded-[6]"
+    },
+    "titlebar": {
+      "src": "strips/win7-titlebar.png",
+      "cls": "absolute inset-0"
+    },
+    "titlebar/inactive": {
+      "src": "strips/win7-titlebar_inactive.png",
+      "cls": "absolute inset-0"
+    },
+    "segment": {
+      "src": "strips/win7-segment.png",
+      "cls": "absolute inset-0"
+    },
+    "segment/selected": {
+      "src": "strips/win7-segment_selected.png",
+      "cls": "absolute inset-0"
+    },
+    "button": {
+      "src": "strips/win7-button.png",
+      "cls": "absolute inset-0 rounded-[3]"
+    }
   },
   "fonts": {
     "regular": "shell:font.inter.0",

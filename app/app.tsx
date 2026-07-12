@@ -94,7 +94,7 @@ export default function Shell() {
   function Strip(props: { part: string }) {
     return (
       <Show when={skin().strips[props.part]}>
-        <Image class="absolute inset-0" src={skin().strips[props.part]!} />
+        <Image class={skin().strips[props.part]!.cls} src={skin().strips[props.part]!.src} />
       </Show>
     );
   }

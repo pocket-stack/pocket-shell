@@ -57,14 +57,38 @@ export const winxpSkin: ThemeSkin = {
     "file-json": "glyphs/winxp-icon-file-json.png"
   },
   "strips": {
-    "titlebar": "strips/winxp-titlebar.png",
-    "titlebar/inactive": "strips/winxp-titlebar_inactive.png",
-    "toolbar": "strips/winxp-toolbar.png",
-    "sidebar": "strips/winxp-sidebar.png",
-    "sidebar-heading": "strips/winxp-sidebar-heading.png",
-    "segment": "strips/winxp-segment.png",
-    "segment/selected": "strips/winxp-segment_selected.png",
-    "button": "strips/winxp-button.png"
+    "titlebar": {
+      "src": "strips/winxp-titlebar.png",
+      "cls": "absolute inset-0"
+    },
+    "titlebar/inactive": {
+      "src": "strips/winxp-titlebar_inactive.png",
+      "cls": "absolute inset-0"
+    },
+    "toolbar": {
+      "src": "strips/winxp-toolbar.png",
+      "cls": "absolute inset-0"
+    },
+    "sidebar": {
+      "src": "strips/winxp-sidebar.png",
+      "cls": "absolute inset-0"
+    },
+    "sidebar-heading": {
+      "src": "strips/winxp-sidebar-heading.png",
+      "cls": "absolute inset-0"
+    },
+    "segment": {
+      "src": "strips/winxp-segment.png",
+      "cls": "absolute inset-0 rounded-[3]"
+    },
+    "segment/selected": {
+      "src": "strips/winxp-segment_selected.png",
+      "cls": "absolute inset-0 rounded-[3]"
+    },
+    "button": {
+      "src": "strips/winxp-button.png",
+      "cls": "absolute inset-0 rounded-[3]"
+    }
   },
   "fonts": {
     "regular": "shell:font.w95fa.0",

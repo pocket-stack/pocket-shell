@@ -169,7 +169,8 @@ export function cookRule(
       if (!extent) throw new Error(`${what}: strip gradient needs h or stripH`);
       const file = `strips/${themeId}-${key.replace(/[^a-z0-9-]+/gi, "_")}.png`;
       strips.push({ file, css, extent });
-      stripMap[key] = file;
+      const r = rule.radius === undefined ? 0 : typeof rule.radius === "number" ? rule.radius : px(resolve(rule.radius), `${what}.radius`);
+      stripMap[key] = r > 0 ? `${file}|${r}` : file;
     }
   }
   if (rule.bevel) {
