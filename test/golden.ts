@@ -13,8 +13,9 @@
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createWasmUi } from "../vendor/pocketjs/host-web/wasm-ops.js";
-import { BTN, SCREEN_H, SCREEN_W } from "../vendor/pocketjs/spec/spec.ts";
+import { SCREEN_H, SCREEN_W } from "../vendor/pocketjs/spec/spec.ts";
 import { encodePNG } from "../vendor/pocketjs/test/png.ts";
+import { JOURNEY_PAIRS, SCENES, type FrameInput, type SceneSpec } from "../app/scenes.ts";
 
 const ROOT = new URL("..", import.meta.url).pathname;
 const DIST = `${ROOT}dist/`;
@@ -24,31 +25,9 @@ const UPDATE = process.env.UPDATE === "1";
 
 const ANALOG_CENTER = 0x8080;
 
-interface FrameInput {
-  buttons?: number;
-  analog?: number;
-}
-
-interface GoldenSpec {
-  name: string;
-  frames: number;
-  input?: (frame: number) => FrameInput;
-}
-
-// M0: a single boot scene (the window is inert until M1's themed chrome +
-// focusables land — the journey-differs cross-check below activates when a
-// second, input-driven spec exists).
-const SPECS: GoldenSpec[] = [
-  {
-    name: "boot",
-    frames: 8,
-  },
-];
-
-// Journeys that must produce different framebuffers (input-contract guard).
-const JOURNEY_PAIRS: ReadonlyArray<readonly [string, string]> = [];
-
-void BTN; // referenced by input scripts from M1 on
+type GoldenSpec = SceneSpec;
+const SPECS: readonly GoldenSpec[] = SCENES;
+void ({} as FrameInput);
 
 function run(command: string[]): void {
   const child = Bun.spawnSync(command, {

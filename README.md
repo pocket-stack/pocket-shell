@@ -6,7 +6,15 @@ sheru paints its era chrome with webview CSS: inset box-shadow bevel stacks, mul
 
 Planned on top of the theming core: full d-pad/button interaction over a mock VFS, and a USB-tethered Mac bridge (PSPLINK mailbox) that browses real folders — `/Applications` with real app icons — and launches a Mac app from the PSP with ○.
 
-**Status: M0** — repo scaffold; a bare window shell boots on desktop (wgpu), in the wasm golden harness, and as a PSP EBOOT. Win98 chrome + the parity board land with M1.
+**Status: M1** — the Win98 window chrome renders from cooked sheru data: frame, caption gradient and hairline are **pixel-exact** against the webview reference; the parity board (`docs/parity/index.html`) tracks per-scene RMSE (residual: title font — era bitmap fonts land with M3 — and ±1px control-glyph placement). SELECT toggles the inactive caption, d-pad walks the caption controls, holding ○ presses one in (the engine's `active:` bevel-ring inversion, native on all hosts).
+
+```sh
+bun run sync       # snapshot sheru theme data -> themes-src/sheru/*.json
+bun run cook       # + paint specs + density -> app/theme/cooked/*.cooked.ts
+bun run bake       # glyph JSON -> app/glyphs/*.png
+bun run capture    # sheru webview reference frames (headless Chromium)
+bun run parity     # RMSE board -> docs/parity/index.html
+```
 
 ## Build
 
@@ -26,9 +34,16 @@ The PSP build needs the toolchain from the pocketjs contract: Rust `nightly-2026
 ```
 pocket.json              the Pocket app manifest (see pocket-figma/docs/manifest.md)
 app/                     the PocketShell app (Solid + @pocketjs/framework)
-themes-src/              (M1) sheru theme snapshots + hand-written paint specs
-tools/                   Bun cookers: covers; (M1) sync-sheru, cook-themes, glyphs
-test/golden.ts           byte-exact wasm goldens
+  theme/cooked/          GENERATED skin tables — never hand-edit; re-cook instead
+  glyphs/                baked control glyphs (from sheru's declarative glyph JSON)
+themes-src/
+  sheru/                 verbatim sheru theme snapshots (+ commit provenance)
+  paint/                 hand-translated per-part paint rules (css.ts, rule for rule)
+  density.ts             PSP metric overrides (applied to cook AND capture)
+tools/                   Bun bakers: sync-sheru, cook-themes, gen-assets, covers,
+                         capture-sheru (reference frames), parity-board (RMSE)
+test/golden.ts           byte-exact wasm goldens (scenes shared via app/scenes.ts)
+docs/parity/             the parity board: ref | shot | diff | RMSE + history
 scripts/                 Bun drivers: psp, desktop
 crates/pocket-shell-psp/ the PSP EBOOT crate (cargo-psp, lone bin)
 vendor/                  submodules: pocketjs, rust-psp, quickjs-rs

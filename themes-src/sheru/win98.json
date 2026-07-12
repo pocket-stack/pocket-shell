@@ -1,0 +1,308 @@
+{
+  "provenance": {
+    "repo": "https://github.com/doodlewind/sheru",
+    "commit": "49d35621ae5b7a777cde207171c4ebcdaaca7f9f",
+    "dirty": false,
+    "module": "packages/themes/src/win98/index.ts"
+  },
+  "theme": {
+    "id": "win98",
+    "name": "98",
+    "tokens": {
+      "--bg": "#c0c0c0",
+      "--surface": "#c0c0c0",
+      "--surface-raised": "#c0c0c0",
+      "--surface-sunken": "#ffffff",
+      "--fg": "#000000",
+      "--fg-muted": "#404040",
+      "--fg-disabled": "#808080",
+      "--border": "#808080",
+      "--border-strong": "#000000",
+      "--accent": "#000080",
+      "--accent-on": "#ffffff",
+      "--selection-bg": "#000080",
+      "--selection-fg": "#ffffff",
+      "--font-ui": "Tahoma, \"MS Sans Serif\", Geneva, Verdana, sans-serif",
+      "--font-mono": "\"Lucida Console\", Monaco, \"Courier New\", monospace",
+      "--font-size": "12px",
+      "--titlebar-h": "22px",
+      "--titlebar-bg": "linear-gradient(90deg, #000080, #1084d0)",
+      "--titlebar-bg-inactive": "linear-gradient(90deg, #808080, #b5b5b5)",
+      "--titlebar-fg": "#ffffff",
+      "--titlebar-fg-inactive": "#c0c0c0",
+      "--window-bg": "#c0c0c0",
+      "--window-radius": "0px",
+      "--window-border": "none",
+      "--window-shadow": "none",
+      "--window-frame-w": "3px",
+      "--bevel-lighter": "#ffffff",
+      "--bevel-light": "#dfdfdf",
+      "--bevel-dark": "#808080",
+      "--bevel-darker": "#000000",
+      "--control-bg": "var(--surface)",
+      "--control-fg": "var(--fg)",
+      "--control-border": "var(--border)",
+      "--control-radius": "0px",
+      "--control-shadow": "var(--x-win98-bevel-raised)",
+      "--control-bg-hover": "var(--surface)",
+      "--control-bg-active": "var(--surface)",
+      "--input-bg": "var(--surface-sunken)",
+      "--input-fg": "var(--fg)",
+      "--input-border": "var(--bevel-dark)",
+      "--input-radius": "0px",
+      "--toolbar-bg": "var(--surface)",
+      "--toolbar-h": "30px",
+      "--toolbar-border": "var(--bevel-dark)",
+      "--sidebar-bg": "var(--surface-sunken)",
+      "--sidebar-fg": "var(--fg)",
+      "--sidebar-selected-bg": "var(--selection-bg)",
+      "--sidebar-selected-fg": "var(--selection-fg)",
+      "--sidebar-w": "180px",
+      "--list-bg": "var(--surface-sunken)",
+      "--list-zebra": "transparent",
+      "--list-header-bg": "var(--surface)",
+      "--list-header-fg": "var(--fg)",
+      "--row-h": "20px",
+      "--terminal-bg": "#000000",
+      "--terminal-fg": "#c0c0c0",
+      "--terminal-cursor": "#c0c0c0",
+      "--terminal-selection": "rgba(192, 192, 192, 0.4)",
+      "--terminal-ansi-black": "#000000",
+      "--terminal-ansi-red": "#800000",
+      "--terminal-ansi-green": "#008000",
+      "--terminal-ansi-yellow": "#808000",
+      "--terminal-ansi-blue": "#000080",
+      "--terminal-ansi-magenta": "#800080",
+      "--terminal-ansi-cyan": "#008080",
+      "--terminal-ansi-white": "#c0c0c0",
+      "--terminal-ansi-bright-black": "#808080",
+      "--terminal-ansi-bright-red": "#ff0000",
+      "--terminal-ansi-bright-green": "#00ff00",
+      "--terminal-ansi-bright-yellow": "#ffff00",
+      "--terminal-ansi-bright-blue": "#0000ff",
+      "--terminal-ansi-bright-magenta": "#ff00ff",
+      "--terminal-ansi-bright-cyan": "#00ffff",
+      "--terminal-ansi-bright-white": "#ffffff",
+      "--marquee-bg": "transparent",
+      "--marquee-border": "1px dotted #000000",
+      "--scrollbar-size": "16px",
+      "--scrollbar-thumb": "var(--surface)",
+      "--scrollbar-track": "var(--surface)",
+      "--focus-ring": "1px dotted var(--fg)",
+      "--motion-fast": "0ms",
+      "--motion-base": "0ms",
+      "--ease": "linear",
+      "--x-win98-bevel-raised": "inset -1px -1px var(--bevel-darker), inset 1px 1px var(--bevel-lighter), inset -2px -2px var(--bevel-dark), inset 2px 2px var(--bevel-light)",
+      "--x-win98-bevel-pressed": "inset -1px -1px var(--bevel-lighter), inset 1px 1px var(--bevel-darker), inset -2px -2px var(--bevel-light), inset 2px 2px var(--bevel-dark)",
+      "--x-win98-bevel-sunken": "inset -1px -1px var(--bevel-lighter), inset 1px 1px var(--bevel-dark), inset -2px -2px var(--bevel-light), inset 2px 2px var(--bevel-darker)",
+      "--x-win98-bevel-thin-raised": "inset -1px -1px var(--bevel-dark), inset 1px 1px var(--bevel-lighter)",
+      "--x-win98-bevel-thin-sunken": "inset -1px -1px var(--bevel-lighter), inset 1px 1px var(--bevel-dark)",
+      "--x-win98-dither": "repeating-conic-gradient(var(--bevel-lighter) 0% 25%, var(--surface) 0% 50%)"
+    },
+    "stylesheet": "\n/* ── Window frame ────────────────────────────────────────────────────────── */\n/* The 3px raised frame is padding on the window; the inert frame-edge\n   overlay paints the bevel on top so scrollable content slides under it. */\n[data-theme=\"win98\"] [data-part=\"window\"] {\n  padding: var(--window-frame-w);\n  box-shadow: var(--window-shadow);\n}\n\n[data-theme=\"win98\"] [data-part=\"window-frame-edge\"] {\n  box-shadow:\n    inset -1px -1px var(--bevel-darker),\n    inset 1px 1px var(--bevel-light),\n    inset -2px -2px var(--bevel-dark),\n    inset 2px 2px var(--bevel-lighter);\n}\n\n/* ── Titlebar ────────────────────────────────────────────────────────────── */\n[data-theme=\"win98\"] [data-part=\"titlebar\"] {\n  background: var(--titlebar-bg);\n  color: var(--titlebar-fg);\n  padding: 2px 2px 2px 3px;\n  margin-bottom: 1px; /* the hairline of face gray between caption and menu/toolbar */\n}\n\n[data-theme=\"win98\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"titlebar\"] {\n  background: var(--titlebar-bg-inactive);\n  color: var(--titlebar-fg-inactive);\n}\n\n[data-theme=\"win98\"] [data-part=\"title\"] {\n  font-weight: bold;\n  padding: 0 4px 0 2px;\n}\n\n[data-theme=\"win98\"] [data-part=\"title-icon\"] {\n  margin-left: 1px;\n}\n\n[data-theme=\"win98\"] [data-part=\"title-icon\"] svg {\n  width: 16px;\n  height: 16px;\n}\n\n/* ── Caption buttons (declarative controlGlyphs) ──────────────────────────── */\n[data-theme=\"win98\"] [data-part=\"controls\"] {\n  gap: 0;\n}\n\n[data-theme=\"win98\"] [data-part=\"control\"] {\n  width: 16px;\n  height: 14px;\n  background: var(--control-bg);\n  color: var(--control-fg);\n  box-shadow: var(--x-win98-bevel-raised);\n}\n\n/* Caption buttons never show a focus marquee. */\n[data-theme=\"win98\"] [data-part=\"control\"]:focus-visible {\n  outline: none;\n}\n\n[data-theme=\"win98\"] [data-part=\"control\"][data-action=\"close\"] {\n  margin-left: 2px;\n}\n\n[data-theme=\"win98\"] [data-part=\"control\"]:active {\n  box-shadow: var(--x-win98-bevel-pressed);\n}\n\n[data-theme=\"win98\"] [data-part=\"control\"]:active svg {\n  transform: translate(1px, 1px);\n}\n\n/* ── Toolbar (IE4 idiom: flat buttons, bevel appears on hover) ──────────── */\n[data-theme=\"win98\"] [data-part=\"toolbar\"] {\n  background: var(--toolbar-bg);\n  box-shadow: var(--x-win98-bevel-thin-raised);\n  gap: 4px;\n  padding: 0 4px;\n}\n\n[data-theme=\"win98\"] [data-part=\"toolbar-group\"] {\n  gap: 0;\n}\n\n[data-theme=\"win98\"] [data-part=\"toolbar-button\"] {\n  height: 24px;\n  min-width: 24px;\n  padding: 0 5px;\n  background: transparent;\n  color: var(--control-fg);\n}\n\n[data-theme=\"win98\"] [data-part=\"toolbar-button\"]:hover:not(:disabled) {\n  box-shadow: var(--x-win98-bevel-thin-raised);\n}\n\n[data-theme=\"win98\"] [data-part=\"toolbar-button\"]:active:not(:disabled),\n[data-theme=\"win98\"] [data-part=\"toolbar-button\"][data-state=\"active\"] {\n  box-shadow: var(--x-win98-bevel-thin-sunken);\n}\n\n/* Toggled-on toolbar buttons get the classic dither wash. */\n[data-theme=\"win98\"] [data-part=\"toolbar-button\"][data-state=\"active\"] {\n  background-image: var(--x-win98-dither);\n  background-size: 2px 2px;\n}\n\n[data-theme=\"win98\"] [data-part=\"toolbar-button\"]:active:not(:disabled) > *,\n[data-theme=\"win98\"] [data-part=\"toolbar-button\"][data-state=\"active\"] > * {\n  transform: translate(1px, 1px);\n}\n\n[data-theme=\"win98\"] [data-part=\"toolbar-button\"]:disabled {\n  color: var(--fg-disabled);\n  text-shadow: 1px 1px 0 var(--bevel-lighter); /* engraved disabled text */\n}\n\n/* ── Breadcrumbs as the Explorer address bar: a sunken white well ────────── */\n[data-theme=\"win98\"] [data-part=\"breadcrumbs\"] {\n  flex: 1;\n  height: 22px;\n  padding: 2px 4px;\n  background: var(--input-bg);\n  box-shadow: var(--x-win98-bevel-sunken);\n}\n\n[data-theme=\"win98\"] [data-part=\"breadcrumb\"] {\n  height: 16px;\n  padding: 0 3px;\n  color: var(--fg);\n}\n\n[data-theme=\"win98\"] [data-part=\"breadcrumb\"]:hover {\n  background: var(--selection-bg);\n  color: var(--selection-fg);\n}\n\n[data-theme=\"win98\"] [data-part=\"breadcrumb\"][data-state=\"current\"] {\n  font-weight: bold;\n}\n\n[data-theme=\"win98\"] [data-part=\"breadcrumbs\"] svg {\n  color: var(--fg-muted);\n}\n\n/* ── Search field: a sunken edit control ─────────────────────────────────── */\n[data-theme=\"win98\"] [data-part=\"search-field\"] {\n  height: 22px;\n  min-width: 140px;\n  padding: 2px 4px;\n  background: var(--input-bg);\n  color: var(--input-fg);\n  box-shadow: var(--x-win98-bevel-sunken);\n}\n\n[data-theme=\"win98\"] [data-part=\"search-field\"] svg {\n  color: var(--fg-muted);\n}\n\n[data-theme=\"win98\"] [data-part=\"search-field\"] input::placeholder {\n  color: var(--fg-disabled);\n}\n\n/* ── Split panes: white sunken wells over the gray body ──────────────────── */\n[data-theme=\"win98\"] [data-part=\"window-body\"] {\n  background: var(--bg);\n}\n\n[data-theme=\"win98\"] [data-part=\"split-view\"] {\n  padding: 2px;\n}\n\n[data-theme=\"win98\"] [data-part=\"split-divider\"] {\n  background: var(--surface);\n}\n\n/* ── Sidebar (the Explorer folder tree pane) ─────────────────────────────── */\n[data-theme=\"win98\"] [data-part=\"sidebar\"] {\n  background: var(--sidebar-bg);\n  color: var(--sidebar-fg);\n  box-shadow: var(--x-win98-bevel-sunken);\n  padding: 2px;\n}\n\n[data-theme=\"win98\"] [data-part=\"sidebar-heading\"] {\n  background: var(--surface);\n  box-shadow: var(--x-win98-bevel-thin-raised);\n  font-size: 11px;\n  padding: 2px 6px;\n  margin-bottom: 2px;\n}\n\n[data-theme=\"win98\"] [data-part=\"sidebar-section\"] + [data-part=\"sidebar-section\"] {\n  margin-top: 6px;\n}\n\n[data-theme=\"win98\"] [data-part=\"sidebar-item\"] {\n  padding: 0 4px;\n  color: var(--sidebar-fg);\n}\n\n[data-theme=\"win98\"] [data-part=\"sidebar-item\"][data-state=\"selected\"] {\n  background: var(--sidebar-selected-bg);\n  color: var(--sidebar-selected-fg);\n}\n\n[data-theme=\"win98\"] [data-part=\"sidebar-item\"][data-state=\"selected\"]:focus-visible {\n  outline: 1px dotted var(--sidebar-selected-fg);\n  outline-offset: -1px;\n}\n\n/* Inline eject on removable-volume rows: flat at rest like a coolbar button,\n   raising/sinking the thin bevel on hover/press — tab-close's bevel language. */\n[data-theme=\"win98\"] [data-part=\"sidebar-item-action\"] {\n  width: 14px;\n  height: 14px;\n  color: var(--fg-muted);\n}\n\n[data-theme=\"win98\"] [data-part=\"sidebar-item-action\"]:hover {\n  box-shadow: var(--x-win98-bevel-thin-raised);\n  color: var(--fg);\n}\n\n[data-theme=\"win98\"] [data-part=\"sidebar-item-action\"]:active {\n  box-shadow: var(--x-win98-bevel-thin-sunken);\n}\n\n[data-theme=\"win98\"] [data-part=\"sidebar-item\"][data-state=\"selected\"] [data-part=\"sidebar-item-action\"] {\n  color: var(--sidebar-selected-fg);\n}\n\n/* ── File list (Explorer details view) ───────────────────────────────────── */\n[data-theme=\"win98\"] [data-part=\"file-list\"] {\n  background: var(--list-bg);\n  box-shadow: var(--x-win98-bevel-sunken);\n}\n\n[data-theme=\"win98\"] [data-part=\"file-list\"]:focus-visible {\n  outline: none; /* focus shows on the selected row, not the well */\n}\n\n/* Header cells are raised gray buttons; stretch so the bevels meet. */\n[data-theme=\"win98\"] [data-part=\"file-list-header\"] {\n  align-items: stretch;\n  background: var(--list-header-bg);\n}\n\n[data-theme=\"win98\"] [data-part=\"file-list-col\"] {\n  display: flex;\n  align-items: center;\n  background: var(--list-header-bg);\n  color: var(--list-header-fg);\n  box-shadow: var(--x-win98-bevel-raised);\n  font-size: 11px;\n  padding: 0 6px;\n}\n\n[data-theme=\"win98\"] [data-part=\"file-list-col\"][data-col=\"size\"] {\n  justify-content: flex-end;\n}\n\n[data-theme=\"win98\"] [data-part=\"file-list-col\"][data-state=\"sorted\"] {\n  box-shadow: var(--x-win98-bevel-pressed);\n  padding: 1px 5px 0 7px; /* the pressed 1px content nudge */\n}\n\n/* No row hover in this era — selection only. */\n[data-theme=\"win98\"] [data-part=\"file-row\"][data-state=\"selected\"] {\n  background: var(--selection-bg);\n  color: var(--selection-fg);\n}\n\n/* Keyboard focus draws the dotted marquee inside the selection. */\n[data-theme=\"win98\"] [data-part=\"file-list\"]:focus [data-part=\"file-row\"][data-state=\"selected\"] {\n  outline: 1px dotted var(--selection-fg);\n  outline-offset: -1px;\n}\n\n/* Classic listview: selection drops to button-face gray when not key. */\n[data-theme=\"win98\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"file-row\"][data-state=\"selected\"],\n[data-theme=\"win98\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"sidebar-item\"][data-state=\"selected\"] {\n  background: var(--surface);\n  color: var(--fg);\n}\n\n/* ── Icon grid: the label inverts to selection blue, like the 9x desktop ── */\n[data-theme=\"win98\"] [data-part=\"icon-grid\"] {\n  background: var(--list-bg);\n}\n[data-theme=\"win98\"] [data-part=\"icon-grid-label\"] {\n  padding: 0 2px;\n}\n[data-theme=\"win98\"] [data-part=\"icon-grid-item\"][data-state=\"selected\"] [data-part=\"icon-grid-label\"] {\n  background: var(--selection-bg);\n  color: var(--selection-fg);\n  outline: 1px dotted var(--selection-fg);\n  outline-offset: -1px;\n}\n[data-theme=\"win98\"] [data-part=\"icon-grid-item\"][data-state=\"selected\"] [data-part=\"icon-grid-icon\"] {\n  filter: brightness(0.75) sepia(0.4) hue-rotate(180deg);\n}\n\n[data-theme=\"win98\"] [data-part=\"list-empty\"] {\n  color: var(--fg-muted);\n}\n\n/* ── Terminal panel: pure DOS in a sunken well ───────────────────────────── */\n[data-theme=\"win98\"] [data-part=\"terminal-panel\"] {\n  background: var(--surface);\n  border-top: 1px solid var(--bevel-lighter);\n}\n\n[data-theme=\"win98\"] [data-part=\"terminal-panel\"][data-state=\"closed\"] {\n  border-top: none;\n}\n\n[data-theme=\"win98\"] [data-part=\"terminal-header\"] {\n  height: 20px;\n  padding: 0 6px;\n  font-size: 11px;\n  font-weight: bold;\n}\n\n[data-theme=\"win98\"] [data-part=\"terminal-host\"] {\n  margin: 0 2px 2px;\n  padding: 3px;\n  background: var(--terminal-bg);\n  color: var(--terminal-fg);\n  box-shadow: var(--x-win98-bevel-sunken);\n  font-family: var(--font-mono);\n}\n\n/* ── Status bar: sunken cells + resize grip ──────────────────────────────── */\n[data-theme=\"win98\"] [data-part=\"status-bar\"] {\n  height: 22px;\n  padding: 2px;\n  gap: 2px;\n  background: var(--surface);\n}\n\n[data-theme=\"win98\"] [data-part=\"status-item\"] {\n  height: 100%;\n  padding: 0 6px;\n  box-shadow: var(--x-win98-bevel-thin-sunken);\n}\n\n/* The first cell flexes so trailing cells right-align, Explorer-style. */\n[data-theme=\"win98\"] [data-part=\"status-item\"]:first-child {\n  flex: 1;\n}\n\n/* Diagonal-ridge size grip in the corner. */\n[data-theme=\"win98\"] [data-part=\"status-bar\"]::after {\n  content: \"\";\n  flex: none;\n  width: 12px;\n  height: 12px;\n  align-self: flex-end;\n  background: repeating-linear-gradient(\n    135deg,\n    var(--surface) 0 1px,\n    var(--bevel-lighter) 1px 2px,\n    var(--bevel-dark) 2px 4px\n  );\n  clip-path: polygon(100% 0, 100% 100%, 0 100%);\n}\n\n/* ── Generic controls ────────────────────────────────────────────────────── */\n[data-theme=\"win98\"] [data-part=\"button\"],\n[data-theme=\"win98\"] [data-part=\"icon-button\"],\n[data-theme=\"win98\"] [data-part=\"segment\"] {\n  min-height: 22px;\n  padding: 0 10px;\n  background: var(--control-bg);\n  color: var(--control-fg);\n  box-shadow: var(--control-shadow);\n  border-radius: var(--control-radius);\n}\n\n[data-theme=\"win98\"] [data-part=\"icon-button\"] {\n  min-width: 22px;\n  padding: 0 4px;\n}\n\n[data-theme=\"win98\"] [data-part=\"button\"]:active:not(:disabled),\n[data-theme=\"win98\"] [data-part=\"button\"][data-state=\"open\"],\n[data-theme=\"win98\"] [data-part=\"icon-button\"]:active:not(:disabled),\n[data-theme=\"win98\"] [data-part=\"segment\"]:active:not(:disabled),\n[data-theme=\"win98\"] [data-part=\"segment\"][data-state=\"selected\"] {\n  box-shadow: var(--x-win98-bevel-pressed);\n}\n\n[data-theme=\"win98\"] [data-part=\"button\"]:active:not(:disabled) > *,\n[data-theme=\"win98\"] [data-part=\"icon-button\"]:active:not(:disabled) > *,\n[data-theme=\"win98\"] [data-part=\"segment\"]:active:not(:disabled) > * {\n  transform: translate(1px, 1px);\n}\n\n/* A toggled-on segment shows the dither wash like a latched toolbar button. */\n[data-theme=\"win98\"] [data-part=\"segment\"][data-state=\"selected\"] {\n  background-image: var(--x-win98-dither);\n  background-size: 2px 2px;\n}\n\n[data-theme=\"win98\"] [data-part=\"button\"]:disabled,\n[data-theme=\"win98\"] [data-part=\"icon-button\"]:disabled,\n[data-theme=\"win98\"] [data-part=\"segment\"]:disabled {\n  color: var(--fg-disabled);\n  text-shadow: 1px 1px 0 var(--bevel-lighter);\n}\n\n/* ── Menus ───────────────────────────────────────────────────────────────── */\n[data-theme=\"win98\"] [data-part=\"menu\"] {\n  background: var(--surface);\n  color: var(--fg);\n  box-shadow: var(--x-win98-bevel-raised);\n  padding: 1px;\n}\n\n[data-theme=\"win98\"] [data-part=\"menu-item\"] {\n  height: 18px;\n  padding: 1px 18px 1px 8px;\n}\n\n[data-theme=\"win98\"] [data-part=\"menu-item\"]:hover:not([aria-disabled=\"true\"]),\n[data-theme=\"win98\"] [data-part=\"menu-item\"]:focus:not([aria-disabled=\"true\"]) {\n  background: var(--selection-bg);\n  color: var(--selection-fg);\n  outline: none;\n}\n\n[data-theme=\"win98\"] [data-part=\"menu-item\"][aria-disabled=\"true\"] {\n  color: var(--fg-disabled);\n  text-shadow: 1px 1px 0 var(--bevel-lighter);\n}\n\n[data-theme=\"win98\"] [data-part=\"menu-separator\"] {\n  height: 0;\n  border-top: 1px solid var(--bevel-dark);\n  border-bottom: 1px solid var(--bevel-lighter);\n  margin: 3px 1px;\n}\n\n/* ── Scrollbars: gray bevel thumb over the dither track ──────────────────── */\n[data-theme=\"win98\"] ::-webkit-scrollbar-track {\n  background-color: var(--scrollbar-track);\n  background-image: var(--x-win98-dither);\n  background-size: 2px 2px;\n}\n\n[data-theme=\"win98\"] ::-webkit-scrollbar-thumb {\n  background: var(--scrollbar-thumb);\n  box-shadow: var(--x-win98-bevel-raised);\n}\n\n[data-theme=\"win98\"] ::-webkit-scrollbar-corner {\n  background: var(--surface);\n}\n\n[data-theme=\"win98\"] ::-webkit-scrollbar-button {\n  display: none; /* arrow-less; the bevel thumb carries the look */\n}\n\n/* ── In-page tabs (⌘T) — classic property-sheet tabs on button-face gray ── */\n[data-theme=\"win98\"] [data-part=\"tab-bar\"] {\n  background: var(--surface);\n  padding: 3px 3px 0;\n  gap: 0;\n  /* The selected tab fuses with the toolbar below; the strip draws no line. */\n}\n\n[data-theme=\"win98\"] [data-part=\"tab\"] {\n  height: 21px;\n  min-height: 21px;\n  background: var(--control-bg);\n  color: var(--control-fg);\n  border-radius: 2px 2px 0 0;\n  box-shadow: var(--x-win98-bevel-raised);\n  margin-top: 2px;\n}\n\n[data-theme=\"win98\"] [data-part=\"tab\"][data-state=\"selected\"] {\n  /* The active sheet tab stands 2px prouder and bolds its caption. */\n  margin-top: 0;\n  height: 23px;\n  min-height: 23px;\n  font-weight: bold;\n}\n\n[data-theme=\"win98\"] [data-part=\"tab-close\"],\n[data-theme=\"win98\"] [data-part=\"tab-add\"] {\n  width: 14px;\n  height: 14px;\n  font-size: 11px;\n  line-height: 1;\n  background: var(--control-bg);\n  box-shadow: var(--x-win98-bevel-thin-raised);\n}\n\n[data-theme=\"win98\"] [data-part=\"tab-close\"]:active,\n[data-theme=\"win98\"] [data-part=\"tab-add\"]:active {\n  box-shadow: var(--x-win98-bevel-thin-sunken);\n}\n\n[data-theme=\"win98\"] [data-part=\"tab-add\"] {\n  align-self: center;\n  margin: 0 3px;\n}\n\n/* ── Modal dialogs: a classic gray dialog with its own caption strip ─────── */\n[data-theme=\"win98\"] [data-part=\"dialog-overlay\"] {\n  background: transparent; /* the era never dimmed the desktop */\n}\n\n[data-theme=\"win98\"] [data-part=\"dialog\"] {\n  background: var(--surface);\n  border: none;\n  border-radius: 0;\n  box-shadow: var(--x-win98-bevel-raised);\n  padding: 3px;\n  gap: 0;\n}\n\n[data-theme=\"win98\"] [data-part=\"dialog-title\"] {\n  background: var(--titlebar-bg);\n  color: var(--titlebar-fg);\n  font-size: 11px;\n  font-weight: 700;\n  padding: 3px 6px;\n  margin-bottom: 10px;\n}\n\n[data-theme=\"win98\"] [data-part=\"dialog-body\"] {\n  padding: 2px 10px;\n}\n\n[data-theme=\"win98\"] [data-part=\"dialog-actions\"] {\n  padding: 12px 10px 8px;\n}\n\n[data-theme=\"win98\"] [data-part=\"text-input\"] {\n  border: none;\n  border-radius: 0;\n  box-shadow: var(--x-win98-bevel-sunken);\n  padding: 4px 6px;\n}\n",
+    "chrome": {
+      "controlsSide": "right",
+      "controlsOrder": [
+        "minimize",
+        "zoom",
+        "close"
+      ],
+      "titleAlign": "leading",
+      "controlGlyphs": {
+        "labels": {
+          "minimize": "Minimize",
+          "zoom": "Maximize",
+          "close": "Close"
+        },
+        "glyphs": {
+          "minimize": {
+            "viewBox": [
+              0,
+              0,
+              8,
+              7
+            ],
+            "shapeRendering": "crispEdges",
+            "shapes": [
+              {
+                "kind": "rect",
+                "x": 1,
+                "y": 5,
+                "width": 6,
+                "height": 2,
+                "fill": "currentColor"
+              }
+            ]
+          },
+          "zoom": {
+            "viewBox": [
+              0,
+              0,
+              9,
+              8
+            ],
+            "shapeRendering": "crispEdges",
+            "shapes": [
+              {
+                "kind": "path",
+                "d": "M0 0h9v8H0z M1 2h7v5H1z",
+                "fillRule": "evenodd",
+                "fill": "currentColor"
+              }
+            ]
+          },
+          "close": {
+            "viewBox": [
+              0,
+              0,
+              8,
+              7
+            ],
+            "shapeRendering": "crispEdges",
+            "shapes": [
+              {
+                "kind": "pixels",
+                "width": 2,
+                "height": 1,
+                "fill": "currentColor",
+                "origins": [
+                  [
+                    0,
+                    0
+                  ],
+                  [
+                    6,
+                    0
+                  ],
+                  [
+                    1,
+                    1
+                  ],
+                  [
+                    5,
+                    1
+                  ],
+                  [
+                    2,
+                    2
+                  ],
+                  [
+                    4,
+                    2
+                  ],
+                  [
+                    3,
+                    3
+                  ],
+                  [
+                    2,
+                    4
+                  ],
+                  [
+                    4,
+                    4
+                  ],
+                  [
+                    1,
+                    5
+                  ],
+                  [
+                    5,
+                    5
+                  ],
+                  [
+                    0,
+                    6
+                  ],
+                  [
+                    6,
+                    6
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "windowRadius": 0
+    },
+    "iconGlyphs": {
+      "folder": {
+        "viewBox": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "shapeRendering": "crispEdges",
+        "shapes": [
+          {
+            "kind": "path",
+            "d": "M3 8h9l3 3h14v15H3z",
+            "fill": "#fcf080",
+            "stroke": "#000000",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M3 13h26v13H3z",
+            "fill": "#fcd116",
+            "stroke": "#000000",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M4 14h24v1H4z",
+            "fill": "#fff7a8"
+          }
+        ]
+      },
+      "file": {
+        "viewBox": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "shapeRendering": "crispEdges",
+        "shapes": [
+          {
+            "kind": "path",
+            "d": "M8 3h11l5 5v21H8z",
+            "fill": "#ffffff",
+            "stroke": "#000000",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M19 3v5h5z",
+            "fill": "#c0c0c0",
+            "stroke": "#000000",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M11 13h10M11 16h10M11 19h7",
+            "stroke": "#808080",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "text",
+            "x": 16,
+            "y": 26.5,
+            "source": "ext-upper",
+            "maxChars": 4,
+            "textAnchor": "middle",
+            "fontFamily": "Tahoma, 'MS Sans Serif', sans-serif",
+            "fontSize": 6,
+            "fontWeight": "bold",
+            "fill": "#000080"
+          }
+        ]
+      }
+    },
+    "engines": {
+      "sheruUiContract": "^1.1"
+    }
+  }
+}

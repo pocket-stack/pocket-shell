@@ -9,6 +9,14 @@
     "desktop": "bun scripts/desktop.ts",
     "golden": "bun test/golden.ts",
     "golden:update": "UPDATE=1 bun test/golden.ts",
-    "cover": "bun tools/gen-cover.ts"
+    "cover": "bun tools/gen-cover.ts",
+    "sync": "bun tools/sync-sheru.ts",
+    "cook": "bun tools/cook-themes.ts",
+    "bake": "bun tools/gen-assets.ts",
+    "capture": "bun tools/capture-sheru.ts",
+    "parity": "bun tools/parity-board.ts"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.57.0"
   }
 }
