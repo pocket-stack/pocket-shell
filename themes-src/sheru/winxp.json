@@ -1,0 +1,313 @@
+{
+  "provenance": {
+    "repo": "https://github.com/doodlewind/sheru",
+    "commit": "49d35621ae5b7a777cde207171c4ebcdaaca7f9f",
+    "dirty": false,
+    "module": "packages/themes/src/winxp/index.ts"
+  },
+  "theme": {
+    "id": "winxp",
+    "name": "XP",
+    "tokens": {
+      "--bg": "#ece9d8",
+      "--surface": "#ece9d8",
+      "--surface-raised": "#f4f3ee",
+      "--surface-sunken": "#ffffff",
+      "--fg": "#000000",
+      "--fg-muted": "#6f6e64",
+      "--fg-disabled": "#aca899",
+      "--border": "#aca899",
+      "--border-strong": "#716f64",
+      "--accent": "#316ac5",
+      "--accent-on": "#ffffff",
+      "--selection-bg": "#316ac5",
+      "--selection-fg": "#ffffff",
+      "--font-ui": "Tahoma, \"Segoe UI\", Verdana, Arial, sans-serif",
+      "--font-mono": "\"Lucida Console\", \"Courier New\", ui-monospace, monospace",
+      "--font-size": "12px",
+      "--titlebar-h": "30px",
+      "--titlebar-bg": "linear-gradient(180deg, #0997ff 0%, #0053ee 8%, #0050ee 40%, #0066ff 88%, #0066ff 93%, #005bff 95%, #003dd7 96%, #003dd7 100%)",
+      "--titlebar-bg-inactive": "linear-gradient(180deg, #7697e7 0%, #7e9ee3 3%, #94afe8 6%, #97b4e9 8%, #82a5e4 14%, #7c9fe2 17%, #7996de 25%, #7b99e1 56%, #82a9e9 81%, #80a5e7 89%, #7b96e1 94%, #7a93df 97%, #abbae3 100%)",
+      "--titlebar-fg": "#ffffff",
+      "--titlebar-fg-inactive": "#d8e4f8",
+      "--window-bg": "#0855dd",
+      "--window-radius": "8px",
+      "--window-border": "1px solid #0831d9",
+      "--window-shadow": "0 16px 44px rgba(0, 0, 0, 0.5)",
+      "--window-frame-w": "4px",
+      "--bevel-lighter": "#ffffff",
+      "--bevel-light": "#f1efe2",
+      "--bevel-dark": "#aca899",
+      "--bevel-darker": "#716f64",
+      "--control-bg": "linear-gradient(180deg, #ffffff 0%, #f4f3ee 45%, #e9e7dc 85%, #d8d0c4 100%)",
+      "--control-fg": "#000000",
+      "--control-border": "#003c74",
+      "--control-radius": "3px",
+      "--control-shadow": "none",
+      "--control-bg-hover": "linear-gradient(180deg, #ffffff 0%, #f4f3ee 45%, #e9e7dc 85%, #d8d0c4 100%)",
+      "--control-bg-active": "linear-gradient(180deg, #cdcac3 0%, #e3e0d8 40%, #f1efe9 100%)",
+      "--input-bg": "#ffffff",
+      "--input-fg": "#000000",
+      "--input-border": "#7f9db9",
+      "--input-radius": "0px",
+      "--toolbar-bg": "linear-gradient(180deg, #fcfcf9 0%, #f3f1e4 50%, #ece9d8 100%)",
+      "--toolbar-h": "38px",
+      "--toolbar-border": "#d8d2bd",
+      "--sidebar-bg": "linear-gradient(180deg, #7ba2e7 0%, #6375d6 100%)",
+      "--sidebar-fg": "#215dc6",
+      "--sidebar-selected-bg": "transparent",
+      "--sidebar-selected-fg": "#0a246a",
+      "--sidebar-w": "204px",
+      "--list-bg": "#ffffff",
+      "--list-header-bg": "#ebeadb",
+      "--list-header-fg": "#000000",
+      "--row-h": "20px",
+      "--terminal-bg": "#000000",
+      "--terminal-fg": "#f0f0f0",
+      "--terminal-cursor": "#f0f0f0",
+      "--terminal-selection": "rgba(255, 255, 255, 0.35)",
+      "--terminal-ansi-black": "#000000",
+      "--terminal-ansi-red": "#800000",
+      "--terminal-ansi-green": "#008000",
+      "--terminal-ansi-yellow": "#808000",
+      "--terminal-ansi-blue": "#000080",
+      "--terminal-ansi-magenta": "#800080",
+      "--terminal-ansi-cyan": "#008080",
+      "--terminal-ansi-white": "#c0c0c0",
+      "--terminal-ansi-bright-black": "#808080",
+      "--terminal-ansi-bright-red": "#ff0000",
+      "--terminal-ansi-bright-green": "#00ff00",
+      "--terminal-ansi-bright-yellow": "#ffff00",
+      "--terminal-ansi-bright-blue": "#0000ff",
+      "--terminal-ansi-bright-magenta": "#ff00ff",
+      "--terminal-ansi-bright-cyan": "#00ffff",
+      "--terminal-ansi-bright-white": "#ffffff",
+      "--marquee-bg": "rgba(49, 106, 197, 0.25)",
+      "--marquee-border": "1px solid #316ac5",
+      "--scrollbar-size": "16px",
+      "--scrollbar-thumb": "linear-gradient(90deg, #f6f9ff 0%, #cddffb 35%, #b3ccf6 70%, #98b7ef 100%)",
+      "--scrollbar-track": "#f3f3eb",
+      "--focus-ring": "1px dotted #000000",
+      "--motion-fast": "80ms",
+      "--motion-base": "140ms",
+      "--x-winxp-font-title": "\"Trebuchet MS\", Tahoma, Verdana, sans-serif",
+      "--x-winxp-frame-inactive": "#7f9ee2",
+      "--x-winxp-frame-inactive-outline": "#6f8fd6",
+      "--x-winxp-frame-edge": "rgba(255, 255, 255, 0.35)",
+      "--x-winxp-shade": "rgba(0, 0, 0, 0.35)",
+      "--x-winxp-shade-light": "rgba(0, 0, 0, 0.12)",
+      "--x-winxp-glow-hover": "#f8b338",
+      "--x-winxp-glow-hover-pale": "#fff0cf",
+      "--x-winxp-glow-focus": "#75a8f0",
+      "--x-winxp-card-bg": "#d6dff7",
+      "--x-winxp-card-head": "linear-gradient(180deg, #ffffff 0%, #c7d3f7 100%)",
+      "--x-winxp-link-hover": "#428eff",
+      "--x-winxp-row-hover": "#e8effb",
+      "--x-winxp-selection-blur": "#e0ddd0",
+      "--x-winxp-header-edge": "#d8d7bf",
+      "--x-winxp-ctl-glass": "radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0) 45%), linear-gradient(180deg, #8db5f0 0%, #3f72dd 30%, #2152c5 60%, #2a5fd3 85%, #6390e0 100%)",
+      "--x-winxp-ctl-close": "radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 45%), linear-gradient(180deg, #f0a08e 0%, #e35451 35%, #c93a35 65%, #b02822 85%, #d6705e 100%)",
+      "--x-winxp-ctl-edge": "rgba(255, 255, 255, 0.75)",
+      "--x-winxp-tab-face": "linear-gradient(180deg, #fcfcfb 0%, #f1f0e7 60%, #e7e5d9 100%)",
+      "--x-winxp-scroll-thumb-h": "linear-gradient(180deg, #f6f9ff 0%, #cddffb 35%, #b3ccf6 70%, #98b7ef 100%)",
+      "--x-winxp-scroll-edge": "#8cb0f0"
+    },
+    "stylesheet": "\n/* ── Window frame: blue plastic, rounded top corners only ───────────────── */\n[data-theme=\"winxp\"] [data-part=\"window\"] {\n  /* Luna rounds only the TOP of the window; sides/bottom are the square\n     4px blue frame, which shows through this padding. */\n  border-radius: var(--window-radius) var(--window-radius) 0 0;\n  padding: 0 var(--window-frame-w) var(--window-frame-w);\n}\n[data-theme=\"winxp\"] [data-part=\"window\"][data-focused=\"false\"] {\n  background: var(--x-winxp-frame-inactive);\n  /* The outermost 1px border is the active deep-blue (--window-border);\n     desaturate it to match the inactive frame so no blue line survives. */\n  border-color: var(--x-winxp-frame-inactive-outline);\n}\n\n/* Glassy highlight line just inside the frame's dark outline. */\n[data-theme=\"winxp\"] [data-part=\"window-frame-edge\"] {\n  border: none;\n  border-radius: var(--window-radius) var(--window-radius) 0 0;\n  box-shadow:\n    inset 1px 0 0 var(--x-winxp-frame-edge),\n    inset -1px 0 0 var(--x-winxp-frame-edge),\n    inset 0 -1px 0 var(--x-winxp-frame-edge);\n}\n\n[data-theme=\"winxp\"] [data-part=\"window-body\"] {\n  background: var(--bg);\n}\n\n/* ── Titlebar ────────────────────────────────────────────────────────────── */\n[data-theme=\"winxp\"] [data-part=\"titlebar\"] {\n  /* The gradient runs edge to edge, over the side frame. */\n  margin: 0 calc(-1 * var(--window-frame-w));\n  padding: 0 5px 0 8px;\n  background: var(--titlebar-bg);\n  box-shadow: inset 0 1px 0 var(--x-winxp-frame-edge);\n}\n[data-theme=\"winxp\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"titlebar\"] {\n  background: var(--titlebar-bg-inactive);\n}\n\n[data-theme=\"winxp\"] [data-part=\"title\"] {\n  /* Bold Trebuchet with a hard 1px shadow (alignment is chrome.titleAlign). */\n  font-family: var(--x-winxp-font-title);\n  font-size: 13px;\n  font-weight: 700;\n  color: var(--titlebar-fg);\n  text-shadow: 1px 1px 0 var(--x-winxp-shade);\n  padding-right: 8px;\n}\n[data-theme=\"winxp\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"title\"] {\n  color: var(--titlebar-fg-inactive);\n  text-shadow: none;\n}\n\n[data-theme=\"winxp\"] [data-part=\"title-icon\"] {\n  margin-right: 5px;\n  color: var(--titlebar-fg);\n}\n\n/* ── Window controls: the gel buttons ────────────────────────────────────── */\n[data-theme=\"winxp\"] [data-part=\"controls\"] {\n  gap: 2px;\n}\n[data-theme=\"winxp\"] [data-part=\"control\"] {\n  width: 21px;\n  height: 21px;\n  border: 1px solid var(--x-winxp-ctl-edge);\n  border-radius: 3px;\n  background: var(--x-winxp-ctl-glass);\n  color: var(--titlebar-fg);\n}\n[data-theme=\"winxp\"] [data-part=\"control\"] svg {\n  filter: drop-shadow(0 1px 0 var(--x-winxp-shade));\n}\n[data-theme=\"winxp\"] [data-part=\"control\"][data-action=\"close\"] {\n  background: var(--x-winxp-ctl-close);\n}\n[data-theme=\"winxp\"] [data-part=\"control\"]:hover { filter: brightness(1.15); }\n[data-theme=\"winxp\"] [data-part=\"control\"]:active { filter: brightness(0.82); }\n[data-theme=\"winxp\"] [data-part=\"control\"][data-focused=\"false\"] {\n  /* Inactive gels wash out with the steel-blue caption. */\n  filter: saturate(0.35) brightness(1.05);\n}\n\n/* ── Toolbar ─────────────────────────────────────────────────────────────── */\n[data-theme=\"winxp\"] [data-part=\"toolbar\"] {\n  background: var(--toolbar-bg);\n  border-bottom: 1px solid var(--toolbar-border);\n}\n[data-theme=\"winxp\"] [data-part=\"toolbar-button\"] {\n  height: 26px;\n  padding: 0 8px;\n  border: 1px solid transparent;\n  border-radius: var(--control-radius);\n  color: var(--control-fg);\n}\n[data-theme=\"winxp\"] [data-part=\"toolbar-button\"]:hover {\n  border-color: var(--x-winxp-glow-hover);\n  background: var(--x-winxp-glow-hover-pale);\n}\n[data-theme=\"winxp\"] [data-part=\"toolbar-button\"]:active,\n[data-theme=\"winxp\"] [data-part=\"toolbar-button\"][data-state=\"active\"] {\n  background: var(--control-bg-active);\n  border-color: var(--control-border);\n  box-shadow: inset 1px 1px 2px var(--x-winxp-shade-light);\n}\n\n[data-theme=\"winxp\"] [data-part=\"breadcrumb\"] {\n  padding: 1px 3px;\n  color: var(--fg);\n}\n[data-theme=\"winxp\"] [data-part=\"breadcrumb\"]:hover {\n  color: var(--accent);\n  text-decoration: underline;\n}\n[data-theme=\"winxp\"] [data-part=\"breadcrumb\"][data-state=\"current\"] {\n  font-weight: 700;\n}\n[data-theme=\"winxp\"] [data-part=\"breadcrumbs\"] svg { color: var(--fg-muted); }\n\n/* XP text fields: flat white wells with the steel-blue 1px border. */\n[data-theme=\"winxp\"] [data-part=\"search-field\"] {\n  height: 22px;\n  padding: 0 5px;\n  min-width: 140px;\n  background: var(--input-bg);\n  color: var(--input-fg);\n  border: 1px solid var(--input-border);\n  border-radius: var(--input-radius);\n}\n[data-theme=\"winxp\"] [data-part=\"search-field\"] svg { color: var(--fg-muted); }\n[data-theme=\"winxp\"] [data-part=\"search-field\"] input::placeholder { color: var(--fg-muted); }\n\n/* ── Generic controls: the XP plastic button ─────────────────────────────── */\n[data-theme=\"winxp\"] [data-part=\"button\"],\n[data-theme=\"winxp\"] [data-part=\"icon-button\"],\n[data-theme=\"winxp\"] [data-part=\"segment\"] {\n  min-height: 23px;\n  padding: 0 10px;\n  background: var(--control-bg);\n  color: var(--control-fg);\n  border: 1px solid var(--control-border);\n  border-radius: var(--control-radius);\n  box-shadow: var(--control-shadow);\n}\n[data-theme=\"winxp\"] [data-part=\"icon-button\"] { padding: 0 5px; }\n\n/* Hover is the Luna orange glow ring inside the blue border. */\n[data-theme=\"winxp\"] [data-part=\"button\"]:hover,\n[data-theme=\"winxp\"] [data-part=\"icon-button\"]:hover,\n[data-theme=\"winxp\"] [data-part=\"segment\"]:hover {\n  box-shadow:\n    inset 0 0 0 1px var(--x-winxp-glow-hover-pale),\n    inset 0 0 3px 2px var(--x-winxp-glow-hover);\n}\n/* Keyboard focus is the blue inner glow (plus the base dotted outline). */\n[data-theme=\"winxp\"] [data-part=\"button\"]:focus-visible,\n[data-theme=\"winxp\"] [data-part=\"icon-button\"]:focus-visible,\n[data-theme=\"winxp\"] [data-part=\"segment\"]:focus-visible,\n[data-theme=\"winxp\"] [data-part=\"toolbar-button\"]:focus-visible {\n  box-shadow: inset 0 0 0 2px var(--x-winxp-glow-focus);\n  outline-offset: -4px;\n}\n[data-theme=\"winxp\"] [data-part=\"button\"]:active,\n[data-theme=\"winxp\"] [data-part=\"button\"][data-state=\"open\"],\n[data-theme=\"winxp\"] [data-part=\"icon-button\"]:active,\n[data-theme=\"winxp\"] [data-part=\"segment\"]:active,\n[data-theme=\"winxp\"] [data-part=\"segment\"][data-state=\"selected\"] {\n  background: var(--control-bg-active);\n  box-shadow: inset 1px 1px 2px var(--x-winxp-shade-light);\n}\n[data-theme=\"winxp\"] [data-part=\"button\"]:disabled,\n[data-theme=\"winxp\"] [data-part=\"button\"][aria-disabled=\"true\"],\n[data-theme=\"winxp\"] [data-part=\"icon-button\"]:disabled,\n[data-theme=\"winxp\"] [data-part=\"segment\"]:disabled {\n  color: var(--fg-disabled);\n  border-color: var(--border);\n  box-shadow: none;\n}\n\n/* Segments fuse into one plastic strip; only the outer corners round. */\n[data-theme=\"winxp\"] [data-part=\"segmented\"] [data-part=\"segment\"] { border-radius: 0; }\n[data-theme=\"winxp\"] [data-part=\"segmented\"] [data-part=\"segment\"]:not(:first-child) { margin-left: -1px; }\n[data-theme=\"winxp\"] [data-part=\"segmented\"] [data-part=\"segment\"]:first-child {\n  border-radius: var(--control-radius) 0 0 var(--control-radius);\n}\n[data-theme=\"winxp\"] [data-part=\"segmented\"] [data-part=\"segment\"]:last-child {\n  border-radius: 0 var(--control-radius) var(--control-radius) 0;\n}\n\n/* ── Menus ───────────────────────────────────────────────────────────────── */\n[data-theme=\"winxp\"] [data-part=\"menu\"] {\n  padding: 2px;\n  background: var(--surface-sunken);\n  border: 1px solid var(--border);\n  box-shadow: 2px 2px 3px var(--x-winxp-shade);\n}\n[data-theme=\"winxp\"] [data-part=\"menu-item\"] {\n  padding: 4px 19px 4px 8px;\n  color: var(--fg);\n}\n[data-theme=\"winxp\"] [data-part=\"menu-item\"]:hover,\n[data-theme=\"winxp\"] [data-part=\"menu-item\"]:focus-visible {\n  background: var(--selection-bg);\n  color: var(--selection-fg);\n  outline: none;\n}\n[data-theme=\"winxp\"] [data-part=\"menu-item\"][aria-disabled=\"true\"],\n[data-theme=\"winxp\"] [data-part=\"menu-item\"][aria-disabled=\"true\"]:hover {\n  background: none;\n  color: var(--fg-disabled);\n}\n[data-theme=\"winxp\"] [data-part=\"menu-separator\"] {\n  height: 1px;\n  margin: 3px 2px;\n  background: var(--border);\n}\n\n/* ── Sidebar: the Explorer task pane ─────────────────────────────────────── */\n[data-theme=\"winxp\"] [data-part=\"sidebar\"] {\n  background: var(--sidebar-bg);\n  padding: 12px 10px;\n  gap: 12px;\n}\n/* Sections are the rounded white-headed cards floating on the gradient. */\n[data-theme=\"winxp\"] [data-part=\"sidebar-section\"] {\n  border-radius: 5px 5px 0 0;\n  overflow: hidden;\n  padding-bottom: 5px;\n  background: var(--x-winxp-card-bg);\n  box-shadow: 1px 1px 2px var(--x-winxp-shade-light);\n}\n[data-theme=\"winxp\"] [data-part=\"sidebar-heading\"] {\n  padding: 5px 10px 4px;\n  margin-bottom: 3px;\n  background: var(--x-winxp-card-head);\n  color: var(--sidebar-fg);\n  font-weight: 700;\n}\n[data-theme=\"winxp\"] [data-part=\"sidebar-item\"] {\n  padding: 0 10px 0 14px;\n  color: var(--sidebar-fg);\n  /* Task-pane entries are hyperlinks in XP — the hand cursor is era-true. */\n  cursor: pointer;\n}\n[data-theme=\"winxp\"] [data-part=\"sidebar-item\"]:hover {\n  color: var(--x-winxp-link-hover);\n  text-decoration: underline;\n}\n[data-theme=\"winxp\"] [data-part=\"sidebar-item\"][data-state=\"selected\"] {\n  background: var(--sidebar-selected-bg);\n  color: var(--sidebar-selected-fg);\n  font-weight: 700;\n}\n/* Inline eject on removable-volume rows — the tab-close treatment. The glyph\n   is an SVG, so the task-pane hover underline never reaches it. */\n[data-theme=\"winxp\"] [data-part=\"sidebar-item-action\"] {\n  width: 14px;\n  height: 14px;\n  border-radius: 2px;\n  color: var(--fg-muted);\n}\n[data-theme=\"winxp\"] [data-part=\"sidebar-item-action\"]:hover {\n  background: var(--x-winxp-row-hover);\n  box-shadow: inset 0 0 0 1px var(--x-winxp-glow-focus);\n  color: var(--fg);\n}\n[data-theme=\"winxp\"] [data-part=\"sidebar-item\"][data-state=\"selected\"] [data-part=\"sidebar-item-action\"] {\n  color: var(--sidebar-selected-fg);\n}\n\n[data-theme=\"winxp\"] [data-part=\"split-divider\"] {\n  /* 1px line centered in the 5px hit area. */\n  background: linear-gradient(90deg, transparent 2px, var(--border) 2px, var(--border) 3px, transparent 3px);\n}\n\n/* ── File list: Explorer details view ────────────────────────────────────── */\n[data-theme=\"winxp\"] [data-part=\"file-list\"] {\n  background: var(--list-bg);\n}\n[data-theme=\"winxp\"] [data-part=\"file-list-header\"] {\n  background: var(--list-header-bg);\n}\n[data-theme=\"winxp\"] [data-part=\"file-list-col\"] {\n  color: var(--list-header-fg);\n  border-right: 1px solid var(--x-winxp-header-edge);\n  border-bottom: 1px solid var(--x-winxp-header-edge);\n  box-shadow: inset 0 1px 0 var(--bevel-lighter);\n}\n[data-theme=\"winxp\"] [data-part=\"file-list-col\"][data-state=\"sorted\"] {\n  background: var(--surface);\n}\n[data-theme=\"winxp\"] [data-part=\"file-row\"][data-zebra=\"even\"] {\n  background: var(--list-zebra);\n}\n[data-theme=\"winxp\"] [data-part=\"file-row\"]:hover {\n  background: var(--x-winxp-row-hover);\n}\n[data-theme=\"winxp\"] [data-part=\"file-row\"][data-state=\"selected\"] {\n  background: var(--selection-bg);\n  color: var(--selection-fg);\n}\n/* Unfocused windows keep selection in the classic button-face gray. */\n[data-theme=\"winxp\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"file-row\"][data-state=\"selected\"] {\n  background: var(--x-winxp-selection-blur);\n  color: var(--fg);\n}\n/* ── Icon grid: Luna selection blue on the label, hover row tint ─────────── */\n[data-theme=\"winxp\"] [data-part=\"icon-grid\"] {\n  background: var(--list-bg);\n}\n[data-theme=\"winxp\"] [data-part=\"icon-grid-item\"] {\n  border-radius: 2px;\n}\n[data-theme=\"winxp\"] [data-part=\"icon-grid-item\"]:hover {\n  background: var(--x-winxp-row-hover);\n}\n[data-theme=\"winxp\"] [data-part=\"icon-grid-label\"] {\n  font-size: 11px;\n  padding: 0 3px;\n  border-radius: 2px;\n}\n[data-theme=\"winxp\"] [data-part=\"icon-grid-item\"][data-state=\"selected\"] [data-part=\"icon-grid-label\"] {\n  background: var(--selection-bg);\n  color: var(--selection-fg);\n}\n[data-theme=\"winxp\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"icon-grid-item\"][data-state=\"selected\"] [data-part=\"icon-grid-label\"] {\n  background: var(--x-winxp-selection-blur);\n  color: var(--fg);\n}\n\n[data-theme=\"winxp\"] [data-part=\"list-empty\"] {\n  background: var(--list-bg);\n  color: var(--fg-muted);\n}\n\n/* ── Terminal: cmd.exe ───────────────────────────────────────────────────── */\n[data-theme=\"winxp\"] [data-part=\"terminal-panel\"] {\n  /* Chrome surface, not terminal black: the resize grip + header are window\n     chrome; only the host paints the terminal background. */\n  background: var(--surface);\n  border-top: 1px solid var(--border-strong);\n}\n[data-theme=\"winxp\"] [data-part=\"terminal-header\"] {\n  padding: 3px 8px;\n  background: var(--surface);\n  border-bottom: 1px solid var(--border);\n  color: var(--fg);\n  font-size: 11px;\n}\n[data-theme=\"winxp\"] [data-part=\"terminal-host\"] {\n  padding: 3px 4px;\n  background: var(--terminal-bg);\n  color: var(--terminal-fg);\n  font-family: var(--font-mono);\n}\n\n/* ── Status bar ──────────────────────────────────────────────────────────── */\n[data-theme=\"winxp\"] [data-part=\"status-bar\"] {\n  position: relative;\n  height: 23px;\n  background: var(--surface);\n  border-top: 1px solid var(--border);\n  box-shadow: inset 0 1px 0 var(--bevel-lighter);\n}\n[data-theme=\"winxp\"] [data-part=\"status-item\"] {\n  height: 17px;\n  padding: 0 8px;\n  border: 1px solid;\n  border-color: var(--bevel-dark) var(--bevel-light) var(--bevel-light) var(--bevel-dark);\n  color: var(--fg);\n}\n/* The diagonal resize-grip dots in the bottom-right corner. */\n[data-theme=\"winxp\"] [data-part=\"status-bar\"]::after {\n  content: \"\";\n  position: absolute;\n  right: 1px;\n  bottom: 1px;\n  width: 13px;\n  height: 13px;\n  pointer-events: none;\n  background: url(\"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12'><rect x='1' y='9' width='2' height='2' fill='white'/><rect x='0' y='8' width='2' height='2' fill='rgb(157,156,147)'/><rect x='5' y='5' width='2' height='2' fill='white'/><rect x='4' y='4' width='2' height='2' fill='rgb(157,156,147)'/><rect x='5' y='9' width='2' height='2' fill='white'/><rect x='4' y='8' width='2' height='2' fill='rgb(157,156,147)'/><rect x='9' y='1' width='2' height='2' fill='white'/><rect x='8' y='0' width='2' height='2' fill='rgb(157,156,147)'/><rect x='9' y='5' width='2' height='2' fill='white'/><rect x='8' y='4' width='2' height='2' fill='rgb(157,156,147)'/><rect x='9' y='9' width='2' height='2' fill='white'/><rect x='8' y='8' width='2' height='2' fill='rgb(157,156,147)'/></svg>\") no-repeat;\n}\n\n/* ── Scrollbars: Luna 3D thumbs with rounded ends ────────────────────────── */\n[data-theme=\"winxp\"] ::-webkit-scrollbar-track {\n  background: var(--scrollbar-track);\n}\n[data-theme=\"winxp\"] ::-webkit-scrollbar-thumb {\n  background: var(--scrollbar-thumb);\n  border: 1px solid var(--x-winxp-scroll-edge);\n  border-radius: 7px;\n}\n/* The 3D sheen runs across the thumb, so the horizontal one flips axis. */\n[data-theme=\"winxp\"] ::-webkit-scrollbar-thumb:horizontal {\n  background: var(--x-winxp-scroll-thumb-h);\n  border: 1px solid var(--x-winxp-scroll-edge);\n  border-radius: 7px;\n}\n[data-theme=\"winxp\"] ::-webkit-scrollbar-thumb:active {\n  box-shadow: inset 0 0 0 99px var(--x-winxp-shade-light);\n}\n\n/* ── In-page tabs (⌘T) — Luna property tabs: the amber lip marks the page ── */\n[data-theme=\"winxp\"] [data-part=\"tab-bar\"] {\n  background: var(--toolbar-bg);\n  border-bottom: 1px solid var(--toolbar-border);\n  padding: 4px 5px 0;\n  gap: 2px;\n}\n\n[data-theme=\"winxp\"] [data-part=\"tab\"] {\n  height: 22px;\n  min-height: 22px;\n  font-size: 11px;\n  color: var(--fg);\n  border: 1px solid var(--x-winxp-header-edge);\n  border-bottom: none;\n  border-radius: 3px 3px 0 0;\n  background: var(--x-winxp-tab-face);\n}\n\n[data-theme=\"winxp\"] [data-part=\"tab\"]:hover {\n  box-shadow: inset 0 2px 0 var(--x-winxp-glow-hover-pale);\n}\n\n[data-theme=\"winxp\"] [data-part=\"tab\"][data-state=\"selected\"] {\n  background: var(--surface);\n  /* Luna's signature: the selected tab carries the amber top lip. */\n  box-shadow: inset 0 2px 0 var(--x-winxp-glow-hover);\n}\n\n[data-theme=\"winxp\"] [data-part=\"tab-label\"] {\n  text-align: center;\n}\n\n[data-theme=\"winxp\"] [data-part=\"tab-close\"],\n[data-theme=\"winxp\"] [data-part=\"tab-add\"] {\n  width: 14px;\n  height: 14px;\n  border-radius: 2px;\n  font-size: 11px;\n  line-height: 1;\n  color: var(--fg-muted);\n}\n\n[data-theme=\"winxp\"] [data-part=\"tab-close\"]:hover,\n[data-theme=\"winxp\"] [data-part=\"tab-add\"]:hover {\n  background: var(--x-winxp-row-hover);\n  box-shadow: inset 0 0 0 1px var(--x-winxp-glow-focus);\n  color: var(--fg);\n}\n\n[data-theme=\"winxp\"] [data-part=\"tab-add\"] {\n  align-self: center;\n  margin: 0 3px 4px;\n}\n\n/* ── Modal dialogs: Luna caption over the tan task-dialog face ───────────── */\n[data-theme=\"winxp\"] [data-part=\"dialog-overlay\"] {\n  background: transparent; /* the era never dimmed the desktop */\n}\n\n[data-theme=\"winxp\"] [data-part=\"dialog\"] {\n  background: #ece9d8;\n  border: 1px solid #0831d9;\n  border-radius: 5px;\n  /* No padding: the Luna title bar sits flush inside the blue frame (a pad would\n     leave a beige ring around it). overflow:hidden clips the square-cornered\n     title/body to the rounded frame; body/actions carry their own insets. */\n  padding: 0;\n  gap: 0;\n  overflow: hidden;\n  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);\n}\n\n[data-theme=\"winxp\"] [data-part=\"dialog-title\"] {\n  background: var(--titlebar-bg);\n  color: var(--titlebar-fg);\n  font-size: 12px;\n  font-weight: 700;\n  padding: 4px 8px;\n  border-radius: 4px 4px 0 0;\n  margin-bottom: 10px;\n  text-shadow: 1px 1px 1px rgba(10, 24, 131, 0.7);\n}\n\n[data-theme=\"winxp\"] [data-part=\"dialog-body\"] {\n  padding: 2px 10px;\n}\n\n[data-theme=\"winxp\"] [data-part=\"dialog-actions\"] {\n  padding: 12px 10px 8px;\n}\n\n[data-theme=\"winxp\"] [data-part=\"text-input\"] {\n  background: #ffffff;\n  border: 1px solid #7f9db9;\n  border-radius: 0;\n  padding: 4px 6px;\n}\n",
+    "engines": {
+      "sheruUiContract": "^1.1"
+    },
+    "chrome": {
+      "controlsSide": "right",
+      "controlsOrder": [
+        "minimize",
+        "zoom",
+        "close"
+      ],
+      "titleAlign": "leading",
+      "controlGlyphs": {
+        "labels": {
+          "minimize": "Minimize",
+          "zoom": "Maximize",
+          "close": "Close"
+        },
+        "glyphs": {
+          "minimize": {
+            "viewBox": [
+              0,
+              0,
+              10,
+              10
+            ],
+            "shapes": [
+              {
+                "kind": "rect",
+                "x": 1,
+                "y": 6.8,
+                "width": 5,
+                "height": 2.2,
+                "fill": "currentColor"
+              }
+            ]
+          },
+          "zoom": {
+            "viewBox": [
+              0,
+              0,
+              10,
+              10
+            ],
+            "shapes": [
+              {
+                "kind": "rect",
+                "x": 1.55,
+                "y": 2,
+                "width": 6.9,
+                "height": 6.45,
+                "fill": "none",
+                "stroke": "currentColor",
+                "strokeWidth": 1.1
+              },
+              {
+                "kind": "rect",
+                "x": 1,
+                "y": 1,
+                "width": 8,
+                "height": 2,
+                "fill": "currentColor"
+              }
+            ]
+          },
+          "close": {
+            "viewBox": [
+              0,
+              0,
+              10,
+              10
+            ],
+            "shapes": [
+              {
+                "kind": "path",
+                "d": "M2.1 2.1 L7.9 7.9 M7.9 2.1 L2.1 7.9",
+                "stroke": "currentColor",
+                "strokeWidth": 1.7,
+                "strokeLinecap": "round"
+              }
+            ]
+          }
+        }
+      },
+      "windowRadius": 8
+    },
+    "iconGlyphs": {
+      "folder": {
+        "viewBox": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "defs": [
+          {
+            "id": "sheru-winxp-folder",
+            "kind": "linear",
+            "x1": 0,
+            "y1": 0,
+            "x2": 0,
+            "y2": 1,
+            "stops": [
+              {
+                "offset": 0,
+                "color": "#ffe793"
+              },
+              {
+                "offset": 1,
+                "color": "#f7c243"
+              }
+            ]
+          }
+        ],
+        "shapes": [
+          {
+            "kind": "path",
+            "d": "M3.5 9a2.5 2.5 0 0 1 2.5-2.5h6.4l2.6 3h12.5A2.5 2.5 0 0 1 30 12v11.5a2.5 2.5 0 0 1-2.5 2.5h-22A2.5 2.5 0 0 1 3 23.5z",
+            "fill": "#e8a33d"
+          },
+          {
+            "kind": "path",
+            "d": "M4.5 13.5a2 2 0 0 1 2-2h21a2 2 0 0 1 2 2v10a1.5 1.5 0 0 1-1.5 1.5h-22a1.5 1.5 0 0 1-1.5-1.5z",
+            "fill": "url:#sheru-winxp-folder",
+            "stroke": "#d18d2a",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M5.5 13h20.5a30 30 0 0 1-20.5 1.6z",
+            "fill": "rgba:255,255,255,0.55"
+          }
+        ]
+      },
+      "file": {
+        "viewBox": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "defs": [
+          {
+            "id": "sheru-winxp-file",
+            "kind": "linear",
+            "x1": 0,
+            "y1": 0,
+            "x2": 1,
+            "y2": 1,
+            "stops": [
+              {
+                "offset": 0,
+                "color": "#ffffff"
+              },
+              {
+                "offset": 1,
+                "color": "#e9eef7"
+              }
+            ]
+          }
+        ],
+        "shapes": [
+          {
+            "kind": "path",
+            "d": "M8 3.5h11l5 5v20H8z",
+            "fill": "url:#sheru-winxp-file",
+            "stroke": "#7a8aa5",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M19 3.5v5h5",
+            "fill": "#cdd8ea",
+            "stroke": "#7a8aa5",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M11 13h10M11 16h10M11 19h6",
+            "stroke": "#9fb3d1",
+            "strokeWidth": 1.3
+          },
+          {
+            "kind": "text",
+            "x": 16,
+            "y": 26.5,
+            "source": "ext-upper",
+            "maxChars": 4,
+            "fontFamily": "Tahoma, sans-serif",
+            "fontSize": 6,
+            "fontWeight": "bold",
+            "fill": "#1c5dbf",
+            "textAnchor": "middle"
+          }
+        ]
+      }
+    }
+  }
+}

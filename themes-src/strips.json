@@ -1,0 +1,112 @@
+[
+  {
+    "file": "strips/winxp-titlebar.png",
+    "css": "linear-gradient(180deg, #0997ff 0%, #0053ee 8%, #0050ee 40%, #0066ff 88%, #0066ff 93%, #005bff 95%, #003dd7 96%, #003dd7 100%)",
+    "extent": 18
+  },
+  {
+    "file": "strips/winxp-titlebar_inactive.png",
+    "css": "linear-gradient(180deg, #7697e7 0%, #7e9ee3 3%, #94afe8 6%, #97b4e9 8%, #82a5e4 14%, #7c9fe2 17%, #7996de 25%, #7b99e1 56%, #82a9e9 81%, #80a5e7 89%, #7b96e1 94%, #7a93df 97%, #abbae3 100%)",
+    "extent": 18
+  },
+  {
+    "file": "strips/winxp-toolbar.png",
+    "css": "linear-gradient(180deg, #fcfcf9 0%, #f3f1e4 50%, #ece9d8 100%)",
+    "extent": 26
+  },
+  {
+    "file": "strips/winxp-sidebar.png",
+    "css": "linear-gradient(180deg, #7ba2e7 0%, #6375d6 100%)",
+    "extent": 182
+  },
+  {
+    "file": "strips/winxp-sidebar-heading.png",
+    "css": "linear-gradient(180deg, #ffffff 0%, #c7d3f7 100%)",
+    "extent": 16
+  },
+  {
+    "file": "strips/winxp-segment.png",
+    "css": "linear-gradient(180deg, #ffffff 0%, #f4f3ee 45%, #e9e7dc 85%, #d8d0c4 100%)",
+    "extent": 22
+  },
+  {
+    "file": "strips/winxp-segment_selected.png",
+    "css": "linear-gradient(180deg, #cdcac3 0%, #e3e0d8 40%, #f1efe9 100%)",
+    "extent": 22
+  },
+  {
+    "file": "strips/winxp-button.png",
+    "css": "linear-gradient(180deg, #ffffff 0%, #f4f3ee 45%, #e9e7dc 85%, #d8d0c4 100%)",
+    "extent": 22
+  },
+  {
+    "file": "strips/win7-window.png",
+    "css": "linear-gradient(180deg, rgba(207, 224, 241, 0.97) 0%, rgba(148, 178, 209, 0.96) 45%, rgba(118, 150, 186, 0.96) 100%)",
+    "extent": 256
+  },
+  {
+    "file": "strips/win7-titlebar.png",
+    "css": "linear-gradient(180deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0.28) 45%, rgba(160, 190, 220, 0.18) 52%, rgba(255, 255, 255, 0.22) 100%)",
+    "extent": 18
+  },
+  {
+    "file": "strips/win7-titlebar_inactive.png",
+    "css": "linear-gradient(180deg, rgba(255, 255, 255, 0.52) 0%, rgba(243, 246, 249, 0.28) 50%, rgba(255, 255, 255, 0.2) 100%)",
+    "extent": 18
+  },
+  {
+    "file": "strips/win7-segment.png",
+    "css": "linear-gradient(180deg, #f2f2f2 0%, #ebebeb 45%, #dddddd 46%, #cfcfcf 100%)",
+    "extent": 22
+  },
+  {
+    "file": "strips/win7-segment_selected.png",
+    "css": "linear-gradient(180deg, #e5f4fc 0%, #c4e5f6 30%, #98d1ef 31%, #68b3db 100%)",
+    "extent": 22
+  },
+  {
+    "file": "strips/win7-button.png",
+    "css": "linear-gradient(180deg, #f2f2f2 0%, #ebebeb 45%, #dddddd 46%, #cfcfcf 100%)",
+    "extent": 22
+  },
+  {
+    "file": "strips/aqua-titlebar.png",
+    "css": "linear-gradient(to bottom, #ffffff 0%, #f0f0f0 8%, #d8d8d8 50%, #c6c6c6 51%, #d2d2d2 100%)",
+    "extent": 18
+  },
+  {
+    "file": "strips/aqua-titlebar_inactive.png",
+    "css": "linear-gradient(to bottom, #fbfbfb 0%, #f0f0f0 50%, #e4e4e4 100%)",
+    "extent": 18
+  },
+  {
+    "file": "strips/aqua-toolbar-button.png",
+    "css": "linear-gradient(to bottom, #ffffff 0%, #f4f4f4 45%, #e0e0e0 50%, #f5f5f5 100%)",
+    "extent": 22
+  },
+  {
+    "file": "strips/aqua-file-list-header.png",
+    "css": "linear-gradient(to bottom, #ffffff 0%, #f0f0f0 55%, #dcdcdc 100%)",
+    "extent": 17
+  },
+  {
+    "file": "strips/aqua-file-list-col_sorted.png",
+    "css": "linear-gradient(to bottom, #e2ecfb 0%, #cfe0f7 55%, #b9d0f0 100%)",
+    "extent": 17
+  },
+  {
+    "file": "strips/aqua-segment.png",
+    "css": "linear-gradient(to bottom, #ffffff 0%, #f4f4f4 45%, #e0e0e0 50%, #f5f5f5 100%)",
+    "extent": 22
+  },
+  {
+    "file": "strips/aqua-segment_selected.png",
+    "css": "linear-gradient(180deg, #a7cdf6 0%, #5a9bee 45%, #2f6fde 50%, #71b3f4 100%)",
+    "extent": 22
+  },
+  {
+    "file": "strips/aqua-button.png",
+    "css": "linear-gradient(to bottom, #ffffff 0%, #f4f4f4 45%, #e0e0e0 50%, #f5f5f5 100%)",
+    "extent": 22
+  }
+]

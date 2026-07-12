@@ -16,9 +16,12 @@ export interface SceneSpec {
   frames: number;
   input?: (frame: number) => FrameInput;
   /** Parity-board RMSE region [x, y, w, h] in WINDOW coords (the board
-   *  crops the golden to the window rect first). M1 scores the chrome
-   *  strip only — the body stays empty until M2. */
+   *  crops the golden to the window rect first). */
   region: [number, number, number, number];
+  /** Theme this scene lands on (default win98) — board ref lookup. */
+  theme?: string;
+  /** Reference scene name in docs/parity/ref/<theme>/ (default = name). */
+  refName?: string;
 }
 
 /** The window rect inside the 480x272 frame (desktop reveal = 8px). */
@@ -87,10 +90,30 @@ export const SCENES: SceneSpec[] = [
   },
 ];
 
+// Theme-cycle scenes: R advances win98 -> winxp -> win7 -> aqua -> xfce.
+const themeScene = (name: string, theme: string, presses: number): SceneSpec => ({
+  name,
+  theme,
+  refName: "chrome-focused",
+  frames: presses * 2 + 10,
+  input: (f) => (f < presses * 2 && f % 2 === 0 ? { buttons: BTN.RTRIGGER } : {}),
+  region: FULL_WINDOW,
+});
+SCENES.push(
+  themeScene("theme-winxp", "winxp", 1),
+  themeScene("theme-win7", "win7", 2),
+  themeScene("theme-aqua", "aqua", 3),
+  themeScene("theme-xfce", "xfce", 4),
+);
+
 export const JOURNEY_PAIRS: ReadonlyArray<readonly [string, string]> = [
   ["chrome-focused", "chrome-unfocused"],
   ["chrome-focused", "control-pressed"],
   ["chrome-focused", "list-selection"],
   ["list-selection", "navigate"],
   ["chrome-focused", "sidebar-selected"],
+  ["chrome-focused", "theme-winxp"],
+  ["theme-winxp", "theme-win7"],
+  ["theme-win7", "theme-aqua"],
+  ["theme-aqua", "theme-xfce"],
 ];

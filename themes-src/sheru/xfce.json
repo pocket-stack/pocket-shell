@@ -1,0 +1,269 @@
+{
+  "provenance": {
+    "repo": "https://github.com/doodlewind/sheru",
+    "commit": "49d35621ae5b7a777cde207171c4ebcdaaca7f9f",
+    "dirty": false,
+    "module": "packages/themes/src/xfce/index.ts"
+  },
+  "theme": {
+    "id": "xfce",
+    "name": "XFCE",
+    "tokens": {
+      "--bg": "#d6d6d6",
+      "--surface": "#d9d9d9",
+      "--surface-raised": "#ececec",
+      "--surface-sunken": "#ffffff",
+      "--fg": "#212121",
+      "--fg-muted": "#5c5c5c",
+      "--fg-disabled": "#9e9e9e",
+      "--border": "#bcbcbc",
+      "--border-strong": "#999999",
+      "--accent": "#4a90c2",
+      "--accent-on": "#ffffff",
+      "--selection-bg": "linear-gradient(180deg, #5d9fcd, #4a90c2)",
+      "--selection-fg": "#ffffff",
+      "--font-ui": "\"DejaVu Sans\", Cantarell, \"Helvetica Neue\", sans-serif",
+      "--font-mono": "\"DejaVu Sans Mono\", \"Liberation Mono\", Menlo, monospace",
+      "--font-size": "12px",
+      "--titlebar-h": "26px",
+      "--titlebar-bg": "linear-gradient(180deg, #4a525a, #3c434a)",
+      "--titlebar-bg-inactive": "linear-gradient(180deg, #888888, #777777)",
+      "--titlebar-fg": "#ffffff",
+      "--titlebar-fg-inactive": "#cccccc",
+      "--window-bg": "linear-gradient(180deg, #cecece, #d6d6d6)",
+      "--window-radius": "4px",
+      "--window-border": "1px solid #555c63",
+      "--window-shadow": "0 8px 24px rgba(0, 0, 0, 0.35)",
+      "--window-frame-w": "0px",
+      "--bevel-lighter": "#ffffff",
+      "--bevel-light": "#f5f5f5",
+      "--bevel-dark": "#b4b4b4",
+      "--bevel-darker": "#999999",
+      "--control-bg": "linear-gradient(180deg, #fcfcfc, #dedede)",
+      "--control-border": "#999999",
+      "--control-radius": "3px",
+      "--control-shadow": "inset 0 1px 0 var(--bevel-lighter)",
+      "--control-bg-hover": "linear-gradient(180deg, #ffffff, #e8e8e8)",
+      "--control-bg-active": "#d4d4d4",
+      "--input-bg": "#ffffff",
+      "--input-border": "#999999",
+      "--input-radius": "3px",
+      "--toolbar-bg": "linear-gradient(180deg, #d8d8d8, #cbcbcb)",
+      "--toolbar-h": "36px",
+      "--toolbar-border": "#b4b4b4",
+      "--sidebar-bg": "#f2f1f0",
+      "--sidebar-selected-bg": "linear-gradient(180deg, #5d9fcd, #4a90c2)",
+      "--sidebar-selected-fg": "#ffffff",
+      "--sidebar-w": "180px",
+      "--list-bg": "#ffffff",
+      "--list-zebra": "transparent",
+      "--list-header-bg": "linear-gradient(180deg, #f4f4f4, #dfdfdf)",
+      "--list-header-fg": "#212121",
+      "--row-h": "20px",
+      "--terminal-bg": "#2e3436",
+      "--terminal-fg": "#d3d7cf",
+      "--terminal-cursor": "#d3d7cf",
+      "--terminal-selection": "rgba(211, 215, 207, 0.3)",
+      "--terminal-ansi-black": "#000000",
+      "--terminal-ansi-red": "#cc0000",
+      "--terminal-ansi-green": "#4e9a06",
+      "--terminal-ansi-yellow": "#c4a000",
+      "--terminal-ansi-blue": "#3465a4",
+      "--terminal-ansi-magenta": "#75507b",
+      "--terminal-ansi-cyan": "#06989a",
+      "--terminal-ansi-white": "#d3d7cf",
+      "--terminal-ansi-bright-black": "#555753",
+      "--terminal-ansi-bright-red": "#ef2929",
+      "--terminal-ansi-bright-green": "#8ae234",
+      "--terminal-ansi-bright-yellow": "#fce94f",
+      "--terminal-ansi-bright-blue": "#729fcf",
+      "--terminal-ansi-bright-magenta": "#ad7fa8",
+      "--terminal-ansi-bright-cyan": "#34e2e2",
+      "--terminal-ansi-bright-white": "#eeeeec",
+      "--marquee-bg": "rgba(52, 101, 164, 0.2)",
+      "--marquee-border": "1px solid #3465a4",
+      "--scrollbar-size": "13px",
+      "--scrollbar-thumb": "#bebebe",
+      "--scrollbar-track": "#efefef",
+      "--focus-ring": "1px dotted #5c5c5c",
+      "--x-xfce-header-border": "#30353b",
+      "--x-xfce-title-shadow": "0 1px 1px rgba(0, 0, 0, 0.35)",
+      "--x-xfce-control-hover": "rgba(255, 255, 255, 0.18)",
+      "--x-xfce-control-active": "rgba(0, 0, 0, 0.22)",
+      "--x-xfce-close-hover": "#cc575d",
+      "--x-xfce-hover": "#e8e8e8",
+      "--x-xfce-selection-inactive": "#c9c9c9",
+      "--x-xfce-pressed-shadow": "inset 0 1px 2px rgba(0, 0, 0, 0.18)",
+      "--x-xfce-entry-shadow": "inset 0 1px 2px rgba(0, 0, 0, 0.1)",
+      "--x-xfce-scroll-thumb": "linear-gradient(180deg, #c8c8c8, #b4b4b4)",
+      "--x-xfce-scroll-thumb-hover": "linear-gradient(180deg, #b6b6b6, #a2a2a2)",
+      "--x-xfce-statusbar-bg": "#e8e8e8",
+      "--x-xfce-menu-bg": "#f5f5f5",
+      "--x-xfce-menu-shadow": "0 2px 8px rgba(0, 0, 0, 0.3)"
+    },
+    "stylesheet": "\n/* ── Window frame ────────────────────────────────────────────────────────── */\n/* xfwm4 rounds only the top corners; the bottom edge stays square. */\n[data-theme=\"xfce\"] [data-part=\"window\"] {\n  border-radius: var(--window-radius) var(--window-radius) 0 0;\n}\n\n/* ── Titlebar ────────────────────────────────────────────────────────────── */\n[data-theme=\"xfce\"] [data-part=\"titlebar\"] {\n  background: var(--titlebar-bg);\n  color: var(--titlebar-fg);\n  border-bottom: 1px solid var(--x-xfce-header-border);\n  padding: 0 4px;\n}\n\n[data-theme=\"xfce\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"titlebar\"] {\n  background: var(--titlebar-bg-inactive);\n  color: var(--titlebar-fg-inactive);\n}\n\n[data-theme=\"xfce\"] [data-part=\"title\"] {\n  font-size: 12px;\n  font-weight: bold;\n  text-shadow: var(--x-xfce-title-shadow);\n}\n\n[data-theme=\"xfce\"] [data-part=\"window\"][data-focused=\"false\"] [data-part=\"title\"] {\n  text-shadow: none;\n}\n\n[data-theme=\"xfce\"] [data-part=\"title-icon\"] {\n  margin-left: 6px;\n  color: var(--titlebar-fg);\n}\n\n/* Flat squarish xfwm4 buttons: backdrop appears only on hover. */\n[data-theme=\"xfce\"] [data-part=\"controls\"] {\n  gap: 2px;\n  padding: 0 2px;\n}\n\n[data-theme=\"xfce\"] [data-part=\"control\"] {\n  width: 25px;\n  height: 20px;\n  border-radius: 3px;\n  background: transparent;\n  color: inherit; /* glyph follows the titlebar fg, so it dims when unfocused */\n}\n\n[data-theme=\"xfce\"] [data-part=\"control\"]:hover {\n  background: var(--x-xfce-control-hover);\n}\n\n[data-theme=\"xfce\"] [data-part=\"control\"]:active {\n  background: var(--x-xfce-control-active);\n}\n\n[data-theme=\"xfce\"] [data-part=\"control\"][data-action=\"close\"]:hover,\n[data-theme=\"xfce\"] [data-part=\"control\"][data-action=\"close\"]:active {\n  background: var(--x-xfce-close-hover);\n  color: var(--titlebar-fg);\n}\n\n/* ── GTK button faces (shared by toolbar, generic and segmented controls) ── */\n[data-theme=\"xfce\"] [data-part=\"button\"],\n[data-theme=\"xfce\"] [data-part=\"icon-button\"],\n[data-theme=\"xfce\"] [data-part=\"segment\"] {\n  height: 24px;\n  padding: 0 10px;\n  background: var(--control-bg);\n  border: 1px solid var(--control-border);\n  border-radius: var(--control-radius);\n  box-shadow: var(--control-shadow);\n  color: var(--control-fg);\n}\n\n[data-theme=\"xfce\"] [data-part=\"icon-button\"] {\n  width: 26px;\n  padding: 0;\n}\n\n[data-theme=\"xfce\"] [data-part=\"button\"]:hover,\n[data-theme=\"xfce\"] [data-part=\"icon-button\"]:hover,\n[data-theme=\"xfce\"] [data-part=\"segment\"]:hover {\n  background: var(--control-bg-hover);\n}\n\n[data-theme=\"xfce\"] [data-part=\"button\"]:active,\n[data-theme=\"xfce\"] [data-part=\"button\"][data-state=\"open\"],\n[data-theme=\"xfce\"] [data-part=\"icon-button\"]:active,\n[data-theme=\"xfce\"] [data-part=\"segment\"]:active,\n[data-theme=\"xfce\"] [data-part=\"segment\"][data-state=\"selected\"] {\n  background: var(--control-bg-active);\n  box-shadow: var(--x-xfce-pressed-shadow);\n}\n\n/* GTK2 linked segments share their inner borders. */\n[data-theme=\"xfce\"] [data-part=\"segment\"] {\n  border-radius: 0;\n  margin-left: -1px;\n}\n[data-theme=\"xfce\"] [data-part=\"segment\"]:first-child {\n  border-radius: var(--control-radius) 0 0 var(--control-radius);\n  margin-left: 0;\n}\n[data-theme=\"xfce\"] [data-part=\"segment\"]:last-child {\n  border-radius: 0 var(--control-radius) var(--control-radius) 0;\n}\n\n/* ── Toolbar ─────────────────────────────────────────────────────────────── */\n[data-theme=\"xfce\"] [data-part=\"toolbar\"] {\n  background: var(--toolbar-bg);\n  border-bottom: 1px solid var(--toolbar-border);\n}\n\n/* GTK2 toolbar buttons sit flat until hovered, then grow a button face. */\n[data-theme=\"xfce\"] [data-part=\"toolbar-button\"] {\n  height: 26px;\n  min-width: 28px;\n  padding: 0 8px;\n  background: transparent;\n  border: 1px solid transparent;\n  border-radius: var(--control-radius);\n  color: var(--control-fg);\n}\n\n[data-theme=\"xfce\"] [data-part=\"toolbar-button\"]:hover {\n  background: var(--control-bg);\n  border-color: var(--control-border);\n  box-shadow: var(--control-shadow);\n}\n\n[data-theme=\"xfce\"] [data-part=\"toolbar-button\"]:active,\n[data-theme=\"xfce\"] [data-part=\"toolbar-button\"][data-state=\"active\"] {\n  background: var(--control-bg-active);\n  border-color: var(--control-border);\n  box-shadow: var(--x-xfce-pressed-shadow);\n}\n\n[data-theme=\"xfce\"] [data-part=\"toolbar-button\"][aria-disabled=\"true\"],\n[data-theme=\"xfce\"] [data-part=\"toolbar-button\"]:disabled {\n  color: var(--fg-disabled);\n}\n\n/* ── Breadcrumbs: the GTK pathbar, a row of linked toggle buttons ────────── */\n[data-theme=\"xfce\"] [data-part=\"breadcrumb\"] {\n  height: 24px;\n  padding: 0 9px;\n  background: var(--control-bg);\n  border: 1px solid var(--control-border);\n  border-radius: var(--control-radius);\n  box-shadow: var(--control-shadow);\n  color: var(--control-fg);\n}\n\n[data-theme=\"xfce\"] [data-part=\"breadcrumb\"]:hover {\n  background: var(--control-bg-hover);\n}\n\n/* The crumb you are in reads as a depressed toggle, like Thunar's pathbar. */\n[data-theme=\"xfce\"] [data-part=\"breadcrumb\"][data-state=\"current\"] {\n  background: var(--control-bg-active);\n  box-shadow: var(--x-xfce-pressed-shadow);\n  font-weight: bold;\n}\n\n[data-theme=\"xfce\"] [data-part=\"breadcrumbs\"] svg {\n  color: var(--fg-muted);\n}\n\n/* ── Search field: a GTK entry ───────────────────────────────────────────── */\n[data-theme=\"xfce\"] [data-part=\"search-field\"] {\n  height: 24px;\n  min-width: 150px;\n  padding: 0 6px;\n  background: var(--input-bg);\n  border: 1px solid var(--input-border);\n  border-radius: var(--input-radius);\n  box-shadow: var(--x-xfce-entry-shadow);\n  color: var(--input-fg);\n}\n\n[data-theme=\"xfce\"] [data-part=\"search-field\"] svg {\n  color: var(--fg-muted);\n}\n\n[data-theme=\"xfce\"] [data-part=\"search-field\"] input::placeholder {\n  color: var(--fg-muted);\n}\n\n/* ── Sidebar: the GTK side pane ──────────────────────────────────────────── */\n[data-theme=\"xfce\"] [data-part=\"sidebar\"] {\n  background: var(--sidebar-bg);\n  border-right: 1px solid var(--border);\n  padding: 4px 0;\n  font-size: 12px;\n}\n\n[data-theme=\"xfce\"] [data-part=\"sidebar-heading\"] {\n  padding: 6px 10px 2px;\n  font-size: 11px;\n  font-weight: bold;\n  color: var(--fg-muted);\n}\n\n[data-theme=\"xfce\"] [data-part=\"sidebar-item\"] {\n  width: calc(100% - 8px);\n  margin: 1px 4px;\n  padding: 0 6px;\n  border-radius: 2px;\n  color: var(--sidebar-fg);\n}\n\n[data-theme=\"xfce\"] [data-part=\"sidebar-item\"]:hover {\n  background: var(--x-xfce-hover);\n}\n\n[data-theme=\"xfce\"] [data-part=\"sidebar-item\"][data-state=\"selected\"] {\n  background: var(--sidebar-selected-bg);\n  color: var(--sidebar-selected-fg);\n}\n\n[data-theme=\"xfce\"] [data-part=\"sidebar-item-icon\"] {\n  color: var(--fg-muted);\n}\n\n[data-theme=\"xfce\"] [data-part=\"sidebar-item\"][data-state=\"selected\"] [data-part=\"sidebar-item-icon\"] {\n  color: var(--sidebar-selected-fg);\n}\n\n/* Inline eject on removable-volume rows — the tab-close treatment. */\n[data-theme=\"xfce\"] [data-part=\"sidebar-item-action\"] {\n  width: 15px;\n  height: 15px;\n  border: 1px solid transparent;\n  border-radius: 3px;\n  color: var(--fg-muted);\n}\n\n[data-theme=\"xfce\"] [data-part=\"sidebar-item-action\"]:hover {\n  border-color: var(--border);\n  background: var(--control-bg-hover);\n  color: var(--fg);\n}\n\n[data-theme=\"xfce\"] [data-part=\"sidebar-item\"][data-state=\"selected\"] [data-part=\"sidebar-item-action\"] {\n  color: var(--sidebar-selected-fg);\n}\n\n/* Sidebar border carries the visual split; the divider stays a hit area\n   with a hairline painted down its center. */\n[data-theme=\"xfce\"] [data-part=\"split-divider\"] {\n  background: linear-gradient(\n    to right,\n    transparent 2px,\n    var(--border) 2px,\n    var(--border) 3px,\n    transparent 3px\n  );\n}\n\n/* ── File list: a GTK2 treeview ──────────────────────────────────────────── */\n[data-theme=\"xfce\"] [data-part=\"file-list\"] {\n  background: var(--list-bg);\n  font-size: 12px;\n}\n\n/* Column headers are button-like gradient cells with shared 1px borders. */\n[data-theme=\"xfce\"] [data-part=\"file-list-header\"] {\n  background: var(--list-header-bg);\n  border-bottom: 1px solid var(--border);\n}\n\n[data-theme=\"xfce\"] [data-part=\"file-list-col\"] {\n  height: 100%;\n  display: flex;\n  align-items: center;\n  border-right: 1px solid var(--border);\n  box-shadow: inset 0 1px 0 var(--bevel-lighter);\n  color: var(--list-header-fg);\n}\n\n[data-theme=\"xfce\"] [data-part=\"file-list-col\"][data-state=\"sorted\"] {\n  background: var(--control-bg-active);\n  box-shadow: var(--x-xfce-pressed-shadow);\n}\n\n/* GTK2 treeviews have no hover state — selection only. */\n[data-theme=\"xfce\"] [data-part=\"file-row\"][data-state=\"selected\"] {\n  background: var(--selection-bg);\n  color: var(--selection-fg);\n}\n\n/* GTK convention: selection grays out while the treeview loses focus. */\n[data-theme=\"xfce\"] [data-part=\"file-list\"]:not(:focus-within) [data-part=\"file-row\"][data-state=\"selected\"] {\n  background: var(--x-xfce-selection-inactive);\n  color: var(--fg);\n}\n\n[data-theme=\"xfce\"] [data-part=\"file-row\"][data-zebra=\"even\"]:not([data-state=\"selected\"]) {\n  background: var(--list-zebra);\n}\n\n[data-theme=\"xfce\"] [data-part=\"file-icon\"] {\n  color: var(--fg-muted);\n}\n\n[data-theme=\"xfce\"] [data-part=\"file-row\"][data-state=\"selected\"] [data-part=\"file-icon\"] {\n  color: var(--selection-fg);\n}\n\n[data-theme=\"xfce\"] [data-part=\"file-cell\"]:not([data-col=\"name\"]) {\n  color: var(--fg-muted);\n}\n\n[data-theme=\"xfce\"] [data-part=\"file-row\"][data-state=\"selected\"] [data-part=\"file-cell\"] {\n  color: inherit;\n}\n\n/* ── Icon grid: GTK2 icon view — the whole cell takes the selection fill ── */\n[data-theme=\"xfce\"] [data-part=\"icon-grid\"] {\n  background: var(--list-bg);\n}\n[data-theme=\"xfce\"] [data-part=\"icon-grid-item\"] {\n  border: 1px solid transparent;\n  border-radius: 3px;\n}\n[data-theme=\"xfce\"] [data-part=\"icon-grid-item\"][data-state=\"selected\"] {\n  background: var(--selection-bg);\n  border-color: var(--border-strong);\n  color: var(--selection-fg);\n}\n[data-theme=\"xfce\"] [data-part=\"icon-grid\"]:not(:focus-within) [data-part=\"icon-grid-item\"][data-state=\"selected\"] {\n  background: var(--x-xfce-selection-inactive);\n  color: var(--fg);\n}\n\n[data-theme=\"xfce\"] [data-part=\"list-empty\"] {\n  color: var(--fg-muted);\n}\n\n/* ── Scrollbars: bordered GTK2 trough + rounded gradient slider ──────────── */\n[data-theme=\"xfce\"] ::-webkit-scrollbar-track {\n  background: var(--scrollbar-track);\n  border: 1px solid var(--border);\n}\n\n[data-theme=\"xfce\"] ::-webkit-scrollbar-thumb {\n  background: var(--x-xfce-scroll-thumb);\n  border: 1px solid var(--border-strong);\n  border-radius: 2px;\n}\n\n[data-theme=\"xfce\"] ::-webkit-scrollbar-thumb:hover {\n  background: var(--x-xfce-scroll-thumb-hover);\n}\n\n[data-theme=\"xfce\"] ::-webkit-scrollbar-corner {\n  background: var(--scrollbar-track);\n}\n\n/* ── Terminal: xfce4-terminal's Tango defaults ───────────────────────────── */\n[data-theme=\"xfce\"] [data-part=\"terminal-panel\"] {\n  /* Chrome surface, not terminal black: the resize grip + header are window\n     chrome; only the host paints the terminal background. */\n  background: var(--surface);\n  border-top: 1px solid var(--border-strong);\n}\n\n/* The header reads as a light GTK notebook strip above the dark terminal. */\n[data-theme=\"xfce\"] [data-part=\"terminal-header\"] {\n  height: 25px;\n  padding: 0 8px;\n  background: var(--toolbar-bg);\n  border-bottom: 1px solid var(--border);\n  color: var(--fg-muted);\n  font-size: 11px;\n  font-weight: bold;\n}\n\n[data-theme=\"xfce\"] [data-part=\"terminal-host\"] {\n  background: var(--terminal-bg);\n  color: var(--terminal-fg);\n  padding: 4px 6px;\n  font-family: var(--font-mono);\n}\n\n/* ── Status bar ──────────────────────────────────────────────────────────── */\n[data-theme=\"xfce\"] [data-part=\"status-bar\"] {\n  height: 24px;\n  background: var(--x-xfce-statusbar-bg);\n  border-top: 1px solid var(--border);\n  color: var(--fg-muted);\n  font-size: 11px;\n}\n\n/* ── Menus ───────────────────────────────────────────────────────────────── */\n[data-theme=\"xfce\"] [data-part=\"menu\"] {\n  background: var(--x-xfce-menu-bg);\n  border: 1px solid var(--border-strong);\n  box-shadow: var(--x-xfce-menu-shadow);\n  padding: 2px;\n  font-size: 12px;\n}\n\n[data-theme=\"xfce\"] [data-part=\"menu-item\"] {\n  padding: 3px 18px 3px 8px;\n  color: var(--fg);\n}\n\n[data-theme=\"xfce\"] [data-part=\"menu-item\"]:hover,\n[data-theme=\"xfce\"] [data-part=\"menu-item\"]:focus-visible {\n  background: var(--selection-bg);\n  color: var(--selection-fg);\n  outline: none;\n}\n\n[data-theme=\"xfce\"] [data-part=\"menu-item\"][aria-disabled=\"true\"] {\n  color: var(--fg-disabled);\n}\n\n[data-theme=\"xfce\"] [data-part=\"menu-item\"][aria-disabled=\"true\"]:hover {\n  background: transparent;\n  color: var(--fg-disabled);\n}\n\n[data-theme=\"xfce\"] [data-part=\"menu-separator\"] {\n  height: 1px;\n  margin: 3px 1px;\n  background: var(--border);\n}\n\n/* ── In-page tabs (⌘T) — a GTK2 notebook: sunken strip, raised active page ─ */\n[data-theme=\"xfce\"] [data-part=\"tab-bar\"] {\n  background: var(--surface-sunken);\n  border-bottom: 1px solid var(--border-strong);\n  padding: 3px 4px 0;\n  gap: 1px;\n}\n\n[data-theme=\"xfce\"] [data-part=\"tab\"] {\n  height: 24px;\n  min-height: 24px;\n  color: var(--fg-muted);\n  border: 1px solid var(--border);\n  border-bottom: none;\n  border-radius: 3px 3px 0 0;\n  background: var(--surface-raised);\n}\n\n[data-theme=\"xfce\"] [data-part=\"tab\"][data-state=\"selected\"] {\n  color: var(--fg);\n  border-color: var(--border-strong);\n  background: var(--surface);\n  /* GTK2 marks the current notebook page with the selection-blue lip. */\n  box-shadow: inset 0 2px 0 var(--accent);\n}\n\n[data-theme=\"xfce\"] [data-part=\"tab-close\"],\n[data-theme=\"xfce\"] [data-part=\"tab-add\"] {\n  width: 15px;\n  height: 15px;\n  border: 1px solid transparent;\n  border-radius: 3px;\n  font-size: 12px;\n  line-height: 1;\n  color: var(--fg-muted);\n}\n\n[data-theme=\"xfce\"] [data-part=\"tab-close\"]:hover,\n[data-theme=\"xfce\"] [data-part=\"tab-add\"]:hover {\n  border-color: var(--border);\n  background: var(--control-bg-hover);\n  color: var(--fg);\n}\n\n[data-theme=\"xfce\"] [data-part=\"tab-add\"] {\n  align-self: center;\n  margin: 0 3px 3px;\n}\n\n/* ── Modal dialogs: a flat GTK2 message dialog ───────────────────────────── */\n[data-theme=\"xfce\"] [data-part=\"dialog-overlay\"] {\n  background: rgba(0, 0, 0, 0.2);\n}\n\n[data-theme=\"xfce\"] [data-part=\"dialog\"] {\n  background: var(--surface);\n  border: 1px solid #5c5c5c;\n  border-radius: 2px;\n  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);\n}\n\n[data-theme=\"xfce\"] [data-part=\"dialog-title\"] {\n  font-weight: 700;\n}\n\n[data-theme=\"xfce\"] [data-part=\"text-input\"] {\n  background: #ffffff;\n  border: 1px solid #888888;\n  border-radius: 2px;\n  padding: 4px 6px;\n}\n",
+    "chrome": {
+      "controlsSide": "right",
+      "controlsOrder": [
+        "minimize",
+        "zoom",
+        "close"
+      ],
+      "controlGlyphs": {
+        "labels": {
+          "minimize": "Minimize",
+          "zoom": "Maximize",
+          "close": "Close"
+        },
+        "glyphs": {
+          "minimize": {
+            "viewBox": [
+              0,
+              0,
+              12,
+              12
+            ],
+            "shapes": [
+              {
+                "kind": "line",
+                "x1": 2.5,
+                "y1": 8.5,
+                "x2": 9.5,
+                "y2": 8.5,
+                "stroke": "currentColor",
+                "strokeWidth": 1
+              }
+            ]
+          },
+          "zoom": {
+            "viewBox": [
+              0,
+              0,
+              12,
+              12
+            ],
+            "shapes": [
+              {
+                "kind": "rect",
+                "x": 2.5,
+                "y": 2.5,
+                "width": 7,
+                "height": 7,
+                "fill": "none",
+                "stroke": "currentColor",
+                "strokeWidth": 1
+              }
+            ]
+          },
+          "close": {
+            "viewBox": [
+              0,
+              0,
+              12,
+              12
+            ],
+            "shapes": [
+              {
+                "kind": "path",
+                "d": "M2.5 2.5 L9.5 9.5 M9.5 2.5 L2.5 9.5",
+                "fill": "none",
+                "stroke": "currentColor",
+                "strokeWidth": 1
+              }
+            ]
+          }
+        }
+      },
+      "windowRadius": 4
+    },
+    "iconGlyphs": {
+      "folder": {
+        "viewBox": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "defs": [
+          {
+            "id": "sheru-xfce-folder",
+            "kind": "linear",
+            "x1": 0,
+            "y1": 0,
+            "x2": 0,
+            "y2": 1,
+            "stops": [
+              {
+                "offset": 0,
+                "color": "#a3c0e0"
+              },
+              {
+                "offset": 1,
+                "color": "#6d94c4"
+              }
+            ]
+          }
+        ],
+        "shapes": [
+          {
+            "kind": "path",
+            "d": "M3.5 8.5a1.5 1.5 0 0 1 1.5-1.5h7.2l2.4 3h13a1.5 1.5 0 0 1 1.5 1.5v12.5a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5z",
+            "fill": "url:#sheru-xfce-folder",
+            "stroke": "#3f5e85",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M4.5 11.5h23v2h-23z",
+            "fill": "rgba:255,255,255,0.35"
+          }
+        ]
+      },
+      "file": {
+        "viewBox": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "shapes": [
+          {
+            "kind": "path",
+            "d": "M8 3.5h11l5 5v20H8z",
+            "fill": "#fcfcfa",
+            "stroke": "#888a85",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M19 3.5v5h5",
+            "fill": "#d3d7cf",
+            "stroke": "#888a85",
+            "strokeWidth": 1
+          },
+          {
+            "kind": "path",
+            "d": "M11 13h10M11 16h10M11 19h6",
+            "stroke": "#babdb6",
+            "strokeWidth": 1.3
+          },
+          {
+            "kind": "text",
+            "x": 16,
+            "y": 26.5,
+            "source": "ext-upper",
+            "maxChars": 4,
+            "fontFamily": "'DejaVu Sans', sans-serif",
+            "fontSize": 6,
+            "fontWeight": "bold",
+            "fill": "#204a87",
+            "textAnchor": "middle"
+          }
+        ]
+      }
+    },
+    "engines": {
+      "sheruUiContract": "^1.1"
+    }
+  }
+}

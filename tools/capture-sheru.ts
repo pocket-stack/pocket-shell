@@ -25,12 +25,14 @@ const repo = new URL("..", import.meta.url).pathname;
 const sheruDir = (process.env.SHERU_DIR ?? `${process.env.HOME}/code/sheru`).replace(/\/$/, "");
 const webuiDir = join(sheruDir, "apps/macos/Sources/Sheru/Resources/WebUI");
 
-const THEME_IDS = ["win98"] as const;
+const THEME_IDS = ["win98", "winxp", "win7", "aqua", "xfce"] as const;
 const VIEW_W = 464;
 const VIEW_H = 256;
 
 interface RefScene {
   name: string;
+  /** Restrict to these themes (default: all). */
+  themes?: string[];
   /** Applied after first paint, before the screenshot. */
   prepare?: (page: import("playwright-core").Page) => Promise<void>;
 }
@@ -39,6 +41,7 @@ const REF_SCENES: RefScene[] = [
   { name: "chrome-focused" },
   {
     name: "chrome-unfocused",
+    themes: ["win98"],
     prepare: async (page) => {
       await page.evaluate(() => {
         document.querySelector('[data-part="window"]')?.setAttribute("data-focused", "false");
@@ -47,6 +50,7 @@ const REF_SCENES: RefScene[] = [
   },
   {
     name: "control-pressed",
+    themes: ["win98"],
     prepare: async (page) => {
       // Hold the pointer down on the close control: :active applies while
       // held, matching the PSP scene's held CIRCLE.
@@ -58,12 +62,14 @@ const REF_SCENES: RefScene[] = [
   },
   {
     name: "list-selection",
+    themes: ["win98"],
     prepare: async (page) => {
       await page.locator('[data-part="file-row"]', { hasText: "code" }).first().click();
     },
   },
   {
     name: "navigate",
+    themes: ["win98"],
     prepare: async (page) => {
       await page.locator('[data-part="file-row"]', { hasText: "Applications" }).first().dblclick();
       await page.waitForTimeout(200);
@@ -71,6 +77,7 @@ const REF_SCENES: RefScene[] = [
   },
   {
     name: "sidebar-selected",
+    themes: ["win98"],
     prepare: async (page) => {
       await page.locator('[data-part="sidebar-item"]', { hasText: "Recents" }).first().click();
     },
@@ -122,6 +129,7 @@ try {
 
     let dumpedDates = false;
     for (const scene of REF_SCENES) {
+      if (scene.themes && !scene.themes.includes(id)) continue;
       const page = await browser.newPage({
         viewport: { width: VIEW_W, height: VIEW_H },
         deviceScaleFactor: 1,

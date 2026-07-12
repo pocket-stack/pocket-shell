@@ -1,6 +1,4 @@
 // @title PocketShell
-import { getOps } from "@pocketjs/framework";
-import { get, hasPack } from "@pocketjs/framework/pak";
 import { mount } from "@pocketjs/framework/solid";
 import Shell from "./app.tsx";
 

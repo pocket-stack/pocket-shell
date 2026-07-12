@@ -40,9 +40,12 @@ export interface PartRule {
   /** Static layout utilities, verbatim (flex direction, alignment, size). */
   layout?: string;
   bg?: ColorValue;
-  /** A token holding a CSS linear-gradient(); 2-stop axis-aligned lowers to
-   *  native gradient utilities, anything else fails the bake loudly. */
-  gradient?: TokenRef;
+  /** A token holding a CSS linear-gradient() — or an inline literal
+   *  linear-gradient string when approximating layered/radial sources
+   *  (cite the approximation). 2-stop axis-aligned lowers to native
+   *  gradient utilities; anything richer becomes a baked strip image
+   *  (requires h or stripH). */
+  gradient?: TokenRef | string;
   bevel?: BevelRef;
   text?: TextRule;
   /** Fixed height in px, or a px-valued token (density-overridable). */
@@ -51,6 +54,18 @@ export interface PartRule {
   w?: SizeValue;
   /** Background under d-pad focus (sheru :hover / [data-state=selected]). */
   bgFocus?: ColorValue;
+  /** Gradient background under d-pad focus — must lower natively (2-stop
+   *  axis-aligned); strips cannot express focus states. */
+  gradientFocus?: TokenRef | string;
+  /** Uniform corner radius px (per-corner needs the engine PR — deviation). */
+  radius?: SizeValue;
+  /** Single inset border (engine: one color, all sides). */
+  border?: { color: ColorValue; width?: number };
+  /** Baked shadow index 1..3 (engine shadow/-md/-lg). */
+  shadow?: 1 | 2 | 3;
+  /** Explicit strip height when the rule has no fixed h — multi-stop or
+   *  non-axis gradients lower to baked strip images until the engine PR. */
+  stripH?: number;
   /** Padding [t, r, b, l] in px (post-density). */
   pad?: [number, number, number, number];
   /** Extra utilities appended verbatim (margins, gaps — the escape hatch). */

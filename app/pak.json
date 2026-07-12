@@ -1,10 +1,18 @@
 [
   {
-    "key": "shell:font.0",
-    "file": "fonts/win98-font.0.bin"
+    "key": "shell:font.w95fa.0",
+    "file": "fonts/w95fa.0.bin"
   },
   {
-    "key": "shell:font.7",
-    "file": "fonts/win98-font.7.bin"
+    "key": "shell:font.w95fa.7",
+    "file": "fonts/w95fa.7.bin"
+  },
+  {
+    "key": "shell:font.inter.0",
+    "file": "fonts/inter.0.bin"
+  },
+  {
+    "key": "shell:font.inter.7",
+    "file": "fonts/inter.7.bin"
   }
 ]
