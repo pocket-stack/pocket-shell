@@ -9,9 +9,9 @@
 // is the native focus: variant (zero JS); the white selected-text swap is a
 // per-frame focus mirror signal (writes only on change).
 //
-// Known M2 deviations (tracked on the parity board): no 1px glyph nudge on
-// press, no sidebar connector icons, no ext badge on file icons (M3), no
-// scrollbar — listings are cut to the visible rows until ScrollView lands.
+// Known deviations (tracked on the parity board): no 1px glyph nudge on
+// press, no sidebar connector icons, no scrollbar — listings are cut to
+// the visible rows until ScrollView lands.
 
 import { createMemo, createSignal, For, Show } from "solid-js";
 import { Image, Text, View, type NodeMirror } from "@pocketjs/framework/components";
@@ -25,6 +25,25 @@ const skin = win98Skin;
 
 // The list well shows this many rows until ScrollView lands (M6).
 const VISIBLE_ROWS = 9;
+
+// Ext-badged file icons (tools/gen-assets.ts bakes one per known ext from
+// sheru's `text` glyph shape). FULL literals — the build's asset scan
+// collects string literals, so every path here gets baked into the pak.
+const FILE_ICONS: Record<string, string> = {
+  md: "glyphs/win98-icon-file-md.png",
+  png: "glyphs/win98-icon-file-png.png",
+  pbp: "glyphs/win98-icon-file-pbp.png",
+  xlsx: "glyphs/win98-icon-file-xlsx.png",
+  txt: "glyphs/win98-icon-file-txt.png",
+  pdf: "glyphs/win98-icon-file-pdf.png",
+  json: "glyphs/win98-icon-file-json.png",
+};
+
+function iconFor(entry: VfsEntry): string {
+  if (entry.kind === "dir") return "glyphs/win98-icon-folder.png";
+  const ext = entry.name.slice(entry.name.lastIndexOf(".") + 1).toLowerCase();
+  return FILE_ICONS[ext] ?? "glyphs/win98-icon-file.png";
+}
 
 function Control(props: { glyph: string; close?: boolean }) {
   return (
@@ -74,10 +93,7 @@ export default function Shell() {
     return (
       <View ref={ref} focusable class={cls(skin, "file-row")} onPress={() => open(props.entry)}>
         <View class="w-[116] flex-row items-center overflow-hidden shrink-0 pl-[2]">
-          <Image
-            class="w-[16] h-[16] mr-[4] shrink-0"
-            src={props.entry.kind === "dir" ? "glyphs/win98-icon-folder.png" : "glyphs/win98-icon-file.png"}
-          />
+          <Image class="w-[16] h-[16] mr-[4] shrink-0" src={iconFor(props.entry)} />
           <Text class={txt()}>{props.entry.name}</Text>
         </View>
         <View class="w-[140] flex-row items-center overflow-hidden shrink-0 pl-[4]">
@@ -177,6 +193,7 @@ export default function Shell() {
               <View class={cls(skin, "file-list-header")}>
                 <View class={cls(skin, "file-list-col", { sorted: true })} style={{ width: 120 }}>
                   <Text class="text-xs text-black">Name</Text>
+                  <Image class="w-[8] h-[8] ml-[4]" src="glyphs/sort-asc.png" />
                 </View>
                 <View class={cls(skin, "file-list-col")} style={{ width: 140 }}>
                   <Text class="text-xs text-black">Date Modified</Text>
