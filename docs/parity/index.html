@@ -1,0 +1,44 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>PocketShell parity board</title>
+<style>
+  body { font: 13px ui-monospace, monospace; background: #101014; color: #ddd; margin: 24px; }
+  table { border-collapse: collapse; }
+  td, th { border: 1px solid #333; padding: 6px 8px; vertical-align: top; }
+  img { display: block; image-rendering: pixelated; }
+  .rmse { font-size: 18px; text-align: right; }
+  caption { text-align: left; padding: 8px 0 12px; }
+</style>
+<table>
+  <caption>sheru webview reference vs PocketShell (PSP engine frame, window crop) —
+  RMSE over each scene's region (red channel in the diff = in-region error).
+  History: <code>history.json</code>.</caption>
+  <tr><th>theme</th><th>scene</th><th>sheru reference</th><th>PocketShell</th><th>diff</th><th>RMSE</th></tr>
+  
+    <tr>
+      <td><code>win98</code></td>
+      <td><code>chrome-focused</code></td>
+      <td><img src="ref/win98/chrome-focused.png" width="464"></td>
+      <td><img src="shots/win98/chrome-focused.png" width="464"></td>
+      <td><img src="diff/win98/chrome-focused.png" width="464"></td>
+      <td class="rmse">31.76</td>
+    </tr>
+
+    <tr>
+      <td><code>win98</code></td>
+      <td><code>chrome-unfocused</code></td>
+      <td><img src="ref/win98/chrome-unfocused.png" width="464"></td>
+      <td><img src="shots/win98/chrome-unfocused.png" width="464"></td>
+      <td><img src="diff/win98/chrome-unfocused.png" width="464"></td>
+      <td class="rmse">17.30</td>
+    </tr>
+
+    <tr>
+      <td><code>win98</code></td>
+      <td><code>control-pressed</code></td>
+      <td><img src="ref/win98/control-pressed.png" width="464"></td>
+      <td><img src="shots/win98/control-pressed.png" width="464"></td>
+      <td><img src="diff/win98/control-pressed.png" width="464"></td>
+      <td class="rmse">32.33</td>
+    </tr>
+</table>

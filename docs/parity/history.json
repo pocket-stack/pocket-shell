@@ -1,0 +1,40 @@
+[
+  {
+    "date": "2026-07-12",
+    "milestone": "M1",
+    "results": {
+      "win98": [
+        {
+          "scene": "chrome-focused",
+          "rmse": 31.76,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "chrome-unfocused",
+          "rmse": 17.3,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "control-pressed",
+          "rmse": 32.33,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        }
+      ]
+    }
+  }
+]
