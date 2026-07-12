@@ -1,0 +1,8 @@
+node_modules/
+dist/*.js
+dist/*.pak
+dist/EBOOT.PBP
+target/
+.DS_Store
+test/goldens/*.actual.png
+out/

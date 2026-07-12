@@ -1,0 +1,59 @@
+{
+  "$schema": "https://pocket-stack.dev/schema/pocket-1.json",
+  "pocket": 1,
+
+  "id": "dev.pocket-stack.shell",
+  "name": "pocket-shell",
+  "title": "PocketShell",
+  "version": "0.1.0",
+  "description": "The sheru file-manager themes — Windows 98, XP Luna, Win7 Aero, Aqua, XFCE — rendered by the PocketJS style engine on a Sony PSP at 480x272, with webview feature parity as the yardstick. Bevel rings, caption gradients, era chrome; d-pad driven; a USB-tethered Mac bridge browses /Applications and launches real apps.",
+  "authors": [
+    { "name": "Yifeng \"Evan\" Wang", "url": "https://github.com/doodlewind" }
+  ],
+  "license": "MIT",
+  "repository": "https://github.com/pocket-stack/pocket-shell",
+
+  "engine": {
+    "pocketjs": ">=0.4.0-0",
+    "capabilities": ["ui"]
+  },
+
+  "app": {
+    "entry": "app/main.tsx",
+    "framework": "solid",
+    "kind": "tool",
+    "simulationHz": 60
+  },
+
+  "assets": {
+    "bake": "bun tools/gen-assets.ts",
+    "prebaked": ["app/pak.json", "app/theme/cooked", "themes-src/sheru"],
+    "sources": [
+      {
+        "name": "sheru theme system",
+        "origin": "https://github.com/doodlewind/sheru",
+        "author": "Yifeng \"Evan\" Wang",
+        "license": "MIT",
+        "note": "Tokens, chrome metrics and glyph geometry are snapshotted verbatim from the sheru theme modules (themes-src/sheru/*.json, with commit provenance); the per-part paint rules are hand-translated from each theme's css.ts."
+      }
+    ]
+  },
+
+  "targets": {
+    "psp": {
+      "crate": "crates/pocket-shell-psp",
+      "title": "PocketShell",
+      "icon0": "art/ICON0.png",
+      "pic1": "art/PIC1.png",
+      "memoryBudgetMb": 20
+    },
+    "desktop": { "host": "uihost" },
+    "web": { "host": "host-web" }
+  },
+
+  "store": {
+    "categories": ["tools", "themes"],
+    "tags": ["file-manager", "win98", "xp", "aero", "aqua", "retro-ui"],
+    "privacy": { "network": "none", "storage": "none" }
+  }
+}

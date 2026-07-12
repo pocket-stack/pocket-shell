@@ -1,0 +1,23 @@
+# pocket-shell-psp — PocketShell on a real Sony PSP.
+#
+# STANDALONE LONE-BIN CRATE (outside any workspace; cargo-psp requirement,
+# same as vendor/pocketjs/native). Build via `bun run psp` at the repo root.
+#
+# Pure 2D composition: the pocketjs-psp host LIBRARY provides everything —
+# the arena allocator trio, QuickJS embedding, the `ui` HostOps surface,
+# the DrawList GE backend, the pak feeder and the DevTools mailbox. This
+# crate is only the stock boot + 2D frame loop (src/main.rs) with the built
+# app bundle baked in (build.rs).
+#
+# All vendor paths resolve inside vendor/: rust-psp + quickjs-rs are
+# submodules there, and vendor/pocketjs's own relative deps land on them.
+
+[package]
+name = "pocket-shell-psp"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+psp = { path = "../../vendor/rust-psp/psp", features = ["external-c-heap", "abort-only", "external-global-alloc"] }
+libquickjs-sys = { path = "../../vendor/quickjs-rs/libquickjs-sys" }
+pocketjs-psp = { path = "../../vendor/pocketjs/native" }
