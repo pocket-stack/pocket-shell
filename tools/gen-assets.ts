@@ -299,8 +299,11 @@ if (existsSync(stripManifestPath)) {
   for (const req of requests) {
     const { stops, horizontal, reverse } = parseStrip(req.css, req.extent);
     const S = Math.min(512, pow2(Math.max(8, req.extent)));
-    const w = horizontal ? S : 1;
-    const h = horizontal ? 1 : S;
+    // REAL-GE CONSTRAINT: texture rows must span >= 16 bytes (4 px @8888) —
+    // 1px-wide strips render on every emulator and BLANK on hardware.
+    const THIN = 4;
+    const w = horizontal ? S : THIN;
+    const h = horizontal ? THIN : S;
     const canvas = createCanvas(w, h);
     const ctx = canvas.getContext("2d");
     const img = ctx.createImageData(w, h);
@@ -308,10 +311,13 @@ if (existsSync(stripManifestPath)) {
       let t = i / (S - 1);
       if (reverse) t = 1 - t;
       const [r, g2, b, a] = sampleGradient(stops, t);
-      img.data[i * 4] = r;
-      img.data[i * 4 + 1] = g2;
-      img.data[i * 4 + 2] = b;
-      img.data[i * 4 + 3] = a;
+      for (let k = 0; k < THIN; k++) {
+        const o = horizontal ? (k * S + i) * 4 : (i * THIN + k) * 4;
+        img.data[o] = r;
+        img.data[o + 1] = g2;
+        img.data[o + 2] = b;
+        img.data[o + 3] = a;
+      }
     }
     ctx.putImageData(img, 0, 0);
     await Bun.write(`${repo}app/${req.file}`, canvas.toBuffer("image/png"));
