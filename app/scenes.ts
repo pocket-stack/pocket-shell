@@ -26,7 +26,36 @@ export const WINDOW_RECT = [8, 8, 464, 256] as const;
 
 const CHROME_STRIP: [number, number, number, number] = [0, 0, 464, 22];
 
+const FULL_WINDOW: [number, number, number, number] = [0, 0, 464, 256];
+
+// Focus order is document DFS: 3 caption controls → 2 toolbar buttons →
+// 10 sidebar items → file rows. Press/release pairs per DOWN.
+const downs = (n: number) => (f: number) => (f < n * 2 && f % 2 === 0 ? { buttons: BTN.DOWN } : {});
+
 export const SCENES: SceneSpec[] = [
+  {
+    // Walk focus to the "code" row (17th focusable): navy selection bg
+    // (native focus:) + white row text (focus mirror signal).
+    name: "list-selection",
+    frames: 44,
+    input: downs(17),
+    region: FULL_WINDOW,
+  },
+  {
+    // Walk to the "Applications" row (16th) and open it with CIRCLE:
+    // listing swaps to the apps, the address crumbs update.
+    name: "navigate",
+    frames: 48,
+    input: (f) => (f < 32 && f % 2 === 0 ? { buttons: BTN.DOWN } : f === 36 ? { buttons: BTN.CIRCLE } : {}),
+    region: FULL_WINDOW,
+  },
+  {
+    // Walk to the first sidebar item (Recents, 6th focusable).
+    name: "sidebar-selected",
+    frames: 20,
+    input: downs(6),
+    region: FULL_WINDOW,
+  },
   {
     // Boot settle: active caption, three raised controls, framed face.
     name: "chrome-focused",
@@ -61,4 +90,7 @@ export const SCENES: SceneSpec[] = [
 export const JOURNEY_PAIRS: ReadonlyArray<readonly [string, string]> = [
   ["chrome-focused", "chrome-unfocused"],
   ["chrome-focused", "control-pressed"],
+  ["chrome-focused", "list-selection"],
+  ["list-selection", "navigate"],
+  ["chrome-focused", "sidebar-selected"],
 ];

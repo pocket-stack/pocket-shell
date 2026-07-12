@@ -19,8 +19,10 @@ const CANVAS_W = 16;
 const CANVAS_H = 8;
 
 interface GlyphShape {
-  kind: "rect" | "pixels" | "path";
+  kind: "rect" | "pixels" | "path" | "text";
   fill?: string;
+  stroke?: string;
+  strokeWidth?: number;
   // rect
   x?: number;
   y?: number;
@@ -43,17 +45,22 @@ function resolveFill(fill: string | undefined, currentColor: string): string {
   return fill;
 }
 
-function rasterize(glyph: Glyph, currentColor: string): Buffer {
+/** Draw a glyph onto a wOut x hOut canvas, scaling the viewBox to fit
+ *  (centered, floor offsets). crispEdges control glyphs draw 1:1 on the
+ *  integer grid; file icons downscale 32→16 with canvas AA, matching how
+ *  the webview scales the same SVG. `text` shapes (ext badges) are an M3
+ *  item and skipped. */
+function rasterize(glyph: Glyph, currentColor: string, wOut: number, hOut: number): Buffer {
   const [, , vw, vh] = glyph.viewBox;
-  if (vw > CANVAS_W || vh > CANVAS_H) {
-    throw new Error(`glyph viewBox ${vw}x${vh} exceeds the ${CANVAS_W}x${CANVAS_H} canvas`);
-  }
-  const ox = Math.floor((CANVAS_W - vw) / 2);
-  const oy = Math.floor((CANVAS_H - vh) / 2);
-  const canvas = createCanvas(CANVAS_W, CANVAS_H);
+  const scale = Math.min(wOut / vw, hOut / vh, 1);
+  const ox = Math.floor((wOut - vw * scale) / 2);
+  const oy = Math.floor((hOut - vh * scale) / 2);
+  const canvas = createCanvas(wOut, hOut);
   const ctx = canvas.getContext("2d");
   ctx.translate(ox, oy);
+  ctx.scale(scale, scale);
   for (const shape of glyph.shapes) {
+    if (shape.kind === "text") continue; // ext badges land with M3 era fonts
     ctx.fillStyle = resolveFill(shape.fill, currentColor);
     if (shape.kind === "rect") {
       ctx.fillRect(shape.x ?? 0, shape.y ?? 0, shape.width ?? 0, shape.height ?? 0);
@@ -62,7 +69,15 @@ function rasterize(glyph: Glyph, currentColor: string): Buffer {
         ctx.fillRect(x, y, shape.width ?? 1, shape.height ?? 1);
       }
     } else if (shape.kind === "path") {
-      ctx.fill(new Path2D(shape.d ?? ""), shape.fillRule === "evenodd" ? "evenodd" : "nonzero");
+      const path = new Path2D(shape.d ?? "");
+      if (shape.fill !== "none") {
+        ctx.fill(path, shape.fillRule === "evenodd" ? "evenodd" : "nonzero");
+      }
+      if (shape.stroke) {
+        ctx.strokeStyle = resolveFill(shape.stroke, currentColor);
+        ctx.lineWidth = shape.strokeWidth ?? 1;
+        ctx.stroke(path);
+      }
     } else {
       throw new Error(`unsupported glyph shape kind ${(shape as { kind: string }).kind}`);
     }
@@ -81,9 +96,18 @@ for (const id of THEME_IDS) {
     : (tokens["--control-fg"] ?? "#000000");
   const glyphs = snap.theme.chrome.controlGlyphs.glyphs as Record<string, Glyph>;
   for (const [name, glyph] of Object.entries(glyphs)) {
-    const png = rasterize(glyph, controlFg);
+    const png = rasterize(glyph, controlFg, CANVAS_W, CANVAS_H);
     const path = `${repo}app/glyphs/${id}-${name}.png`;
     await Bun.write(path, png);
     console.log(`glyph: app/glyphs/${id}-${name}.png (${glyph.viewBox[2]}x${glyph.viewBox[3]} in ${CANVAS_W}x${CANVAS_H})`);
+  }
+  // File-manager artwork: the theme's folder/file icons at list size (16x16
+  // pow2 — the webview renders the same 32x32 SVGs at 16px).
+  const icons = snap.theme.iconGlyphs as Record<string, Glyph>;
+  for (const [name, glyph] of Object.entries(icons)) {
+    const png = rasterize(glyph, tokens["--fg"] ?? "#000000", 16, 16);
+    const path = `${repo}app/glyphs/${id}-icon-${name}.png`;
+    await Bun.write(path, png);
+    console.log(`glyph: app/glyphs/${id}-icon-${name}.png (${glyph.viewBox[2]}x${glyph.viewBox[3]} -> 16x16)`);
   }
 }

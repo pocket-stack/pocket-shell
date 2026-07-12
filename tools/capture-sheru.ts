@@ -19,6 +19,7 @@ import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { chromium } from "playwright-core";
 import { DENSITY } from "../themes-src/density.ts";
+import { CLOCK_EPOCH } from "../app/data/vfs-mock.ts";
 
 const repo = new URL("..", import.meta.url).pathname;
 const sheruDir = (process.env.SHERU_DIR ?? `${process.env.HOME}/code/sheru`).replace(/\/$/, "");
@@ -53,6 +54,25 @@ const REF_SCENES: RefScene[] = [
       if (!box) throw new Error("close control not found");
       await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
       await page.mouse.down();
+    },
+  },
+  {
+    name: "list-selection",
+    prepare: async (page) => {
+      await page.locator('[data-part="file-row"]', { hasText: "code" }).first().click();
+    },
+  },
+  {
+    name: "navigate",
+    prepare: async (page) => {
+      await page.locator('[data-part="file-row"]', { hasText: "Applications" }).first().dblclick();
+      await page.waitForTimeout(200);
+    },
+  },
+  {
+    name: "sidebar-selected",
+    prepare: async (page) => {
+      await page.locator('[data-part="sidebar-item"]', { hasText: "Recents" }).first().click();
     },
   },
 ];
@@ -100,13 +120,25 @@ try {
       .map(([k, v]) => `${k}: ${v} !important;`)
       .join(" ");
 
+    let dumpedDates = false;
     for (const scene of REF_SCENES) {
       const page = await browser.newPage({
         viewport: { width: VIEW_W, height: VIEW_H },
         deviceScaleFactor: 1,
       });
+      // Frozen wall clock: sheru's mock seeds mtimes relative to NOW; the
+      // mock VFS in app/data/vfs-mock.ts hardcodes the strings this instant
+      // renders (see CLOCK_EPOCH there).
+      await page.clock.setFixedTime(new Date(CLOCK_EPOCH));
       await page.goto(`http://127.0.0.1:${server.port}/?theme=${id}`, { waitUntil: "networkidle" });
       await page.waitForSelector('[data-part="window"]');
+      if (!dumpedDates) {
+        dumpedDates = true;
+        const rows = await page.$$eval('[data-part="file-row"]', (els) =>
+          els.map((el) => Array.from(el.querySelectorAll('[data-part="file-cell"]')).map((c) => c.textContent?.trim()).join(" | ")),
+        );
+        console.log("ref root listing:", JSON.stringify(rows, null, 1));
+      }
       await page.addStyleTag({
         content:
           (densityCss ? `:root { ${densityCss} }\n` : "") +
