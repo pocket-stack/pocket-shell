@@ -1,4 +1,4 @@
-// Deterministic mock VFS — hand-ported from sheru's mock-bridge seed
+// Deterministic mock VFS - hand-ported from sheru's mock-bridge seed
 // (packages/webui/src/bridge/mock.ts) with FIXED display dates: sheru seeds
 // mtimes relative to Date.now(), which would break byte-exact goldens, so
 // the parity capture freezes the browser clock at CLOCK_EPOCH and these
@@ -32,14 +32,14 @@ export const SIDEBAR: SidebarSection[] = [
   {
     heading: "Connectors",
     items: [
-      "Object Storage — sheru-source",
-      "GitHub — octocat",
-      "Gmail — evan@sheru.app",
-      "Calendar — evan@sheru.app",
-      "Linear — SHERU",
-      "Notion — SHERU",
-      "Google Drive — evan@sheru.app",
-      "dev-box — SSH",
+      "Object Storage - sheru-source",
+      "GitHub - octocat",
+      "Gmail - evan@sheru.app",
+      "Calendar - evan@sheru.app",
+      "Linear - SHERU",
+      "Notion - SHERU",
+      "Google Drive - evan@sheru.app",
+      "dev-box - SSH",
     ],
   },
 ];
@@ -54,7 +54,7 @@ const a = (name: string, date: string): VfsEntry =>
   ({ name, kind: "app", date, size: "--", kindLabel: "Application" });
 
 // Root + Applications mirror the sheru mock EXACTLY (names, order, dates as
-// rendered under the frozen clock — dumped by tools/capture-sheru.ts);
+// rendered under the frozen clock - dumped by tools/capture-sheru.ts);
 // deeper folders are PocketShell-only navigation fixtures.
 const TREE: Record<string, VfsEntry[]> = {
   [ROOT_PATH]: [

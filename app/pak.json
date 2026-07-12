@@ -1,0 +1,10 @@
+[
+  {
+    "key": "shell:font.0",
+    "file": "fonts/win98-font.0.bin"
+  },
+  {
+    "key": "shell:font.7",
+    "file": "fonts/win98-font.7.bin"
+  }
+]

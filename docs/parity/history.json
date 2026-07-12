@@ -172,5 +172,345 @@
         }
       ]
     }
+  },
+  {
+    "date": "2026-07-12",
+    "milestone": "M3",
+    "results": {
+      "win98": [
+        {
+          "scene": "list-selection",
+          "rmse": 66.18,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "navigate",
+          "rmse": 54.59,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "sidebar-selected",
+          "rmse": 65.72,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "chrome-focused",
+          "rmse": 31.76,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "chrome-unfocused",
+          "rmse": 17.3,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "control-pressed",
+          "rmse": 32.33,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "date": "2026-07-12",
+    "milestone": "M3",
+    "results": {
+      "win98": [
+        {
+          "scene": "list-selection",
+          "rmse": 67.63,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "navigate",
+          "rmse": 55.3,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "sidebar-selected",
+          "rmse": 66.34,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "chrome-focused",
+          "rmse": 31.35,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "chrome-unfocused",
+          "rmse": 17.26,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "control-pressed",
+          "rmse": 31.92,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "date": "2026-07-12",
+    "milestone": "M3",
+    "results": {
+      "win98": [
+        {
+          "scene": "list-selection",
+          "rmse": 74.79,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "navigate",
+          "rmse": 61.01,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "sidebar-selected",
+          "rmse": 74.78,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "chrome-focused",
+          "rmse": 33.1,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "chrome-unfocused",
+          "rmse": 17.52,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "control-pressed",
+          "rmse": 33.64,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "date": "2026-07-12",
+    "milestone": "M3",
+    "results": {
+      "win98": [
+        {
+          "scene": "list-selection",
+          "rmse": 74.76,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "navigate",
+          "rmse": 60.97,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "sidebar-selected",
+          "rmse": 74.76,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "chrome-focused",
+          "rmse": 33.1,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "chrome-unfocused",
+          "rmse": 17.52,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "control-pressed",
+          "rmse": 33.64,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "date": "2026-07-12",
+    "milestone": "M3-w95fa",
+    "results": {
+      "win98": [
+        {
+          "scene": "list-selection",
+          "rmse": 72.19,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "navigate",
+          "rmse": 58.45,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "sidebar-selected",
+          "rmse": 70.98,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "chrome-focused",
+          "rmse": 36.81,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "chrome-unfocused",
+          "rmse": 18.07,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "control-pressed",
+          "rmse": 37.29,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        }
+      ]
+    }
   }
 ]
