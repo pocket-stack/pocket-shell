@@ -21,3 +21,11 @@ edition = "2021"
 psp = { path = "../../vendor/rust-psp/psp", features = ["external-c-heap", "abort-only", "external-global-alloc"] }
 libquickjs-sys = { path = "../../vendor/quickjs-rs/libquickjs-sys" }
 pocketjs-psp = { path = "../../vendor/pocketjs/native" }
+
+# vendor/pocketjs pins `psp` by git rev (its self-contained bootstrap, #102);
+# redirect that source onto the vendored submodule (same commit) so cargo
+# sees ONE psp crate — two copies duplicate the panic_impl lang item.
+[patch."https://github.com/pocket-stack/rust-psp.git"]
+psp = { path = "../../vendor/rust-psp/psp" }
+[patch."https://github.com/pocket-stack/quickjs-rs.git"]
+libquickjs-sys = { path = "../../vendor/quickjs-rs/libquickjs-sys" }

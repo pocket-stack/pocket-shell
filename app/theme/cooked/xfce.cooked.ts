@@ -61,6 +61,7 @@ export const xfceSkin: ThemeSkin = {
     "regular": "shell:font.inter.0",
     "bold": "shell:font.inter.7"
   },
+  "cursor": "glyphs/xfce-cursor.png",
   "chrome": {
     "side": "right",
     "order": [

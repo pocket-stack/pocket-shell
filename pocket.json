@@ -6,7 +6,7 @@
   "name": "pocket-shell",
   "title": "PocketShell",
   "version": "0.1.0",
-  "description": "The sheru file-manager themes — Windows 98, XP Luna, Win7 Aero, Aqua, XFCE — rendered by the PocketJS style engine on a Sony PSP at 480x272, with webview feature parity as the yardstick. Bevel rings, caption gradients, era chrome; d-pad driven; a USB-tethered Mac bridge browses /Applications and launches real apps.",
+  "description": "The sheru file-manager themes — Windows 98, XP Luna, Win7 Aero, Aqua, XFCE — rendered by the PocketJS style engine on a Sony PSP at 480x272, with webview feature parity as the yardstick. Bevel rings, caption gradients, era chrome; driven by the analog nub steering a themed pointer (the framework's input.cursor capability); a USB-tethered Mac bridge browses /Applications and launches real apps.",
   "authors": [
     { "name": "Yifeng \"Evan\" Wang", "url": "https://github.com/doodlewind" }
   ],

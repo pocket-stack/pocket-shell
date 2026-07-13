@@ -94,6 +94,7 @@ export const winxpSkin: ThemeSkin = {
     "regular": "shell:font.w95fa.0",
     "bold": "shell:font.w95fa.7"
   },
+  "cursor": "glyphs/winxp-cursor.png",
   "chrome": {
     "side": "right",
     "order": [

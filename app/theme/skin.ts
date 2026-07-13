@@ -19,6 +19,9 @@ export interface ThemeSkin {
   strips: Record<string, { src: string; cls: string }>;
   /** Era font atlas pak keys (regular, bold) for the runtime slot swap. */
   fonts: { regular: string; bold: string };
+  /** Era pointer sprite (baked by gen-assets; enableCursor swaps it with
+   *  the theme). Full literal so the build's asset scan bakes it. */
+  cursor: string;
   /** Caption-control layout from sheru chrome. */
   chrome: { side: "left" | "right"; order: string[] };
 }

@@ -173,6 +173,41 @@ mkdirSync(`${repo}app/glyphs`, { recursive: true });
   console.log("glyph: app/glyphs/sort-asc.png (8x8)");
 }
 
+// Era pointer sprites (enableCursor swaps them with the theme): the classic
+// 16x16 arrow, decoded from per-row bitmasks (bit N = pixel at x = N, tip at
+// the 0,0 hotspot). The Windows/XFCE eras use the white-fill/black-outline
+// arrow; aqua uses the Mac's black-fill/white-outline.
+{
+  const OUTLINE = [
+    0x001, 0x003, 0x005, 0x009, 0x011, 0x021, 0x041, 0x081,
+    0x101, 0x201, 0x7c1, 0x049, 0x095, 0x093, 0x120, 0x1e0,
+  ];
+  const FILL = [
+    0x000, 0x000, 0x002, 0x006, 0x00e, 0x01e, 0x03e, 0x07e,
+    0x0fe, 0x1fe, 0x03e, 0x036, 0x062, 0x060, 0x0c0, 0x000,
+  ];
+  const bakeCursor = (outline: string, fill: string) => {
+    const c = createCanvas(16, 16);
+    const x = c.getContext("2d");
+    for (let row = 0; row < 16; row++) {
+      for (let col = 0; col < 16; col++) {
+        const isFill = (FILL[row] >> col) & 1;
+        const isOutline = (OUTLINE[row] >> col) & 1;
+        if (!isFill && !isOutline) continue;
+        x.fillStyle = isFill ? fill : outline;
+        x.fillRect(col, row, 1, 1);
+      }
+    }
+    return c.toBuffer("image/png");
+  };
+  const win = bakeCursor("#000000", "#ffffff");
+  const mac = bakeCursor("#ffffff", "#000000");
+  for (const id of THEME_IDS) {
+    await Bun.write(`${repo}app/glyphs/${id}-cursor.png`, id === "aqua" ? mac : win);
+  }
+  console.log(`glyph: app/glyphs/<theme>-cursor.png x${THEME_IDS.length} (16x16)`);
+}
+
 for (const id of THEME_IDS) {
   const snap = await Bun.file(`${repo}themes-src/sheru/${id}.json`).json();
   const tokens: Record<string, string> = snap.theme.tokens;

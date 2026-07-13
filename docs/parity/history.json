@@ -638,5 +638,131 @@
         }
       ]
     }
+  },
+  {
+    "date": "2026-07-13",
+    "milestone": "cursor",
+    "results": {
+      "win98": [
+        {
+          "scene": "list-selection",
+          "ref": "list-selection",
+          "rmse": 72.54,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "navigate",
+          "ref": "navigate",
+          "rmse": 58.91,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "sidebar-selected",
+          "ref": "sidebar-selected",
+          "rmse": 71.33,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        },
+        {
+          "scene": "chrome-focused",
+          "ref": "chrome-focused",
+          "rmse": 37.15,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "chrome-unfocused",
+          "ref": "chrome-unfocused",
+          "rmse": 18.75,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        },
+        {
+          "scene": "control-pressed",
+          "ref": "control-pressed",
+          "rmse": 37.44,
+          "region": [
+            0,
+            0,
+            464,
+            22
+          ]
+        }
+      ],
+      "winxp": [
+        {
+          "scene": "theme-winxp",
+          "ref": "chrome-focused",
+          "rmse": 76.4,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        }
+      ],
+      "win7": [
+        {
+          "scene": "theme-win7",
+          "ref": "chrome-focused",
+          "rmse": 65.58,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        }
+      ],
+      "aqua": [
+        {
+          "scene": "theme-aqua",
+          "ref": "chrome-focused",
+          "rmse": 64.08,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        }
+      ],
+      "xfce": [
+        {
+          "scene": "theme-xfce",
+          "ref": "chrome-focused",
+          "rmse": 58.91,
+          "region": [
+            0,
+            0,
+            464,
+            256
+          ]
+        }
+      ]
+    }
   }
 ]
