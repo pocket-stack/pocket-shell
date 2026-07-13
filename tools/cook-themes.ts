@@ -79,6 +79,7 @@ for (const spec of SPECS) {
       regular: `shell:font.${FONTS[spec.id]}.0`,
       bold: `shell:font.${FONTS[spec.id]}.7`,
     },
+    cursor: `glyphs/${spec.id}-cursor.png`,
     chrome: {
       side: chrome?.controlsSide ?? "right",
       order: chrome?.controlsOrder ?? ["minimize", "zoom", "close"],

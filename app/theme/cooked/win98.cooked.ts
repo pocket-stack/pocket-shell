@@ -61,6 +61,7 @@ export const win98Skin: ThemeSkin = {
     "regular": "shell:font.w95fa.0",
     "bold": "shell:font.w95fa.7"
   },
+  "cursor": "glyphs/win98-cursor.png",
   "chrome": {
     "side": "right",
     "order": [

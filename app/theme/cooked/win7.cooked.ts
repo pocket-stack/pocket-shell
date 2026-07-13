@@ -86,6 +86,7 @@ export const win7Skin: ThemeSkin = {
     "regular": "shell:font.inter.0",
     "bold": "shell:font.inter.7"
   },
+  "cursor": "glyphs/win7-cursor.png",
   "chrome": {
     "side": "right",
     "order": [

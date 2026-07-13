@@ -94,6 +94,7 @@ export const aquaSkin: ThemeSkin = {
     "regular": "shell:font.inter.0",
     "bold": "shell:font.inter.7"
   },
+  "cursor": "glyphs/aqua-cursor.png",
   "chrome": {
     "side": "left",
     "order": [

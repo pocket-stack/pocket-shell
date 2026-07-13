@@ -1,25 +1,34 @@
-// M4: the Explorer over the mock VFS in all five sheru themes, every part
+// The Explorer over the mock VFS in all five sheru themes, every part
 // painted from the cooked skin tables (values = sheru snapshots, rules =
-// paint specs).
+// paint specs). Driven by the framework's virtual cursor (input.cursor):
 //
-//   d-pad        walk focus (controls → toolbar → sidebar → rows)
-//   CIRCLE       open: enter a folder (rows), jump (sidebar), Up (toolbar)
+//   analog nub   steer the era pointer (d-pad nudges at 1 px/frame)
+//   CIRCLE       click: open a folder (rows), jump (sidebar), Up (toolbar);
+//                held over a control it shows the pressed face
 //   SELECT       toggle window key state (active vs inactive caption)
 //   L / R        cycle themes (win98 → winxp → win7 → aqua → xfce)
 //
-// Theme switch swaps the skin table (reactive class lookups), the era font
-// atlases (runtime loadFontAtlas — slots re-register), the control glyphs,
-// file icons and gradient strips. Multi-stop gradients render as baked
-// strip images (<Strip>) until the engine gradient PR.
+// Hover IS the focus: variant, so the cooked focus: styles (translated from
+// sheru's :hover/selection rules) light up under the pointer with zero new
+// machinery, and the hover-mirror signal inverts row text the same way the
+// old focus mirror did.
 //
-// Known deviations (tracked on the parity board): no 1px glyph nudge on
-// press, no sidebar connector icons, no scrollbar until ScrollView; aqua
-// pinstripe/gels + per-corner radii + dither per paint-spec notes.
+// Theme switch swaps the skin table (reactive class lookups), the era font
+// atlases (runtime loadFontAtlas — slots re-register), the pointer sprite
+// (enableCursor re-call), the control glyphs, file icons and gradient
+// strips. Multi-stop gradients render as baked strip images (<Strip>) until
+// the engine gradient PR.
+//
+// Known deviations (tracked on the parity board): hover shows the selection
+// tint (sheru separates :hover from click-selection; splitting them needs
+// /selected part states), no 1px glyph nudge on press, no sidebar connector
+// icons, no scrollbar until ScrollView; aqua pinstripe/gels + per-corner
+// radii + dither per paint-spec notes.
 
 import { createEffect, createMemo, createSignal, For, Show } from "solid-js";
 import { getOps } from "@pocketjs/framework";
 import { Image, Text, View, type NodeMirror } from "@pocketjs/framework/components";
-import { BTN, getFocused } from "@pocketjs/framework/input";
+import { BTN, enableCursor, getFocused } from "@pocketjs/framework/input";
 import { onButtonPress, onFrame } from "@pocketjs/framework/lifecycle";
 import { get, hasPack } from "@pocketjs/framework/pak";
 import { cls, type ThemeSkin } from "./theme/skin.ts";
@@ -40,15 +49,34 @@ export default function Shell() {
   const skin = () => SKINS[skinIdx()];
   const [winFocused, setWinFocused] = createSignal(true);
   const [cwd, setCwd] = createSignal(ROOT_PATH);
-  const [focusedId, setFocusedId] = createSignal(-1);
+  const [hoverId, setHoverId] = createSignal(-1);
   const [status, setStatus] = createSignal("");
 
   onButtonPress(BTN.SELECT, () => setWinFocused((f) => !f));
   onButtonPress(BTN.RTRIGGER, () => setSkinIdx((i) => (i + 1) % SKINS.length));
   onButtonPress(BTN.LTRIGGER, () => setSkinIdx((i) => (i + SKINS.length - 1) % SKINS.length));
+
+  // The virtual cursor replaces the d-pad focus walk entirely; the era
+  // pointer sprite follows the theme (a re-call updates in place — position
+  // survives). Parked on the desktop reveal at boot so the chrome parity
+  // shots stay pointer-free; `start` is first-call-only or theme switches
+  // would teleport the pointer.
+  let cursorPlaced = false;
+  createEffect(() => {
+    enableCursor({
+      image: `ui:img.${skin().cursor}`,
+      dpadSpeed: 60,
+      ...(cursorPlaced ? {} : { start: [2, 268] as [number, number] }),
+    });
+    cursorPlaced = true;
+  });
+
+  // Hover mirror: the cursor drives focus, so getFocused() IS the hovered
+  // node — row/sidebar text inverts under the pointer exactly as it did
+  // under the old d-pad focus.
   onFrame(() => {
     const id = getFocused()?.id ?? -1;
-    if (id !== focusedId()) setFocusedId(id);
+    if (id !== hoverId()) setHoverId(id);
   });
 
   // Era fonts follow the skin: re-register slots 0/7 from the skin's atlas
@@ -119,7 +147,7 @@ export default function Shell() {
   // Name 120 (icon + label) | Date 140 | Size 72 (right) | Kind fills.
   function FileRow(props: { entry: VfsEntry }) {
     let ref: NodeMirror | undefined;
-    const sel = () => focusedId() === (ref?.id ?? -2);
+    const sel = () => hoverId() === (ref?.id ?? -2);
     const txt = () => (sel() ? "text-xs text-[#ffffff]" : "text-xs text-[#000000]");
     return (
       <View ref={ref} focusable class={cls(skin(), "file-row")} onPress={() => open(props.entry)}>
@@ -142,7 +170,7 @@ export default function Shell() {
 
   function SidebarItem(props: { label: string }) {
     let ref: NodeMirror | undefined;
-    const sel = () => focusedId() === (ref?.id ?? -2);
+    const sel = () => hoverId() === (ref?.id ?? -2);
     return (
       <View
         ref={ref}

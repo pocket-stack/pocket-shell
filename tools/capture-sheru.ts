@@ -35,6 +35,10 @@ interface RefScene {
   themes?: string[];
   /** Applied after first paint, before the screenshot. */
   prepare?: (page: import("playwright-core").Page) => Promise<void>;
+  /** Paint the theme's baked arrow at [x, y] (window coords): the PSP
+   *  golden carries the virtual cursor there, and Playwright screenshots
+   *  omit the OS pointer — the reference must carry the same pixels. */
+  cursor?: [number, number];
 }
 
 const REF_SCENES: RefScene[] = [
@@ -51,6 +55,7 @@ const REF_SCENES: RefScene[] = [
   {
     name: "control-pressed",
     themes: ["win98"],
+    cursor: [454, 12],
     prepare: async (page) => {
       // Hold the pointer down on the close control: :active applies while
       // held, matching the PSP scene's held CIRCLE.
@@ -63,6 +68,7 @@ const REF_SCENES: RefScene[] = [
   {
     name: "list-selection",
     themes: ["win98"],
+    cursor: [190, 92],
     prepare: async (page) => {
       await page.locator('[data-part="file-row"]', { hasText: "code" }).first().click();
     },
@@ -70,6 +76,7 @@ const REF_SCENES: RefScene[] = [
   {
     name: "navigate",
     themes: ["win98"],
+    cursor: [234, 232],
     prepare: async (page) => {
       await page.locator('[data-part="file-row"]', { hasText: "Applications" }).first().dblclick();
       await page.waitForTimeout(200);
@@ -78,11 +85,18 @@ const REF_SCENES: RefScene[] = [
   {
     name: "sidebar-selected",
     themes: ["win98"],
+    cursor: [54, 60],
     prepare: async (page) => {
       await page.locator('[data-part="sidebar-item"]', { hasText: "Recents" }).first().click();
     },
   },
 ];
+
+/** The same 16x16 arrow the app's enableCursor draws, as a data URI. */
+async function cursorDataUri(theme: string): Promise<string> {
+  const png = await Bun.file(join(repo, `app/glyphs/${theme}-cursor.png`)).arrayBuffer();
+  return `data:image/png;base64,${Buffer.from(png).toString("base64")}`;
+}
 
 function browserExecutable(): string | undefined {
   try {
@@ -157,6 +171,19 @@ try {
       // settle fonts/layout deterministically
       await page.evaluate(() => document.fonts.ready);
       await scene.prepare?.(page);
+      if (scene.cursor) {
+        await page.evaluate(
+          ([uri, x, y]) => {
+            const img = document.createElement("img");
+            img.src = uri as string;
+            img.style.cssText =
+              `position:fixed;left:${x}px;top:${y}px;width:16px;height:16px;` +
+              `z-index:99999;pointer-events:none;image-rendering:pixelated;`;
+            document.body.appendChild(img);
+          },
+          [await cursorDataUri(id), scene.cursor[0], scene.cursor[1]] as const,
+        );
+      }
       await page.waitForTimeout(120);
       await page.screenshot({ path: `${outDir}/${scene.name}.png` });
       await page.close();
