@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.pocket/
+.DS_Store
+*.log
