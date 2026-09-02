@@ -502,6 +502,58 @@ describe("pocket-shell in the sim", () => {
     expect(store.sheet()?.at).toBe("root");
   });
 
+  test("a held modifier stays down for several clicks, and a tapped one for one", async () => {
+    const { world, store, sent } = await connected();
+    tap(world, MODE.x + MODE_HALF_W + 17, MODE.y + 11);
+    expect(store.mode()).toBe("deck");
+
+    // One finger holds ctrl. It arms on the down edge and, because the finger
+    // stays, it does NOT drop after the first click: two ctrl-clicks in a row
+    // are how a file manager multi-selects.
+    const ctrl = keyboardKeys("lower").find((k) => k.def.label === "ctrl")!;
+    const held = () => pack(ctrl.x + ctrl.w / 2, ctrl.y + ctrl.h / 2);
+    world.frame(0, undefined, [held()]);
+    for (let i = 0; i < 4; i += 1) world.frame(0, undefined, [held()]);
+    expect(store.kbMods()).toEqual(["ctrl"]);
+
+    for (const step of [0, 40]) {
+      const at = pack(TRACKPAD.x + 40 + step, TRACKPAD.y + 50, 1);
+      world.frame(0, undefined, [held(), at]);
+      world.frame(0, undefined, [held(), at]);
+      world.frame(0, undefined, [held()]);
+      for (let i = 0; i < 6; i += 1) world.frame(0, undefined, [held()]);
+      // Still armed, ready for the next one.
+      expect(store.kbMods()).toEqual(["ctrl"]);
+    }
+    expect(sent.filter((line) => (line as { t: string }).t === "click")).toEqual([
+      { t: "click", b: "l", mods: ["ctrl"] },
+      { t: "click", b: "l", mods: ["ctrl"] },
+    ]);
+
+    // Lifting the key drops it, since it was used while held.
+    world.frame(0, undefined, []);
+    for (let i = 0; i < 6; i += 1) world.frame(0);
+    expect(store.kbMods()).toEqual([]);
+  });
+
+  test("a super chord runs the machine's own binding instead of typing", async () => {
+    const { world, store, sent } = await connected();
+    tap(world, MODE.x + MODE_HALF_W + 17, MODE.y + 11);
+    const superKey = keyboardKeys("lower").find((k) => k.def.label === "super")!;
+    // Leftmost on the bottom row, where a laptop's is.
+    expect(superKey.x).toBe(Math.min(...keyboardKeys("lower").filter((k) => k.row === 4).map((k) => k.x)));
+    tap(world, superKey.x + superKey.w / 2, superKey.y + superKey.h / 2, 5);
+    expect(store.kbMods()).toEqual(["super"]);
+
+    const w = keyboardKeys("lower").find((k) => k.def.label === "w")!;
+    tap(world, w.x + w.w / 2, w.y + w.h / 2, 5);
+    // Not `{ t: "key" }`: Hyprland ignores a virtual keyboard's bindings, so
+    // the daemon looks the chord up in Omarchy's binding files and runs that.
+    expect(sent).toContainEqual({ t: "chord", k: "w", mods: ["super"] });
+    expect(sent.some((line) => (line as { t: string }).t === "key")).toBe(false);
+    expect(store.kbMods()).toEqual([]);
+  });
+
   test("a hello that is still pending shows the approval screen", async () => {
     const world = await bootWorld("pocketshell-ipod", HZ, undefined, undefined, { width: 480, height: 320 });
     const store = (globalThis as { __pocketShellIpod?: CompanionStore }).__pocketShellIpod!;

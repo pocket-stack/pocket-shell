@@ -48,6 +48,7 @@ const HOST_FILES = [
   "host/wire.ts",
   "host/hypr.ts",
   "host/omarchy.ts",
+  "host/keymap.ts",
   "host/menu-source.ts",
   "host/serve.ts",
   "host/pointer/pocket-pointer.c",

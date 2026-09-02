@@ -45,6 +45,7 @@ import {
   TRACKPAD,
 } from "./keyboard-layout.ts";
 import { pointerGain, type Rect, SCROLL_GAIN, stagger } from "./layout.ts";
+import type { Modifier } from "./protocol.ts";
 import type { CompanionStore } from "./store.ts";
 import { themed } from "./theme.ts";
 
@@ -217,6 +218,22 @@ function ClickButton(p: { store: CompanionStore }) {
  * answers by direction, so the ink is the legend and the rocker is the
  * target (keyboard-layout.ts).
  */
+/** The half of an arm that meets the cross's middle: square, so the two
+ *  corners there stay square. */
+function innerHalf(dir: Direction4, arm: Rect): Record<string, number> {
+  const half = Math.ceil(Math.min(arm.w, arm.h) / 2);
+  switch (dir) {
+    case "u":
+      return { insetL: arm.x, insetT: arm.y + arm.h - half, width: arm.w, height: half };
+    case "d":
+      return { insetL: arm.x, insetT: arm.y, width: arm.w, height: half };
+    case "l":
+      return { insetL: arm.x + arm.w - half, insetT: arm.y, width: half, height: arm.h };
+    default:
+      return { insetL: arm.x, insetT: arm.y, width: half, height: arm.h };
+  }
+}
+
 function DpadCross(p: { store: CompanionStore }) {
   const dirs: Direction4[] = ["u", "l", "r", "d"];
   const down = (dir: Direction4) => p.store.dpad()?.dir === dir;
@@ -240,9 +257,19 @@ function DpadCross(p: { store: CompanionStore }) {
           const arm = DPAD_ARMS[dir()];
           return (
             <>
+              {/* The lit arm is rounded on its OUTER corners only: the two
+                  towards the middle belong to the cross's body, and a
+                  rounded corner there would cut a notch out of one piece.
+                  There is no per-corner radius, so a square rect covers the
+                  inner half of the rounded one. */}
               <View
                 class={down(dir()) ? "absolute rounded-[7] bg-[#7aa2f7]" : "hidden"}
                 style={{ insetL: arm.x, insetT: arm.y, width: arm.w, height: arm.h }}
+                ref={themed("accentFill")}
+              />
+              <View
+                class={down(dir()) ? "absolute bg-[#7aa2f7]" : "hidden"}
+                style={innerHalf(dir(), arm)}
                 ref={themed("accentFill")}
               />
               <View
@@ -344,15 +371,26 @@ export function deckHandlers(store: CompanionStore): GestureHandlers {
   let clicker: number | null = null;
   let steering: { id: number; dir: Direction4 } | null = null;
   let menuing: number | null = null;
+  /** The contact holding a modifier key. */
+  let modding: { id: number; mod: Modifier } | null = null;
 
+  /**
+   * What a key sends. A chord that carries SUPER is a DESKTOP chord — the
+   * daemon resolves it against Omarchy's own keymap, because Hyprland does
+   * not run its bindings for a key this app types. Everything else goes to
+   * the focused window.
+   */
   const send = (act: KeyAction) => {
-    const mods = store.kbMods();
-    const line = keyToLine(act, mods);
-    if (line) {
-      if (line.t === "type") store.typeText(line.text);
-      else store.typeKey(line.k, line.mods ?? []);
+    const mods = store.consumeMods();
+    if (mods.includes("super")) {
+      const key = "ch" in act ? act.ch : "key" in act ? act.key : "";
+      if (key) store.chord(key.length === 1 ? key.toLowerCase() : key, mods);
+      return;
     }
-    if (mods.length) store.setKbMods([]);
+    const line = keyToLine(act, mods);
+    if (!line) return;
+    if (line.t === "type") store.typeText(line.text);
+    else store.typeKey(line.k, line.mods ?? []);
   };
 
   const press = (key: KeyRect) => {
@@ -361,11 +399,7 @@ export function deckHandlers(store: CompanionStore): GestureHandlers {
       store.setKbLayer(act.layer);
       return;
     }
-    if ("mod" in act) {
-      const mods = store.kbMods();
-      store.setKbMods(mods.includes(act.mod) ? mods.filter((m) => m !== act.mod) : [...mods, act.mod]);
-      return;
-    }
+    if ("mod" in act) return; // modifiers act on their own down and up edges
     send(act);
     // One-shot shift: the upper layer drops back after a character.
     if ("ch" in act && store.kbLayer() === "upper") store.setKbLayer("lower");
@@ -403,10 +437,19 @@ export function deckHandlers(store: CompanionStore): GestureHandlers {
           store.pressDown(`dpad:${target.dir}`);
           store.dpadDown(target.dir);
           return;
-        case "key":
+        case "key": {
           setDown(target.key);
           store.pressDown(`key:${target.key.row}:${target.key.col}`);
+          // A modifier arms on the way down, so it can be HELD across
+          // several keys or clicks — ctrl held over three taps is three
+          // ctrl-clicks, which is how a selection is extended.
+          const act = target.key.def.act;
+          if ("mod" in act) {
+            modding = { id: c.id, mod: act.mod };
+            store.modDown(act.mod);
+          }
           return;
+        }
         default:
           store.pressDown(null);
       }
@@ -434,8 +477,9 @@ export function deckHandlers(store: CompanionStore): GestureHandlers {
       store.keyHover(chipAt(key, f.variants.length, c.x, c.y));
     },
     onTap: (c) => {
-      // The pad, the click key and the d-pad all answer on release.
-      if (pads.has(c.id) || clicker === c.id || steering?.id === c.id) return;
+      // The pad, the click key, the d-pad and a modifier all answer on
+      // their own release.
+      if (pads.has(c.id) || clicker === c.id || steering?.id === c.id || modding?.id === c.id) return;
       if (menuing === c.id) {
         menuing = null;
         store.pressRelease();
@@ -448,7 +492,7 @@ export function deckHandlers(store: CompanionStore): GestureHandlers {
       setDown(null);
     },
     onLongPress: (c) => {
-      if (clicker === c.id || steering?.id === c.id || menuing === c.id) return;
+      if (clicker === c.id || steering?.id === c.id || menuing === c.id || modding?.id === c.id) return;
       const pad = pads.get(c.id);
       if (pad) {
         if (twoFinger || pad.moved || dragging || store.clickHeld()) return;
@@ -464,12 +508,19 @@ export function deckHandlers(store: CompanionStore): GestureHandlers {
       store.openKeyFly({ key: { x: key.x, y: key.y, w: key.w, h: key.h }, variants: key.def.variants, hot: null });
     },
     onPanStart: (c) => {
-      if (pads.has(c.id) || holding || clicker === c.id || steering?.id === c.id) return;
+      if (pads.has(c.id) || holding || clicker === c.id || steering?.id === c.id || modding?.id === c.id) return;
       store.pressDown(null);
       setDown(null);
       menuing = null;
     },
     onUp: (c) => {
+      if (modding?.id === c.id) {
+        store.modUp(modding.mod);
+        modding = null;
+        store.pressRelease();
+        setDown(null);
+        return;
+      }
       if (clicker === c.id) {
         clicker = null;
         store.dragButton(false);
@@ -515,6 +566,10 @@ export function deckHandlers(store: CompanionStore): GestureHandlers {
       store.pressRelease();
     },
     onCancel: (c) => {
+      if (modding?.id === c.id) {
+        store.modUp(modding.mod);
+        modding = null;
+      }
       if (clicker === c.id) {
         clicker = null;
         store.dragButton(false);

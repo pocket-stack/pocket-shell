@@ -15,7 +15,7 @@ of this repository (`../LICENSE`).
 ```
  iPod touch 4 (480x320 landscape)      USB (usbmuxd)      Omarchy machine
  ┌────────────────────────────────┐    PKNT/TCP      ┌──────────────────────────┐
- │ apps/pocket-shell (Solid)     │◀───────────────▶│ host/serve.ts (Node)     │
+ │ ipod/ (Solid)                  │◀───────────────▶│ host/serve.ts (Node)     │
  │ hosts/iphone2g/svcwire.c       │  or WiFi+beacon  │  .socket.sock  requests  │
  └────────────────────────────────┘                  │  .socket2.sock events    │
                                                      │  omarchy-* / wtype       │
@@ -34,7 +34,7 @@ against a scripted desktop; the panel is 480x320.
 | ![the control centre](../media/ipod/control-centre.png) | ![Omarchy's menu as a sheet](../media/ipod/menu-root.png) |
 | ![the Trigger submenu](../media/ipod/menu-trigger.png) | ![the machine's applications](../media/ipod/menu-apps.png) |
 | ![the deck](../media/ipod/deck.png) | ![a held key's variants](../media/ipod/deck-variants.png) |
-| ![the click button held for a drag-select](../media/ipod/deck-drag.png) | ![a d-pad key held](../media/ipod/deck-dpad.png) |
+| ![the click button held for a drag-select](../media/ipod/deck-drag.png) | ![a d-pad arm held](../media/ipod/deck-dpad.png) |
 | ![an empty workspace](../media/ipod/empty.png) | ![the connect screen](../media/ipod/connect.png) |
 
 The stage is 260 px between the strip and the launch bar; the deck runs to
@@ -84,19 +84,28 @@ after a day the strokes are made without looking.
   release). Drag a tiled window onto another to swap them, onto a tab to
   move it there. Swipe empty stage to step workspaces.
 - **Deck.** The laptop's C surface on the iPod: five compact rows of keys
-  over a trackpad, so typing and pointing need no mode of their own. Keys go
-  straight to the desktop (`wtype`) as they are pressed; a pressed key rises,
-  brightens and shows its character in a bubble above the finger. Comma and
-  period sit beside the space bar, apostrophe after the letters, backtick on
-  the symbol layer; esc, tab, ctrl, alt and the arrows are always there.
-  **Chords two ways**: sticky modifiers (tap ctrl, then the key; ctrl arms,
-  paints itself, drops after one key) and hold-and-slide variants (hold `x`
-  → `^X` `⌥X`, hold `1` → `F1` `^1`; release on the key itself types it
+  over a band that holds the trackpad, so typing and pointing need no mode of
+  their own. Keys go straight to the desktop (`wtype`) as they are pressed and
+  a pressed key rises and brightens. A digit row is always up, so the layer
+  key is `#+=` rather than `123`; comma and period sit beside the space bar,
+  apostrophe after the letters, backtick on the symbol layer. The bottom row
+  starts at `super`, where a laptop's does, and runs `ctrl alt #+= tab space`.
+  **Chords two ways**: modifiers (tap ctrl and it arms for the next key; hold
+  it and it stays down for as many keys, taps or drags as the finger holds —
+  which is how a file manager multi-selects) and hold-and-slide variants (hold
+  `x` → `^X` `⌥X`, hold `1` → `F1` `^1`; release on the key itself types it
   plain). **The modifiers reach the pointer too**: ctrl then a tap is a
-  ctrl-click, and ctrl with the click button held is a ctrl-drag. The
-  **trackpad** is a relative pointer with acceleration: one finger moves, a
-  tap clicks, two fingers scroll, a two-finger tap is the right button, a
-  hold picks something up.
+  ctrl-click, and ctrl with the click button held is a ctrl-drag. The band is
+  a laptop's: the **trackpad** in the middle with palm rests either side, the
+  **menu** and **click** keys stacked in the left one as two squares, and a
+  **d-pad** filling the right one. The trackpad is a relative pointer with
+  acceleration — one finger moves, a tap clicks, two fingers scroll, a
+  two-finger tap is the right button, a hold picks something up — and the
+  click key is the classic touchpad button: hold it with one finger and the
+  other finger's slide is a drag-select. The d-pad is one cross, not four
+  keys: a press lights the arm the finger is on (rounded on the outside,
+  square where it meets the middle, so the lit arm reads as part of the
+  cross) and holding repeats.
 - **The ball.** Omarchy's menu (SUPER+SPACE) has a handle that floats over
   everything and lives on a side edge. **Tap it and the menu opens as a
   sheet** in the middle of the screen: the same rows in the same order with
@@ -166,7 +175,10 @@ panel's left, right and bottom edges, and between its three parts. That makes
 the band exactly as tall as the d-pad's square is wide, the cross fills it,
 and every margin around the cross is the same 6 px. The cross's span is three
 arms rather than whatever fits, because a span that merely fitted left a
-pixel on one arm and not the others.
+pixel on one arm and not the others. The left rest is the same arithmetic
+turned sideways: half the band less one gap makes two 48 px squares, so the
+menu and click keys fill their column the way the cross fills its square and
+neither reads as oversized beside the keys.
 
 **Typing accuracy is two corrections, not bigger keys.** The visual gaps a
 keyboard wants and the target sizes a finger wants are different things, so
@@ -224,6 +236,37 @@ back mid-drag.
 active workspace locally before the daemon confirms. Level drags update
 locally and send at most every three frames; host echoes are ignored for half
 a second after a release so a slider never snaps back on the way.
+
+## A SUPER chord is looked up, not typed
+
+Hyprland does not run its key bindings for a virtual keyboard. `wtype -M logo
+-k w` reaches the focused application and never the compositor, so SUPER+W
+closed nothing while every keystroke it sent was delivered — the failure was
+silent. `hyprctl binds` lists all 157 bindings but hands back an opaque Lua
+closure id, so a binding cannot be invoked by name either.
+
+So the daemon reads the same files Hyprland read. Omarchy writes its bindings
+as Lua calls of one shape, and `host/keymap.ts` turns them into a chord map:
+
+```lua
+o.bind("SUPER + W",      "Close window", hl.dsp.window.close())
+o.bind("SUPER + L",      "Toggle layout", "omarchy-hyprland-workspace-layout-toggle")
+o.bind("SUPER + RETURN", "Terminal",     { omarchy = "terminal" })
+```
+
+The third argument is a dispatcher to run, a command to spawn, or one of
+Omarchy's launcher tables, whose rules are its own `helpers.lua`
+(`command_from`) reproduced here. The device sends modifiers and a key name;
+the daemon runs whatever that chord is bound to and toasts the binding's own
+description, or says the chord is not bound. Nothing off the wire reaches a
+shell or the Lua evaluator: the map is built only from the machine's files,
+the key name is matched against `[A-Za-z0-9_]`, and a chord the map does not
+carry does nothing. Computed chords are skipped rather than half-read — the
+workspace loop's `"SUPER + " .. key` is not a chord — and the strip's tabs
+already cover those.
+
+Later files win, so `~/.config/hypr/bindings.lua` overrides the defaults, and
+the map is re-read whenever the menu is.
 
 ## Hyprland's request socket speaks Lua
 

@@ -41,6 +41,7 @@ import {
   SHELL_PROTO,
 } from "../protocol.ts";
 import { hyprBatch, hyprDirectory, hyprDispatch, luaWindow, luaWorkspace, snapshot, STATE_EVENTS, watchEvents } from "./hypr.ts";
+import { type Binding, chordKey, readKeymap } from "./keymap.ts";
 import {
   type AppEntry,
   evaluateMenuConditions,
@@ -56,6 +57,7 @@ import {
   readMedia,
   readTheme,
   readWifi,
+  runDetached,
   runAction,
   runMenuEntry,
   setBrightness,
@@ -221,6 +223,8 @@ let lastCc: HostLine | null = null;
 let lastMenu: { hide: string[]; check: string[] } | null = null;
 let apps: AppIndex = { apps: [], byClass: new Map() };
 let menuEntries = loadMenu();
+/** The desktop's own chord map (host/keymap.ts), reread with the menu. */
+let keymap = readKeymap();
 let menuBusy = false;
 const pointer = new Pointer(undefined, log);
 /** How long a modifier is held around a pointer press, and how long the
@@ -313,6 +317,9 @@ async function refreshMenu(): Promise<void> {
   menuBusy = true;
   try {
     menuEntries = loadMenu();
+    const nextKeymap = readKeymap();
+    if (nextKeymap.size !== keymap.size) log(`keymap: ${nextKeymap.size} chords`);
+    keymap = nextKeymap;
     const result = await evaluateMenuConditions(menuEntries);
     if (!lastMenu || JSON.stringify(lastMenu) !== JSON.stringify(result)) {
       lastMenu = result;
@@ -584,6 +591,27 @@ async function handle(conn: Conn, line: ClientLine): Promise<void> {
       setTimeout(() => void refreshCc(), 1500);
       setTimeout(() => void refreshCc(), 5000);
       return;
+    case "chord": {
+      // A desktop chord. Hyprland will not run its bindings for a virtual
+      // keyboard, so the chord is looked up in the machine's own keymap and
+      // what it is bound to runs instead — the same dispatcher or command
+      // the keyboard would have reached.
+      const mods = modifiersOf(line.mods);
+      if (typeof line.k !== "string" || !/^[A-Za-z0-9_]{1,16}$/.test(line.k)) return;
+      const chord = chordKey(mods, line.k);
+      const binding: Binding | undefined = keymap.get(chord);
+      if (!binding) {
+        log(`chord ${chord}: not bound on this machine`);
+        sendLine(conn, { t: "toast", text: `${chord.replaceAll("+", " + ")} is not bound` });
+        return;
+      }
+      if ("dispatch" in binding.run) await dispatchLogged(binding.run.dispatch);
+      else runDetached(["bash", "-lc", binding.run.exec], log);
+      log(`chord ${chord}: ${binding.description}`);
+      sendLine(conn, { t: "toast", text: binding.description || chord });
+      scheduleSnapshot(200);
+      return;
+    }
     case "launch":
       if (typeof line.app !== "string" || !launchApp(line.app, log)) {
         log(`${conn.address}: bad launch ${JSON.stringify(line.app)}`);

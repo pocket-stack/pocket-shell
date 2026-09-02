@@ -289,6 +289,18 @@ export interface ClientMenu {
   id: string;
 }
 
+/**
+ * A desktop chord — SUPER+W and friends. Not typed: Hyprland does not run
+ * its bindings for a virtual keyboard, so the daemon looks the chord up in
+ * the machine's own keymap and runs what it is bound to (host/keymap.ts).
+ */
+export interface ClientChord {
+  t: "chord";
+  mods: Modifier[];
+  /** A keysym name: `w`, `Return`, `space`, `1`. */
+  k: string;
+}
+
 /** Launch one application by desktop entry id, as listed by `apps`. */
 export interface ClientLaunch {
   t: "launch";
@@ -311,7 +323,8 @@ export type ClientLine =
   | ClientDrag
   | ClientWifi
   | ClientMenu
-  | ClientLaunch;
+  | ClientLaunch
+  | ClientChord;
 
 /** Parse one wire batch (newline-separated JSON) into typed lines; malformed
  *  lines are skipped rather than allowed to wedge the reader. */

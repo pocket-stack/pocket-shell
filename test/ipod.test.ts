@@ -33,6 +33,7 @@ import {
   type HyprMonitor,
   type HyprWorkspace,
 } from "../ipod/host/hypr.ts";
+import { chordKey, parseBindings } from "../ipod/host/keymap.ts";
 import { childrenOf, normalizeMenu, parentOf, parseMenuJsonc, stripJsonc } from "../ipod/host/menu-source.ts";
 import {
   applicationDirectories,
@@ -639,6 +640,58 @@ describe("pocket-shell omarchy readers", () => {
   });
 });
 
+describe("pocket-shell keymap", () => {
+  // The three shapes Omarchy's bindings come in, as its own files write them.
+  const source = `
+o.bind("SUPER + W", "Close window", hl.dsp.window.close())
+o.bind("SUPER + L", "Toggle workspace layout", "omarchy-hyprland-workspace-layout-toggle")
+o.bind("SUPER + RETURN", "Terminal", { omarchy = "terminal" })
+o.bind("SUPER + SHIFT + A", "ChatGPT", { webapp = "https://chatgpt.com" })
+o.bind("SUPER + SHIFT + ALT + M", "Music TUI", { tui = "cliamp", focus = true })
+o.bind("SUPER + SHIFT + O", "Obsidian", { launch = "obsidian", focus = "^obsidian$" })
+o.bind("SUPER + mouse:273", "Resize window", hl.dsp.window.resize(), { mouse = true })
+for workspace = 1, 10 do
+  o.bind("SUPER + " .. key, "Switch to workspace " .. workspace, hl.dsp.focus({ workspace = tostring(workspace) }))
+end
+`;
+
+  test("reads the machine's bindings in each of the shapes they take", () => {
+    const bindings = parseBindings(source);
+    const by = new Map(bindings.map((binding) => [binding.chord, binding]));
+    expect(by.get("SUPER+W")).toEqual({
+      chord: "SUPER+W",
+      description: "Close window",
+      run: { dispatch: "hl.dsp.window.close()" },
+    });
+    expect(by.get("SUPER+L")!.run).toEqual({ exec: "omarchy-hyprland-workspace-layout-toggle" });
+    // Omarchy's launcher tables, by its own command_from rules.
+    expect(by.get("SUPER+RETURN")!.run).toEqual({ exec: "omarchy-launch-terminal" });
+    expect(by.get("SUPER+SHIFT+A")!.run).toEqual({ exec: "omarchy-launch-webapp 'https://chatgpt.com'" });
+    // Normalised into one order (SUPER, CTRL, ALT, SHIFT), whichever order
+    // the file wrote them in.
+    expect(by.get("SUPER+ALT+SHIFT+M")!.run).toEqual({ exec: "omarchy-launch-or-focus-tui 'cliamp'" });
+    expect(by.get("SUPER+SHIFT+O")!.run).toEqual({
+      exec: "omarchy-launch-or-focus '^obsidian$' 'uwsm-app -- obsidian'",
+    });
+    // A mouse binding and a computed chord are not chords this can key.
+    expect([...by.keys()].some((chord) => chord.includes("MOUSE"))).toBe(false);
+    expect(by.size).toBe(6);
+  });
+
+  test("a chord is keyed the same way whichever end writes it", () => {
+    expect(chordKey(["super"], "w")).toBe("SUPER+W");
+    // Order is fixed, not the order the fingers pressed.
+    expect(chordKey(["shift", "super"], "f")).toBe("SUPER+SHIFT+F");
+    expect(chordKey(["super", "alt", "shift"], "m")).toBe("SUPER+ALT+SHIFT+M");
+    expect(chordKey(["shift", "alt", "super"], "m")).toBe("SUPER+ALT+SHIFT+M");
+    expect(chordKey(["super"], "Return")).toBe("SUPER+RETURN");
+    expect(chordKey(["super"], "space")).toBe("SUPER+SPACE");
+    expect(chordKey([], "w")).toBe("W");
+    // The desktop's own spelling of the modifier is accepted too.
+    expect(chordKey(["logo"], "w")).toBe("SUPER+W");
+  });
+});
+
 describe("pocket-shell applications", () => {
   test("desktop entries are read the way a launcher reads them", () => {
     const entry = parseDesktopEntry(
@@ -872,6 +925,12 @@ describe("pocket-shell deck", () => {
       // A terminal's two punctuation keys are on the bottom row.
       expect(labels).toContain("-");
       expect(labels).toContain("/");
+      // The layer key says what it brings; the digits are always on top.
+      expect(labels).not.toContain("123");
+      expect(labels).toContain(layer === "sym" ? "abc" : "#+=");
+      // SUPER is the leftmost key of the bottom row.
+      const bottom = keys.filter((k) => k.row === 4).sort((a, b) => a.x - b.x);
+      expect(bottom[0]!.def.label).toBe("super");
     }
     expect(TRACKPAD.y + TRACKPAD.h).toBeLessThanOrEqual(SCREEN_H);
     expect(TRACKPAD.h).toBeGreaterThanOrEqual(80);
@@ -906,7 +965,15 @@ describe("pocket-shell deck", () => {
     expect(SCREEN_H - (DPAD_CROSS.y + DPAD_CROSS.h)).toBe(GAP);
     expect(SCREEN_W - (DPAD_CROSS.x + DPAD_CROSS.w)).toBe(GAP);
     expect(DPAD_CROSS.x - (TRACKPAD.x + TRACKPAD.w)).toBe(GAP);
-    // Both rest buttons clear the minimum target.
+    // The rests are two squares that fill the band the way the cross fills
+    // its own square: no size of their own, and smaller than the 72x48 they
+    // were beside the cross's 34 px arms.
+    expect(MENU_KEY.w).toBe(MENU_KEY.h);
+    expect(CLICK_KEY.w).toBe(CLICK_KEY.h);
+    expect(MENU_KEY.w).toBe(CLICK_KEY.w);
+    expect(MENU_KEY.h + GAP + CLICK_KEY.h).toBe(BAND.h);
+    expect(MENU_KEY.w).toBeLessThan(72);
+    // And they still clear the minimum target.
     for (const r of [MENU_KEY, CLICK_KEY]) expect(Math.min(r.w, r.h)).toBeGreaterThanOrEqual(28);
   });
 

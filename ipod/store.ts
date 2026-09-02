@@ -333,6 +333,15 @@ export function createCompanionStore(svc: Svc | null = connectSvc()) {
   const [mode, setMode] = createSignal<Mode>("stage");
   const [kbLayer, setKbLayer] = createSignal<KbLayer>("lower");
   const [kbMods, setKbMods] = createSignal<Modifier[]>([]);
+  /**
+   * A modifier behaves as a physical one while its key is under a finger
+   * and as a sticky one when tapped. Holding ctrl and tapping three rows in
+   * a file manager has to send three ctrl-clicks, so a HELD modifier
+   * survives being used; a tapped one is spent by the next key.
+   */
+  const heldMods = new Set<Modifier>();
+  const usedWhileHeld = new Set<Modifier>();
+  const armedBefore = new Map<Modifier, boolean>();
   const [pressed, setPressed] = createSignal<string | null>(null);
   /** 0..1 eased press depth of the pressed target: attack on down, release
    *  after up. Keys scale and brighten by it, the bubble rides on it. */
@@ -732,8 +741,43 @@ export function createCompanionStore(svc: Svc | null = connectSvc()) {
     send({ t: "wifi", on: w.on ? 0 : 1 });
     say(w.on ? "Wi-Fi off" : "Wi-Fi on");
   };
+  /** The modifier key went down: arm it, and remember it is being held. */
+  const modDown = (mod: Modifier) => {
+    armedBefore.set(mod, kbMods().includes(mod));
+    heldMods.add(mod);
+    usedWhileHeld.delete(mod);
+    if (!kbMods().includes(mod)) setKbMods([...kbMods(), mod]);
+  };
+  /** Released: a modifier that was used while held has done its job, and a
+   *  second tap on an armed one turns it off. Otherwise it stays armed for
+   *  the next key. */
+  const modUp = (mod: Modifier) => {
+    heldMods.delete(mod);
+    const used = usedWhileHeld.delete(mod);
+    if (used || armedBefore.get(mod)) setKbMods(kbMods().filter((m) => m !== mod));
+    armedBefore.delete(mod);
+  };
+  /** What to send with this key or click, and what that costs: a held
+   *  modifier stays for the next one, a tapped one is spent. */
+  const consumeMods = (): Modifier[] => {
+    const mods = kbMods();
+    if (mods.length === 0) return mods;
+    const keep: Modifier[] = [];
+    for (const mod of mods) {
+      if (heldMods.has(mod)) {
+        usedWhileHeld.add(mod);
+        keep.push(mod);
+      }
+    }
+    if (keep.length !== mods.length) setKbMods(keep);
+    return mods;
+  };
+
   const typeText = (text: string) => send({ t: "type", text });
   const typeKey = (k: string, mods: Modifier[] = []) => send(mods.length ? { t: "key", k, mods } : { t: "key", k });
+  /** A desktop chord: the daemon resolves it against the machine's own
+   *  keymap, because Hyprland will not run a binding for a typed key. */
+  const chord = (k: string, mods: Modifier[]) => send({ t: "chord", k, mods });
 
   /** Trackpad: motion and scroll accumulate and go out once per frame. */
   let ptrDx = 0;
@@ -752,8 +796,7 @@ export function createCompanionStore(svc: Svc | null = connectSvc()) {
    *  extends a selection, and a virtual pointer cannot carry a modifier of
    *  its own, so the daemon holds it. */
   const click = (b: "l" | "r" | "m") => {
-    const mods = kbMods();
-    if (mods.length) setKbMods([]);
+    const mods = consumeMods();
     send(mods.length ? { t: "click", b, mods } : { t: "click", b });
   };
   /** The left button down or up. Down takes the sticky modifiers with it and
@@ -764,8 +807,7 @@ export function createCompanionStore(svc: Svc | null = connectSvc()) {
       send({ t: "drag", on: 0 });
       return;
     }
-    const mods = kbMods();
-    if (mods.length) setKbMods([]);
+    const mods = consumeMods();
     setClickHeld(true);
     send(mods.length ? { t: "drag", on: 1, mods } : { t: "drag", on: 1 });
   };
@@ -905,8 +947,7 @@ export function createCompanionStore(svc: Svc | null = connectSvc()) {
   /** A d-pad key went down: one press now, then a repeat while it is held.
    *  A sticky modifier rides along for the whole hold. */
   const dpadDown = (dir: Direction4) => {
-    const mods = kbMods();
-    if (mods.length) setKbMods([]);
+    const mods = consumeMods();
     setDpad({ dir, at: frameCount, mods });
     typeKey(DIRECTION_KEYSYM[dir], mods);
   };
@@ -1190,6 +1231,9 @@ export function createCompanionStore(svc: Svc | null = connectSvc()) {
     setKbLayer,
     kbMods,
     setKbMods,
+    modDown,
+    modUp,
+    consumeMods,
     pressed,
     pressT,
     pressDown,
@@ -1264,6 +1308,7 @@ export function createCompanionStore(svc: Svc | null = connectSvc()) {
     wifiToggle,
     typeText,
     typeKey,
+    chord,
     pointer,
     scroll,
     click,

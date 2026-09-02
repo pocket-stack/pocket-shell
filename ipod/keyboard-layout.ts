@@ -91,17 +91,24 @@ export const BAND: Rect = {
  *
  *   EDGE | rests 72 | GAP | trackpad | GAP | cross 106 | EDGE
  */
-const REST_W = 72;
-export const MENU_KEY: Rect = { x: GAP, y: BAND.y, w: REST_W, h: Math.round(BAND.h / 2) - GAP / 2 };
-export const CLICK_KEY: Rect = { x: GAP, y: MENU_KEY.y + MENU_KEY.h + GAP, w: REST_W, h: BAND.h - MENU_KEY.h - GAP };
+/**
+ * The left rest is a column of two SQUARES that fills the band exactly the
+ * way the cross fills its own square: two of them plus a gap is the band's
+ * height, so the same arithmetic places both rests and neither needs a
+ * size of its own. They were 72x48 before, which read as oversized beside
+ * the cross's 34 px arms.
+ */
+const REST = (BAND.h - GAP) / 2;
+export const MENU_KEY: Rect = { x: GAP, y: BAND.y, w: REST, h: REST };
+export const CLICK_KEY: Rect = { x: GAP, y: MENU_KEY.y + REST + GAP, w: REST, h: REST };
 /** Right rest: the d-pad's square, as wide as the band is tall. */
 export const DPAD: Rect = { x: SCREEN_W - GAP - BAND.h, y: BAND.y, w: BAND.h, h: BAND.h };
 /** The pad itself: narrower than the panel, like a laptop's, and it takes
  *  whatever the two rests and the three gaps leave. */
 export const TRACKPAD: Rect = {
-  x: GAP + REST_W + GAP,
+  x: GAP + REST + GAP,
   y: BAND.y,
-  w: DPAD.x - GAP - (GAP + REST_W + GAP),
+  w: DPAD.x - GAP - (GAP + REST + GAP),
   h: BAND.h,
 };
 
@@ -226,10 +233,13 @@ const RETURN: KeyDef = { label: "return", w: 1.75, act: { key: "Return" }, dark:
 /** The bottom row: the layer switch, the modifiers, tab, space, and the two
  *  punctuation keys a terminal reaches for. The arrows are the d-pad now. */
 const bottomRow = (layer: KbLayer): KeyDef[] => [
-  { label: layer === "sym" ? "abc" : "123", w: 1, act: { layer: layer === "sym" ? "lower" : "sym" }, dark: true },
+  // SUPER first, where a hand reaches for the modifier this desktop is
+  // built on. The layer key says what it brings — the digits are always on
+  // the top row, so "123" promised the wrong thing.
+  { label: "super", w: 1, act: { mod: "super" }, dark: true },
   { label: "ctrl", w: 1, act: { mod: "ctrl" }, dark: true },
   { label: "alt", w: 1, act: { mod: "alt" }, dark: true },
-  { label: "super", w: 1, act: { mod: "super" }, dark: true },
+  { label: layer === "sym" ? "abc" : "#+=", w: 1, act: { layer: layer === "sym" ? "lower" : "sym" }, dark: true },
   { label: "tab", w: 1, act: { key: "Tab" }, dark: true },
   { label: "space", w: 3.75, act: { key: "space" } },
   { label: "-", w: 0.75, act: { ch: "-" } },

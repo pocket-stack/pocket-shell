@@ -242,14 +242,20 @@ export const ALLOWED_KEYS: ReadonlySet<string> = new Set([
   "backslash", "comma", "period", "slash",
 ]);
 
-const MODIFIERS: ReadonlySet<string> = new Set(["ctrl", "alt", "shift", "super"]);
+/**
+ * The modifiers the wire carries, and what wtype calls them: it knows the
+ * super key as `logo` and rejects `super` outright, which is why every
+ * SUPER chord used to fail silently.
+ */
+const WTYPE_MODIFIER: Record<string, string> = { ctrl: "ctrl", alt: "alt", shift: "shift", super: "logo" };
+const MODIFIERS: ReadonlySet<string> = new Set(Object.keys(WTYPE_MODIFIER));
 
 /** wtype argv for one key with modifiers held around it: press mods, key,
  *  release mods in reverse. Null when the key or a modifier is not allowed. */
 export function wtypeArgs(key: string, mods: readonly string[] = []): string[] | null {
   if (!ALLOWED_KEYS.has(key)) return null;
   if (mods.some((m) => !MODIFIERS.has(m))) return null;
-  const unique = [...new Set(mods)];
+  const unique = [...new Set(mods)].map((m) => WTYPE_MODIFIER[m]!);
   return [
     ...unique.flatMap((m) => ["-M", m]),
     "-k",
@@ -274,9 +280,10 @@ export function typeText(text: string, log: Log): void {
  * is not allowed.
  */
 export function holdModifiers(mods: readonly string[], ms: number, log: Log): boolean {
-  const unique = [...new Set(mods)];
-  if (unique.length === 0) return false;
-  if (unique.some((m) => !MODIFIERS.has(m))) return false;
+  const wanted = [...new Set(mods)];
+  if (wanted.length === 0) return false;
+  if (wanted.some((m) => !MODIFIERS.has(m))) return false;
+  const unique = wanted.map((m) => WTYPE_MODIFIER[m]!);
   const hold = Math.max(50, Math.min(2000, Math.round(ms)));
   runDetached(
     [
