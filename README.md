@@ -34,7 +34,8 @@ the touch screen, appearing while the shoulder is held.**
 Geometry is animated, not cut: opening, closing, swapping, changing layout and
 switching workspaces all ease from where they were to where they belong, so
 the shape of the change is visible. These are recordings of a scripted run on
-the console's own GPU, stacked top screen over touch screen, at 30 fps.
+the console's own GPU, stacked top screen over touch screen, **at half speed**
+— one animation per gesture.
 
 | open | change layout |
 |---|---|
@@ -50,6 +51,11 @@ the console's own GPU, stacked top screen over touch screen, at 30 fps.
 |---|---|
 | <img src="media/chords.gif" width="320" alt="holding L turns the deck's minimap into the chord map for the window layer, and the d-pad moves focus while it is up" /> | <img src="media/close.gif" width="320" alt="closing is a hold, a slide and a release: holding a tile on the minimap arms the close bar, sliding onto it and letting go closes the window" /> |
 | Press a shoulder and the minimap gives way to that layer's table, labelled per button. Release and the minimap comes back. | The panel reports one contact and an 18 px × is a coin flip, so closing a window is a hold, a slide onto the close bar, and a release. |
+
+| the key sheet | the launcher |
+|---|---|
+| <img src="media/keysheet.gif" width="320" alt="L and SELECT put the whole chord table on the stage as a window" /> | <img src="media/launcher.gif" width="320" alt="L and A open the launcher on the deck; the d-pad picks and B closes it" /> |
+| `L + SELECT` opens the whole table as a window on the stage — the same array the deck's map and the dispatcher read. | `L + A` puts the launcher on the deck. The d-pad picks, A opens, B closes. |
 
 ## The two screens
 

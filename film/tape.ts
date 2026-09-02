@@ -94,7 +94,9 @@ export interface Cut {
   /** Inclusive frame range of the dump. */
   from: number;
   to: number;
-  /** Keep every nth frame (2 = 30 fps out of the tape's 60). */
+  /** Keep every nth frame. 1 with fps 30 is half speed, which is what an
+   *  eased layout change wants; GIF delays are centiseconds, so 30 fps is
+   *  the practical ceiling anyway. */
   step: number;
   /** Playback rate of the encoded animation. */
   fps: number;
@@ -102,15 +104,59 @@ export interface Cut {
   caption: string;
 }
 
-/** The animations the README shows. Each range is read off the tape's own
- *  comments above, so a cut cannot drift from what the tape does. */
+/**
+ * A cut must show ONE gesture. The deck's whole body swaps when a shoulder
+ * goes down — the minimap gives way to that layer's chord map — so a range
+ * that reaches into the next gesture puts two of those swaps in one short
+ * animation, and at 30 fps that reads as flicker rather than as an
+ * interaction. (It did: the first cuts of `chords`, `swap`, `layout` and
+ * `workspace` each ran one frame or more into the following chord.)
+ *
+ * So: the tape's modifiers must be released at both ends of a cut, and may
+ * go down and come up at most once inside it. Throws with the offending
+ * frames rather than recording something misleading.
+ */
+export function assertOneGesture(cut: Cut, tape: GoldenSpec): void {
+  const held = (frame: number): boolean =>
+    ((tape.input?.(frame) ?? 0) & (BTN.LTRIGGER | BTN.RTRIGGER)) !== 0;
+  if (cut.to >= tape.frames) {
+    throw new Error(`cut ${cut.name}: ends at frame ${cut.to}, past the tape's ${tape.frames}`);
+  }
+  if (held(cut.from) || held(cut.to)) {
+    throw new Error(
+      `cut ${cut.name}: a shoulder is still held at ${held(cut.from) ? `its first frame (${cut.from})` : `its last frame (${cut.to})`} — ` +
+        "start and end between gestures, or the animation opens or closes mid-chord",
+    );
+  }
+  const edges: number[] = [];
+  for (let frame = cut.from + 1; frame <= cut.to; frame++) {
+    if (held(frame) !== held(frame - 1)) edges.push(frame);
+  }
+  if (edges.length > 2) {
+    throw new Error(
+      `cut ${cut.name}: the shoulders move ${edges.length} times inside ${cut.from}..${cut.to} ` +
+        `(at ${edges.join(", ")}) — one cut, one gesture, or the deck flickers between its minimap and its chord map`,
+    );
+  }
+}
+
+/**
+ * The animations the README shows, one gesture each. Ranges are read off the
+ * tape above and checked by assertOneGesture, which both the recorder and
+ * test/tape.test.ts run.
+ *
+ * Every cut keeps every frame and plays at 30 fps — half of the console's
+ * 60 Hz. Geometry here eases rather than cutting, and half speed is what
+ * makes that visible; it also stays inside what GIF's centisecond delays can
+ * actually express.
+ */
 export const CUTS: readonly Cut[] = [
   {
     name: "open",
     tape: "pocket-shell",
     from: 0,
     to: 46,
-    step: 2,
+    step: 1,
     fps: 30,
     caption:
       "three dock taps open term, notes and about; each window splits the focused leaf along its longer side, and the deck's minimap follows",
@@ -119,8 +165,8 @@ export const CUTS: readonly Cut[] = [
     name: "chords",
     tape: "pocket-shell",
     from: 48,
-    to: 70,
-    step: 2,
+    to: 68,
+    step: 1,
     fps: 30,
     caption:
       "holding L turns the deck's minimap into the chord map for the window layer, and the d-pad moves focus while it is up",
@@ -129,8 +175,8 @@ export const CUTS: readonly Cut[] = [
     name: "swap",
     tape: "pocket-shell",
     from: 68,
-    to: 90,
-    step: 2,
+    to: 86,
+    step: 1,
     fps: 30,
     caption: "R and the d-pad swap two tiled windows; the geometry eases rather than cutting",
   },
@@ -138,8 +184,8 @@ export const CUTS: readonly Cut[] = [
     name: "layout",
     tape: "pocket-shell",
     from: 86,
-    to: 118,
-    step: 2,
+    to: 114,
+    step: 1,
     fps: 30,
     caption:
       "L + START turns the workspace from the dwindle tree into the scrolling strip, keeping window order and focus",
@@ -148,26 +194,35 @@ export const CUTS: readonly Cut[] = [
     name: "workspace",
     tape: "pocket-shell",
     from: 114,
-    to: 146,
-    step: 2,
+    to: 131,
+    step: 1,
     fps: 30,
     caption: "L + R makes the d-pad step workspaces; the stage slides and the strip's tab follows",
   },
   {
-    name: "keys",
+    name: "keysheet",
     tape: "pocket-shell",
     from: 142,
-    to: 186,
-    step: 2,
+    to: 162,
+    step: 1,
     fps: 30,
-    caption: "L + SELECT puts the whole chord table on the stage; L + A opens the launcher on the deck",
+    caption: "L + SELECT puts the whole chord table on the stage as a window",
+  },
+  {
+    name: "launcher",
+    tape: "pocket-shell",
+    from: 162,
+    to: 184,
+    step: 1,
+    fps: 30,
+    caption: "L + A opens the launcher on the deck; the d-pad picks and B closes it",
   },
   {
     name: "close",
     tape: "pocket-shell",
     from: 184,
-    to: 244,
-    step: 2,
+    to: 243,
+    step: 1,
     fps: 30,
     caption:
       "closing is a hold, a slide and a release: holding a tile on the minimap arms the close bar, sliding onto it and letting go closes the window",

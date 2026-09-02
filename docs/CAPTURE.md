@@ -50,7 +50,19 @@ console's own refresh. So the animations are not filmed at all. They are
 4. `scripts/film.ts` reads them back, stacks the two screens into one
    400×480 image, and pipes named ranges of frames straight into ffmpeg as a
    raw stream — one shared palette per animation, so a flat UI stays flat
-   instead of banding.
+   instead of banding. Every frame is kept and played at 30 fps, half the
+   console's rate: eased geometry is the thing being shown, and GIF's
+   centisecond delays cannot express 60 fps anyway.
+
+**One cut, one gesture.** The deck's whole body swaps when a shoulder goes
+down — the minimap gives way to that layer's chord map — so a range that
+reaches even one frame into the next chord puts two of those swaps in a
+two-second animation, and it reads as flicker rather than as an interaction.
+The first cuts of `chords`, `swap`, `layout` and `workspace` all did exactly
+that. `assertOneGesture` in `film/tape.ts` now refuses a range whose
+modifiers are still held at either end or move more than twice inside it;
+the recorder calls it before recording and `test/tape.test.ts` calls it
+without an emulator.
 
 ```sh
 bun run film                      # both tapes: stills into media/, animations

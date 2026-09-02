@@ -20,7 +20,7 @@
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { encodePNG } from "../vendor/pocketjs/tests/png.ts";
-import { CUTS, STILLS, TAPES, tapeNamed, type Cut } from "../film/tape.ts";
+import { assertOneGesture, CUTS, STILLS, TAPES, type Cut } from "../film/tape.ts";
 import {
   AUX_H,
   AUX_W,
@@ -150,7 +150,9 @@ for (const tape of tapes) {
   // piped through ffmpeg; nothing is written as PNG in between.
   for (const cut of CUTS.filter((candidate) => candidate.tape === tape.name)) {
     if (onlyCut && cut.name !== onlyCut) continue;
-    if (cut.to >= frames) throw new Error(`cut ${cut.name} ends at frame ${cut.to}, past the tape's ${frames}`);
+    // One cut, one gesture — checked here as well as in test/tape.test.ts, so
+    // a range that reaches into the next chord fails before it is recorded.
+    assertOneGesture(cut, tape);
     const stream = resolve(DIST_FILM, `${cut.name}.rgba`);
     const file = Bun.file(stream).writer();
     let kept = 0;
