@@ -61,8 +61,14 @@ import {
   deckTargetAt,
   DIRECTION_KEYSYM,
   DPAD,
-  DPAD_KEYS,
+  DPAD_ARM,
+  DPAD_ARMS,
+  DPAD_BAR_H,
+  DPAD_BAR_V,
+  DPAD_CROSS,
+  DPAD_DEAD,
   dpadAt,
+  GAP,
   KEYBOARD,
   keyAt,
   keyboardKeys,
@@ -880,44 +886,79 @@ describe("pocket-shell deck", () => {
     expect(keyAt("lower", 240, TRACKPAD.y + 10)).toBeNull();
   });
 
-  test("the band under the keyboard is a laptop's: menu, click, pad, d-pad", () => {
-    // Nothing overlaps, and the pad does not run edge to edge.
-    expect(MENU_KEY.x).toBeGreaterThan(0);
+  test("the band under the keyboard is a laptop's, spaced by the same two numbers as the keys", () => {
+    // One gap, everywhere in the band: from the panel's edges, from the
+    // keys above, and between the three parts.
+    expect(MENU_KEY.x).toBe(GAP);
     expect(MENU_KEY.y).toBe(BAND.y);
-    expect(CLICK_KEY.y).toBeGreaterThan(MENU_KEY.y + MENU_KEY.h);
-    expect(CLICK_KEY.y + CLICK_KEY.h).toBeLessThanOrEqual(BAND.y + BAND.h);
-    expect(TRACKPAD.x).toBeGreaterThan(MENU_KEY.x + MENU_KEY.w);
-    expect(DPAD.x).toBeGreaterThan(TRACKPAD.x + TRACKPAD.w);
-    expect(DPAD.x + DPAD.w).toBeLessThanOrEqual(SCREEN_W);
-    expect(BAND.y).toBeGreaterThanOrEqual(KEYBOARD.y + KEYBOARD.h);
-    expect(BAND.y + BAND.h).toBeLessThanOrEqual(SCREEN_H);
-    // Both rest buttons and every d-pad key clear the minimum target.
-    for (const r of [MENU_KEY, CLICK_KEY, DPAD_KEYS.u, DPAD_KEYS.d, DPAD_KEYS.l, DPAD_KEYS.r]) {
-      expect(Math.min(r.w, r.h)).toBeGreaterThanOrEqual(28);
-    }
-    // A cross: up over down, left beside right, sharing the middle.
-    expect(DPAD_KEYS.u.x).toBe(DPAD_KEYS.d.x);
-    expect(DPAD_KEYS.u.y).toBeLessThan(DPAD_KEYS.d.y);
-    expect(DPAD_KEYS.l.y).toBe(DPAD_KEYS.r.y);
-    expect(DPAD_KEYS.l.x).toBeLessThan(DPAD_KEYS.u.x);
-    expect(DPAD_KEYS.r.x).toBeGreaterThan(DPAD_KEYS.u.x);
+    expect(CLICK_KEY.y - (MENU_KEY.y + MENU_KEY.h)).toBe(GAP);
+    expect(CLICK_KEY.y + CLICK_KEY.h).toBe(BAND.y + BAND.h);
+    expect(TRACKPAD.x - (MENU_KEY.x + MENU_KEY.w)).toBe(GAP);
+    expect(DPAD.x - (TRACKPAD.x + TRACKPAD.w)).toBe(GAP);
+    expect(SCREEN_W - (DPAD.x + DPAD.w)).toBe(GAP);
+    expect(BAND.y - (KEYBOARD.y + KEYBOARD.h)).toBe(GAP);
+    expect(SCREEN_H - (BAND.y + BAND.h)).toBe(GAP);
+    // The right rest is a square as tall as the band, filled by the cross,
+    // so the CROSS ITSELF has the same margin on all four sides.
+    expect(DPAD.w).toBe(DPAD.h);
+    expect(DPAD.h).toBe(BAND.h);
+    expect(DPAD_CROSS.y - (KEYBOARD.y + KEYBOARD.h)).toBe(GAP);
+    expect(SCREEN_H - (DPAD_CROSS.y + DPAD_CROSS.h)).toBe(GAP);
+    expect(SCREEN_W - (DPAD_CROSS.x + DPAD_CROSS.w)).toBe(GAP);
+    expect(DPAD_CROSS.x - (TRACKPAD.x + TRACKPAD.w)).toBe(GAP);
+    // Both rest buttons clear the minimum target.
+    for (const r of [MENU_KEY, CLICK_KEY]) expect(Math.min(r.w, r.h)).toBeGreaterThanOrEqual(28);
+  });
+
+  test("the d-pad is ONE cross, and the whole square rocks", () => {
+    // Two bars crossing at the centre, each an arm wide, so the piece is
+    // continuous rather than four buttons.
+    expect(DPAD_BAR_V.w).toBe(DPAD_ARM);
+    expect(DPAD_BAR_H.h).toBe(DPAD_ARM);
+    expect(DPAD_BAR_V.h).toBe(DPAD_CROSS.h);
+    expect(DPAD_BAR_H.w).toBe(DPAD_CROSS.w);
+    // Centred on each other, exactly: the span is three arms, so no
+    // rounding is left to give one arm a pixel the others do not have.
+    expect(DPAD_BAR_V.x + DPAD_BAR_V.w / 2).toBe(DPAD_BAR_H.x + DPAD_BAR_H.w / 2);
+    expect(DPAD_BAR_V.y + DPAD_BAR_V.h / 2).toBe(DPAD_BAR_H.y + DPAD_BAR_H.h / 2);
+    expect(DPAD_CROSS.w).toBe(3 * DPAD_ARM);
+    // All four arms are the same square.
     for (const dir of ["u", "d", "l", "r"] as const) {
-      const r = DPAD_KEYS[dir];
-      expect(dpadAt(r.x + 2, r.y + 2)).toBe(dir);
-      expect(r.x).toBeGreaterThanOrEqual(DPAD.x - 4);
-      expect(r.x + r.w).toBeLessThanOrEqual(DPAD.x + DPAD.w + 4);
-      expect(r.y).toBeGreaterThanOrEqual(BAND.y - 4);
-      expect(r.y + r.h).toBeLessThanOrEqual(BAND.y + BAND.h + 4);
+      expect(DPAD_ARMS[dir].w).toBe(DPAD_ARM);
+      expect(DPAD_ARMS[dir].h).toBe(DPAD_ARM);
+    }
+    // The arms meet the bars' ends, so nothing sticks out of the cross.
+    expect(DPAD_ARMS.u.y).toBe(DPAD_CROSS.y);
+    expect(DPAD_ARMS.d.y + DPAD_ARMS.d.h).toBe(DPAD_CROSS.y + DPAD_CROSS.h);
+    expect(DPAD_ARMS.l.x).toBe(DPAD_CROSS.x);
+    expect(DPAD_ARMS.r.x + DPAD_ARMS.r.w).toBe(DPAD_CROSS.x + DPAD_CROSS.w);
+    // A rocker: the direction is where the thumb leans, not what it hits.
+    const cx = DPAD.x + DPAD.w / 2;
+    const cy = DPAD.y + DPAD.h / 2;
+    expect(dpadAt(cx, cy)).toBeNull();
+    expect(dpadAt(cx + DPAD_DEAD - 1, cy + DPAD_DEAD - 1)).toBeNull();
+    expect(dpadAt(cx, cy - 30)).toBe("u");
+    expect(dpadAt(cx, cy + 30)).toBe("d");
+    expect(dpadAt(cx - 30, cy)).toBe("l");
+    expect(dpadAt(cx + 30, cy)).toBe("r");
+    // Even the square's corners answer, leaning the way they point.
+    expect(dpadAt(DPAD.x + 2, DPAD.y + 6)).toBe("l");
+    expect(dpadAt(DPAD.x + 6, DPAD.y + 2)).toBe("u");
+    // The arms' ink sits inside the rocker it stands for.
+    for (const dir of ["u", "d", "l", "r"] as const) {
+      const arm = DPAD_ARMS[dir];
+      expect(dpadAt(arm.x + arm.w / 2, arm.y + arm.h / 2)).toBe(dir);
+      expect(Math.min(arm.w, arm.h)).toBeGreaterThanOrEqual(28);
     }
     expect(dpadAt(TRACKPAD.x + 10, TRACKPAD.y + 10)).toBeNull();
     // One target for every touch on the deck.
     expect(deckTargetAt("lower", MENU_KEY.x + 10, MENU_KEY.y + 10)).toEqual({ kind: "menu" });
     expect(deckTargetAt("lower", CLICK_KEY.x + 10, CLICK_KEY.y + 10)).toEqual({ kind: "click" });
     expect(deckTargetAt("lower", TRACKPAD.x + 40, TRACKPAD.y + 40)).toEqual({ kind: "pad" });
-    expect(deckTargetAt("lower", DPAD_KEYS.l.x + 4, DPAD_KEYS.l.y + 4)).toEqual({ kind: "dpad", dir: "l" });
+    expect(deckTargetAt("lower", DPAD_ARMS.l.x + 4, DPAD_ARMS.l.y + 4)).toEqual({ kind: "dpad", dir: "l" });
     const g = keyboardKeys("lower").find((k) => k.def.label === "g")!;
     expect(deckTargetAt("lower", g.x + 4, g.y + 4)).toMatchObject({ kind: "key" });
-    // The arrows are the d-pad's now: no arrow keys among the keys.
+    // The arrows are the d-pad's: none among the keys.
     expect(keyboardKeys("lower").map((k) => k.def.label)).not.toContain("←");
     // A repeat is a walking pace: each one is a key press on the laptop.
     expect(ARROW_HOLD_FRAMES).toBeGreaterThan(15);

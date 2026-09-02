@@ -428,7 +428,7 @@ async function shots(outDir: string): Promise<void> {
   frames(1);
   frames(10);
   // the band: the click key held while a finger drags on the pad
-  const { CLICK_KEY, DPAD_KEYS, TRACKPAD: PAD } = await import("../ipod/keyboard-layout.ts");
+  const { CLICK_KEY, DPAD_ARMS, TRACKPAD: PAD } = await import("../ipod/keyboard-layout.ts");
   frames(6, [pack(CLICK_KEY.x + 30, CLICK_KEY.y + 20)]);
   for (let i = 1; i <= 6; i += 1) {
     frames(2, [pack(CLICK_KEY.x + 30, CLICK_KEY.y + 20), pack(PAD.x + 60 + i * 10, PAD.y + 50, 1)]);
@@ -437,7 +437,7 @@ async function shots(outDir: string): Promise<void> {
   frames(1);
   frames(8);
   // a d-pad key held
-  frames(6, [pack(DPAD_KEYS.l.x + 16, DPAD_KEYS.l.y + 14)]);
+  frames(6, [pack(DPAD_ARMS.l.x + 16, DPAD_ARMS.l.y + 14)]);
   shot("deck-dpad");
   frames(1);
   frames(8);

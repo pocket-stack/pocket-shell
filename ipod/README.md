@@ -25,7 +25,7 @@ of this repository (`../LICENSE`).
 
 ## Screens
 
-Rendered in the headless sim by `bun scripts/omarchy.ts shots media/`
+Rendered in the headless sim by `bun run omarchy shots media/ipod`
 against a scripted desktop; the panel is 480x320.
 
 | | |
@@ -150,6 +150,43 @@ glyphs Omarchy's bar and menu draw: `fonts.json` names a 68 KiB subset of the
 symbols face (`tools/font-subset.ts`) as a fallback for codepoints Inter does
 not map, and the atlas baker takes those glyphs from it, so an icon is text —
 it recolours with the theme and needs no rectangle art.
+
+**One design system, because the paddings had drifted.** `design.ts` holds
+the spacing scale, the radii, the row heights, the icon box and the
+`rowMetrics` arithmetic; `ui.tsx` holds the drawn primitives — `Card`, `Row`,
+`PressTint` — and the class literals that spell a radius out, since a baked
+class string cannot take a token as a value. Every list here (a held tile's
+popup, the menu sheet, the launch bar) is assembled from those, so two lists
+cannot disagree about where their icons, labels, highlights and hairlines
+sit. A test asserts that the popup's metrics and the sheet's agree.
+
+**One gap holds the deck together.** The keys are spaced by 6 px, and so is
+everything under them: the band's distance from the last key row, from the
+panel's left, right and bottom edges, and between its three parts. That makes
+the band exactly as tall as the d-pad's square is wide, the cross fills it,
+and every margin around the cross is the same 6 px. The cross's span is three
+arms rather than whatever fits, because a span that merely fitted left a
+pixel on one arm and not the others.
+
+**Typing accuracy is two corrections, not bigger keys.** The visual gaps a
+keyboard wants and the target sizes a finger wants are different things, so
+(1) the hit regions **tile** the keyboard — a touch goes to the key whose
+rectangle it is nearest, zero inside, so the gaps belong to their neighbours
+instead of swallowing a press, which is what lets the keys be drawn with
+6 px of air instead of 4 — and (2) the hit test moves the touch **up a few
+pixels** before assigning it, because a press on a capacitive panel lands
+below where the eye aimed. Both are what the platform keyboards do and
+neither costs a frame. A test walks every point over the rows and asserts
+none of them resolves to nothing.
+
+**A rounded node's border fills it.** The engine draws a rounded box with a
+coloured border by filling the whole rounded rect with the BORDER colour and
+insetting the background over it (`draw.rs`), so a translucent background
+inside a border shows the border's colour through it and reads as opaque.
+Anything bordered here therefore has an opaque fill; the tints live on
+borderless overlays. The d-pad's outline is that behaviour used on purpose:
+the cross is two bars painted a pixel larger in the border colour, with the
+body over them, so no seam runs through the middle.
 
 **The panel's own two axes.** A View's main axis is horizontal and its
 cross-axis default is stretch, so `justify-*` places a label across and
@@ -306,8 +343,9 @@ touches in the view's rotated space.
   workspace, the ball opens the sheet, a submenu opens in place, the sheet
   scrolls and lists the machine's applications, holding a tile opens its
   popup and the same finger picks a row, the control centre opens and mutes,
-  the deck types a chord, the arrow compass flicks once and repeats when
-  held, and the trackpad moves the pointer. (No tree probe while a finger is down: the probe
+  the deck types a chord, the d-pad fires and repeats, the click button
+  holds the button down for a drag-select, ctrl reaches the pointer, and the
+  trackpad moves it. (No tree probe while a finger is down: the probe
   advances the world by one touchless frame and would end the hold.)
 - `bun scripts/omarchy.ts client 127.0.0.1:8623 --for 4` — a scripted
   device against a live daemon.

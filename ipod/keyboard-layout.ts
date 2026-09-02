@@ -9,9 +9,10 @@
 // The band under the keyboard is a laptop's C surface read literally: the
 // trackpad does not run edge to edge, and what a laptop leaves as palm rest
 // carries the two things a hand wants beside a pad — Omarchy's menu on the
-// left with the click button under it, a d-pad cross on the right. Four
-// discrete arrow keys beat the slide-a-direction compass they replace: no
-// gesture to learn and nothing to aim inside.
+// left with the click button under it, a d-pad cross on the right. The cross
+// is ONE piece the way a console's is, pressed by direction from its centre
+// like a rocker, and the band is spaced by the same EDGE and GAP as the keys
+// above it.
 //
 // TYPING ACCURACY. Two cheap, well-worn corrections, because the visual gaps
 // a keyboard wants and the target sizes a finger wants are not the same
@@ -43,13 +44,18 @@ export interface KeyVariant {
   mods: Modifier[];
 }
 
-/** Five rows on a 36 px pitch: 30 px of key and 6 px of gap. */
-export const ROWS_TOP = STRIP.h + 4;
+/** The two numbers the whole deck is spaced by: EDGE against the panel,
+ *  GAP between neighbours — keys, rows, the band's three parts. */
+export const EDGE = 4;
+export const GAP = 6;
+
+/** Five rows on a 36 px pitch: 30 px of key and GAP of air. */
+export const ROWS_TOP = STRIP.h + EDGE;
 export const ROW_PITCH = 36;
 export const KEY_H = 30;
 export const ROW_COUNT = 5;
-/** Horizontal inset per key: 3 px a side, so 6 px between two keys. */
-const KEY_INSET = 3;
+/** Horizontal inset per key: half a GAP a side, so GAP between two keys. */
+const KEY_INSET = GAP / 2;
 /** Letter rows: ten columns of 44 px. The top row: twelve of 40. */
 const UNIT = 44;
 const TOP_UNIT = 40;
@@ -65,54 +71,97 @@ export const KEYBOARD: Rect = {
 // the band under the keyboard: menu | click | trackpad | d-pad
 // ---------------------------------------------------------------------------
 
+/**
+ * The band under the keyboard. Every margin around it is GAP — from the last
+ * key row, from the panel's left, right and bottom edges — so the cross on
+ * the right sits the same distance from the pad, the panel and the keys.
+ * That also makes the band exactly as tall as the cross is wide.
+ */
 export const BAND: Rect = {
   x: 0,
-  y: KEYBOARD.y + KEYBOARD.h + 4,
+  y: KEYBOARD.y + KEYBOARD.h + GAP,
   w: SCREEN_W,
-  h: SCREEN_H - (KEYBOARD.y + KEYBOARD.h + 4) - 4,
+  h: SCREEN_H - (KEYBOARD.y + KEYBOARD.h + GAP) - GAP,
 };
-/** Left rest: Omarchy's menu above, the click button below. */
-export const MENU_KEY: Rect = { x: 4, y: BAND.y, w: 72, h: Math.round(BAND.h / 2) - 3 };
-export const CLICK_KEY: Rect = { x: 4, y: MENU_KEY.y + MENU_KEY.h + 6, w: 72, h: BAND.h - MENU_KEY.h - 6 };
-/** The pad itself: narrower than the panel, like a laptop's. */
-export const TRACKPAD: Rect = { x: 82, y: BAND.y, w: 286, h: BAND.h };
-/** Right rest: the d-pad cross. */
-export const DPAD: Rect = { x: 374, y: BAND.y, w: 102, h: BAND.h };
+/**
+ * The band's three parts, spaced by the same two numbers as everything else:
+ * EDGE against the panel, GAP between neighbours. The right rest is a SQUARE
+ * the height of the band, so the cross inside it has the same margin on
+ * every side.
+ *
+ *   EDGE | rests 72 | GAP | trackpad | GAP | cross 106 | EDGE
+ */
+const REST_W = 72;
+export const MENU_KEY: Rect = { x: GAP, y: BAND.y, w: REST_W, h: Math.round(BAND.h / 2) - GAP / 2 };
+export const CLICK_KEY: Rect = { x: GAP, y: MENU_KEY.y + MENU_KEY.h + GAP, w: REST_W, h: BAND.h - MENU_KEY.h - GAP };
+/** Right rest: the d-pad's square, as wide as the band is tall. */
+export const DPAD: Rect = { x: SCREEN_W - GAP - BAND.h, y: BAND.y, w: BAND.h, h: BAND.h };
+/** The pad itself: narrower than the panel, like a laptop's, and it takes
+ *  whatever the two rests and the three gaps leave. */
+export const TRACKPAD: Rect = {
+  x: GAP + REST_W + GAP,
+  y: BAND.y,
+  w: DPAD.x - GAP - (GAP + REST_W + GAP),
+  h: BAND.h,
+};
 
 export type Direction4 = "u" | "d" | "l" | "r";
 export const DIRECTION_KEYSYM: Record<Direction4, string> = { u: "Up", d: "Down", l: "Left", r: "Right" };
 export const DIRECTION_GLYPH: Record<Direction4, string> = { u: "↑", d: "↓", l: "←", r: "→" };
 
-const DPAD_KEY_W = 34;
-const DPAD_KEY_H = Math.floor((DPAD.h - 8) / 3);
+/**
+ * ONE cross, not four buttons: a classic console d-pad is a single piece,
+ * and it is drawn here as two overlapping bars so no seam runs through the
+ * middle. The arms are a third of the span each, which is the proportion
+ * that reads as a d-pad rather than as a plus sign.
+ */
+/**
+ * The arm comes first and the cross is three of them across, so every arm
+ * is the same size and the two bars share an exact centre — a span that
+ * merely fitted left a pixel on one arm and not the other, and on a cross
+ * that reads as sloppy.
+ */
+export const DPAD_ARM = Math.floor(BAND.h / 3);
+const DPAD_SPAN = 3 * DPAD_ARM;
+export const DPAD_CROSS: Rect = {
+  x: DPAD.x + (DPAD.w - DPAD_SPAN) / 2,
+  y: DPAD.y + (DPAD.h - DPAD_SPAN) / 2,
+  w: DPAD_SPAN,
+  h: DPAD_SPAN,
+};
+/** The two bars the cross is made of, each centred on the other. */
+export const DPAD_BAR_V: Rect = { x: DPAD_CROSS.x + DPAD_ARM, y: DPAD_CROSS.y, w: DPAD_ARM, h: DPAD_SPAN };
+export const DPAD_BAR_H: Rect = { x: DPAD_CROSS.x, y: DPAD_CROSS.y + DPAD_ARM, w: DPAD_SPAN, h: DPAD_ARM };
+/** An arm, for the lit look of a press: the cross's nine squares, minus the
+ *  centre and the corners. */
+export const DPAD_ARMS: Record<Direction4, Rect> = {
+  u: { x: DPAD_CROSS.x + DPAD_ARM, y: DPAD_CROSS.y, w: DPAD_ARM, h: DPAD_ARM },
+  d: { x: DPAD_CROSS.x + DPAD_ARM, y: DPAD_CROSS.y + 2 * DPAD_ARM, w: DPAD_ARM, h: DPAD_ARM },
+  l: { x: DPAD_CROSS.x, y: DPAD_CROSS.y + DPAD_ARM, w: DPAD_ARM, h: DPAD_ARM },
+  r: { x: DPAD_CROSS.x + 2 * DPAD_ARM, y: DPAD_CROSS.y + DPAD_ARM, w: DPAD_ARM, h: DPAD_ARM },
+};
+/** The middle of a d-pad presses nothing. */
+export const DPAD_DEAD = 9;
 
-/** The cross: up and down in the middle column, left and right beside it. */
-export const DPAD_KEYS: Record<Direction4, Rect> = (() => {
-  const cx = DPAD.x + Math.round(DPAD.w / 2);
-  const cy = DPAD.y + Math.round(DPAD.h / 2);
-  const midY = cy - Math.round(DPAD_KEY_H / 2);
-  const left = cx - Math.round(DPAD_KEY_W / 2);
-  return {
-    u: { x: left, y: midY - DPAD_KEY_H - 4, w: DPAD_KEY_W, h: DPAD_KEY_H },
-    d: { x: left, y: midY + DPAD_KEY_H + 4, w: DPAD_KEY_W, h: DPAD_KEY_H },
-    l: { x: left - DPAD_KEY_W - 3, y: midY, w: DPAD_KEY_W, h: DPAD_KEY_H },
-    r: { x: left + DPAD_KEY_W + 3, y: midY, w: DPAD_KEY_W, h: DPAD_KEY_H },
-  };
-})();
-
-/** Frames a d-pad key must be held before it repeats, and the frames
+/** Frames a d-pad arm must be held before it repeats, and the frames
  *  between repeats. Each repeat is one key press on the laptop, so the rate
  *  is a walking pace rather than a keyboard's. */
 export const ARROW_HOLD_FRAMES = 20;
 export const ARROW_REPEAT_FRAMES = 7;
 
-/** Which d-pad key a point is on, with slack around the cross. */
+/**
+ * Which way the cross is being pressed: the direction from its centre, the
+ * way a rocker works — the whole square answers, so the arms are bigger
+ * than their ink and a thumb between two of them still picks the one it
+ * leans towards. The middle presses nothing.
+ */
 export function dpadAt(x: number, y: number): Direction4 | null {
-  for (const dir of ["u", "d", "l", "r"] as const) {
-    const r = DPAD_KEYS[dir];
-    if (within(x, y, { x: r.x - 4, y: r.y - 4, w: r.w + 8, h: r.h + 8 })) return dir;
-  }
-  return null;
+  if (!within(x, y, DPAD)) return null;
+  const dx = x - (DPAD.x + DPAD.w / 2);
+  const dy = y - (DPAD.y + DPAD.h / 2);
+  if (Math.abs(dx) < DPAD_DEAD && Math.abs(dy) < DPAD_DEAD) return null;
+  if (Math.abs(dx) >= Math.abs(dy)) return dx > 0 ? "r" : "l";
+  return dy > 0 ? "d" : "u";
 }
 
 // ---------------------------------------------------------------------------

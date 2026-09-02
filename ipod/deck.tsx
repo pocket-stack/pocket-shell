@@ -33,7 +33,9 @@ import {
   deckTargetAt,
   DIRECTION_GLYPH,
   type Direction4,
-  DPAD_KEYS,
+  DPAD_ARMS,
+  DPAD_BAR_H,
+  DPAD_BAR_V,
   keyboardKeys,
   type KeyAction,
   type KeyDef,
@@ -208,36 +210,57 @@ function ClickButton(p: { store: CompanionStore }) {
   );
 }
 
+/**
+ * The d-pad: one cross, drawn as two overlapping bars so no seam runs
+ * through the middle, outlined by painting the same bars a pixel larger in
+ * the border colour underneath. A pressed arm lights up; the whole square
+ * answers by direction, so the ink is the legend and the rocker is the
+ * target (keyboard-layout.ts).
+ */
 function DpadCross(p: { store: CompanionStore }) {
   const dirs: Direction4[] = ["u", "l", "r", "d"];
+  const down = (dir: Direction4) => p.store.dpad()?.dir === dir;
+  const bar = (r: Rect, grow: number) => ({
+    insetL: r.x - grow,
+    insetT: r.y - grow,
+    width: r.w + 2 * grow,
+    height: r.h + 2 * grow,
+  });
   return (
-    <Index each={dirs}>
-      {(dir) => {
-        const r = DPAD_KEYS[dir()];
-        const down = () => p.store.dpad()?.dir === dir();
-        return (
-          <View
-            class={
-              down()
-                ? "absolute rounded-[8] bg-[#7aa2f7] items-center justify-center"
-                : "absolute rounded-[8] bg-[#1a1b26] border border-[#414868] items-center justify-center"
-            }
-            style={{ insetL: r.x, insetT: r.y, width: r.w, height: r.h }}
-            ref={(node) => {
-              themed(() => (down() ? "accentFill" : "surface"))(node);
-              themed(() => (down() ? "accentFill" : "borderMuted"))(node);
-            }}
-          >
-            <Text
-              class={down() ? "text-base font-bold text-[#13141c]" : "text-base text-[#a9b1d6]"}
-              ref={themed(() => (down() ? "textOnAccent" : "text"))}
-            >
-              {DIRECTION_GLYPH[dir()]}
-            </Text>
-          </View>
-        );
-      }}
-    </Index>
+    <>
+      {/* the outline: the same cross, a pixel bigger, in the border colour */}
+      <View class="absolute rounded-[9] bg-[#414868]" style={bar(DPAD_BAR_V, 1)} ref={themed("surfaceMuted")} />
+      <View class="absolute rounded-[9] bg-[#414868]" style={bar(DPAD_BAR_H, 1)} ref={themed("surfaceMuted")} />
+      {/* the body */}
+      <View class="absolute rounded-[8] bg-[#1a1b26]" style={bar(DPAD_BAR_V, 0)} ref={themed("surface")} />
+      <View class="absolute rounded-[8] bg-[#1a1b26]" style={bar(DPAD_BAR_H, 0)} ref={themed("surface")} />
+      {/* the pressed arm, and the arrows */}
+      <Index each={dirs}>
+        {(dir) => {
+          const arm = DPAD_ARMS[dir()];
+          return (
+            <>
+              <View
+                class={down(dir()) ? "absolute rounded-[7] bg-[#7aa2f7]" : "hidden"}
+                style={{ insetL: arm.x, insetT: arm.y, width: arm.w, height: arm.h }}
+                ref={themed("accentFill")}
+              />
+              <View
+                class="absolute items-center justify-center"
+                style={{ insetL: arm.x, insetT: arm.y, width: arm.w, height: arm.h }}
+              >
+                <Text
+                  class={down(dir()) ? "text-base font-bold text-[#13141c]" : "text-base text-[#a9b1d6]"}
+                  ref={themed(() => (down(dir()) ? "textOnAccent" : "text"))}
+                >
+                  {DIRECTION_GLYPH[dir()]}
+                </Text>
+              </View>
+            </>
+          );
+        }}
+      </Index>
+    </>
   );
 }
 

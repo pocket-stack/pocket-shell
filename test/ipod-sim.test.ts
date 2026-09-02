@@ -8,7 +8,7 @@
 import { describe, expect, test } from "bun:test";
 import { bootWorld } from "../vendor/pocketjs/hosts/sim/sim.ts";
 import type { HostState } from "../ipod/protocol.ts";
-import { CLICK_KEY, DPAD_KEYS, keyboardKeys, MENU_KEY, TRACKPAD } from "../ipod/keyboard-layout.ts";
+import { CLICK_KEY, DPAD_ARMS, keyboardKeys, MENU_KEY, TRACKPAD } from "../ipod/keyboard-layout.ts";
 import {
   BALL_HOME,
   CC_BUTTON,
@@ -427,7 +427,7 @@ describe("pocket-shell in the sim", () => {
   test("the d-pad fires at once and repeats while held, with the modifier riding along", async () => {
     const { world, store, sent } = await connected();
     tap(world, MODE.x + MODE_HALF_W + 17, MODE.y + 11);
-    const right = DPAD_KEYS.r;
+    const right = DPAD_ARMS.r;
     const at = { x: right.x + right.w / 2, y: right.y + right.h / 2 };
 
     // A tap: exactly one Right, on the press.
@@ -441,7 +441,7 @@ describe("pocket-shell in the sim", () => {
 
     // Held: the first press, then repeats.
     sent.length = 0;
-    const up = DPAD_KEYS.u;
+    const up = DPAD_ARMS.u;
     for (let i = 0; i < 70; i += 1) world.frame(0, undefined, [pack(up.x + up.w / 2, up.y + up.h / 2)]);
     const ups = sent.filter((line) => (line as { k?: string }).k === "Up");
     expect(ups.length).toBeGreaterThan(4);
@@ -453,7 +453,7 @@ describe("pocket-shell in the sim", () => {
     sent.length = 0;
     const ctrl = keyboardKeys("lower").find((k) => k.def.label === "ctrl")!;
     tap(world, ctrl.x + ctrl.w / 2, ctrl.y + ctrl.h / 2, 5);
-    const left = DPAD_KEYS.l;
+    const left = DPAD_ARMS.l;
     tap(world, left.x + left.w / 2, left.y + left.h / 2, 5);
     expect(sent).toContainEqual({ t: "key", k: "Left", mods: ["ctrl"] });
     expect(store.kbMods()).toEqual([]);
