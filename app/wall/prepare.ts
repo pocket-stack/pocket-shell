@@ -1,7 +1,7 @@
-// apps/pocket-shell/wall/prepare.ts — cook the Omarchy tokyo-night backgrounds
+// app/wall/prepare.ts — cook the Omarchy tokyo-night backgrounds
 // into pak-ready textures.
 //
-//   bun apps/pocket-shell/wall/prepare.ts <source-dir>
+//   bun app/wall/prepare.ts <source-dir>
 //
 // <source-dir> holds the originals from /usr/share/omarchy/themes/tokyo-night/
 // backgrounds/ (0-winding-road.jpg, 3-sunset-lake.png, 2-swirl-buck.jpg).
@@ -32,7 +32,7 @@ const SOURCES: Record<string, string> = {
 
 const sourceDir = process.argv[2];
 if (!sourceDir) {
-  console.error("usage: bun apps/pocket-shell/wall/prepare.ts <dir with the tokyo-night backgrounds>");
+  console.error("usage: bun app/wall/prepare.ts <dir with the tokyo-night backgrounds>");
   process.exit(1);
 }
 const here = new URL(".", import.meta.url).pathname;

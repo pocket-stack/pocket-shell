@@ -1,7 +1,7 @@
-// apps/pocket-shell/wm.ts — the window manager as pure state and geometry.
+// app/wm.ts — the window manager as pure state and geometry.
 //
 // No Solid, no framework imports: every rule about where a window goes lives
-// here and is unit-tested directly (tests/pocket-shell-wm.test.ts). The store
+// here and is unit-tested directly (test/wm.test.ts). The store
 // (store.ts) owns signals, animation and input; this module owns the tree.
 //
 // Two layouts, per workspace, the way Omarchy configures Hyprland:

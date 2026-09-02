@@ -1,4 +1,4 @@
-// apps/pocket-shell/chords.ts — the modifier grammar, as one table.
+// app/chords.ts — the modifier grammar, as one table.
 //
 // Omarchy binds every window action to SUPER plus one key and shows the whole
 // table on SUPER+K. Pocket Shell gives the two shoulders that role:

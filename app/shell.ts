@@ -1,4 +1,4 @@
-// apps/pocket-shell/shell.ts — pocketsh, the terminal applet's command
+// app/shell.ts — pocketsh, the terminal applet's command
 // interpreter. It is to Pocket Shell what hyprctl is to Hyprland: every
 // window-manager verb the chords reach is also a command here, so the same
 // state can be driven from a keyboard. Pure: the interpreter takes a

@@ -1,4 +1,4 @@
-// apps/pocket-shell/app.tsx — Pocket Shell: a tiling window shell for the
+// app/app.tsx — Pocket Shell: a tiling window shell for the
 // Nintendo 3DS, entirely on the console. The top screen is the stage —
 // Omarchy's tokyo-night wallpaper under dwindle- or scrolling-tiled windows —
 // and the touch screen is the deck, where the shoulders' chord map, the
@@ -12,7 +12,7 @@ import { createShellStore } from "./store.ts";
 
 export default function PocketShell() {
   const store = createShellStore();
-  // Debug handle for the headless sim test (tests/pocket-shell-sim.test.ts),
+  // Debug handle for the headless sim test (test/sim.test.ts),
   // which has no touch screen to open windows from.
   (globalThis as { __pocketShell?: unknown }).__pocketShell = store;
   return (

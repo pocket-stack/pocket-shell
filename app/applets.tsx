@@ -1,4 +1,4 @@
-// apps/pocket-shell/applets.tsx — what the windows hold. Every applet is
+// app/applets.tsx — what the windows hold. Every applet is
 // self-contained on the console: pocketsh drives the window manager itself,
 // the clock reads the RTC, notes is a scratch pad, keys is the chord table,
 // stats reads the frame loop, about says what this is.

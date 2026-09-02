@@ -1,4 +1,4 @@
-// apps/pocket-shell/store.ts — the shell's live state: the window manager
+// app/store.ts — the shell's live state: the window manager
 // wrapped in signals, the per-frame input dispatcher that turns shoulder
 // chords into actions, window geometry animation, and the applet states the
 // windows render. Everything the two screens show reads from here.
