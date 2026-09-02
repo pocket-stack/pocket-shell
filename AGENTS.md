@@ -13,7 +13,9 @@ to one of them:
   shoulder buttons. Nothing there is a portability layer, and a change that
   only makes sense on some other machine does not belong in it.
 - `ipod/` — Pocket Shell on the iPod touch 4, an Omarchy companion (a guest
-  app plus the daemon it talks to). Its own README carries the design.
+  app plus the daemon it talks to). Its own README carries the design, and
+  `ipod/HANDOFF.md` any live fault on the Omarchy machine — read it first if
+  you are working **on** that machine.
 
 They share this repository, the runtime submodule and the licence. They share
 no code, and for now that is deliberate: how the two become one product is a
