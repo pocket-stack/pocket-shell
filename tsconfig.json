@@ -17,5 +17,5 @@
       "@pocketjs/framework/*": ["./vendor/pocketjs/framework/src/*"]
     }
   },
-  "include": ["app", "film", "scripts", "test"]
+  "include": ["app", "film", "ipod", "scripts", "test"]
 }

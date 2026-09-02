@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // app/keyboard.tsx — the deck's touch keyboard, for term and
 // notes. The framework Osk lays itself out against the PRIMARY viewport, so
 // the 320 px auxiliary panel gets a hand-laid grid instead: 32 px columns,

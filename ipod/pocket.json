@@ -1,0 +1,30 @@
+{
+  "$schema": "https://pocketjs.dev/schema/pocket-2.json",
+  "pocket": 2,
+  "id": "dev.pocket-stack.shell.ipod",
+  "name": "pocketshell-ipod",
+  "title": "Pocket Shell",
+  "version": "0.1.0",
+  "engine": {
+    "capabilities": {
+      "requires": [
+        "input.touch",
+        "text.glyphs.baked"
+      ]
+    }
+  },
+  "app": {
+    "entry": "ipod/main.tsx",
+    "output": "pocketshell-ipod",
+    "framework": "solid",
+    "viewport": {
+      "fixed": {
+        "logical": [
+          480,
+          320
+        ],
+        "presentation": "native"
+      }
+    }
+  }
+}

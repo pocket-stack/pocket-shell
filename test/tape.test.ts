@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // test/tape.test.ts — the recordings' own rules, checked without an emulator.
 //
 // A cut is a range of a tape's frame dump, and the two can drift: a range

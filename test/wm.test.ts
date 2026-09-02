@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // test/wm.test.ts — the window manager's layout rules, without
 // a device: dwindle splits, scrolling columns, directional focus and swap,
 // resize, fullscreen, workspace moves, and the touch handles.

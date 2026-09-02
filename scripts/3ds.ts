@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // bun run 3ds [--pocket-only] [--capture] [--cia] — build the console binary.
 //
 // The toolchain lives in the submodule and is driven by a resolved plan: this

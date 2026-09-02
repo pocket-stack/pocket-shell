@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // app/shell.ts — pocketsh, the terminal applet's command
 // interpreter. It is to Pocket Shell what hyprctl is to Hyprland: every
 // window-manager verb the chords reach is also a command here, so the same

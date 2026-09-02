@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // app/store.ts — the shell's live state: the window manager
 // wrapped in signals, the per-frame input dispatcher that turns shoulder
 // chords into actions, window geometry animation, and the applet states the

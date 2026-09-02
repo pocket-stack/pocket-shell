@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // app/wm.ts — the window manager as pure state and geometry.
 //
 // No Solid, no framework imports: every rule about where a window goes lives

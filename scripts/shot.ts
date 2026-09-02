@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // bun run shot [--host <ip>] [--out media/hw-x.png] [--eval "<js>"] — one
 // screenshot of a running console, both screens in one PNG.
 //

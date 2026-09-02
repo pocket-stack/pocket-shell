@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // bun run probe [--host <ip>] [--out shot.png] — one round trip to a running
 // console: runtime status, device stats, the mounted tree and a screenshot of
 // both displays.

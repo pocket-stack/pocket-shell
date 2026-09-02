@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // test/sim.test.ts — Pocket Shell's render layer in the
 // headless sim: the same button tape the Azahar golden runs, with the dock
 // taps replaced by store calls (the sim has no touch screen; a detached core

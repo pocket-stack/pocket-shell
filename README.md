@@ -5,11 +5,13 @@ console. Windows tile on the top screen; the touch screen is the control
 surface. There is no companion process, no phone, no PC — the shell, its
 window manager and its applets all run on the handheld.
 
-> **The 3DS is the only platform.** Pocket Shell is written against this
-> machine: two screens of fixed size, a resistive panel that reports one
+> **The 3DS is the only platform this shell runs on.** It is written against
+> the machine: two screens of fixed size, a resistive panel that reports one
 > contact, a d-pad, four face buttons and two shoulders. It is not a
 > cross-platform shell with a 3DS backend, and there is no port to anything
-> else — see [Only the 3DS](#only-the-3ds).
+> else — see [Only the 3DS](#only-the-3ds). (The repository also holds an
+> Omarchy companion for the iPod touch, in `ipod/`; the two are independent —
+> see [Also here](#also-here).)
 
 <img src="media/hw/tiled.png" width="400" alt="Pocket Shell on a Nintendo 3DS: three windows tiled on the top screen under a status bar, and the touch screen showing the workspace strip, a live minimap of the tiling, and the dock" />
 
@@ -222,9 +224,24 @@ app/          the guest
   applets.tsx   term · clock · notes · keys · stats · about
   wall/       tokyo-night backgrounds in 512×256 envelopes
 film/tape.ts  the scripted runs: animations, goldens and the sim replay
+ipod/         the iPod touch companion: its own app and its Omarchy daemon
 scripts/      build, device and recording commands over the vendored toolchain
 test/         the window manager, the headless replay, the pinned frames
 docs/         DESIGN.md (why it is shaped this way), CAPTURE.md (the recorder)
+```
+
+## Also here
+
+`ipod/` is a second, independent application: **Pocket Shell on the iPod
+touch 4** — an Omarchy companion that mirrors the desktop over USB and drives
+it. It shares this repository, its runtime submodule and its licence with the
+3DS shell and nothing else; how the two might become one product is a
+question for later. Its own README covers the design, the wire and the
+daemon: [ipod/README.md](ipod/README.md).
+
+```
+bun run ipod deploy       # build and install on the iPod (POCKETJS_IPODTOUCH4_VIA=<host> when it is plugged elsewhere)
+bun run omarchy deploy-host x1nano   # the daemon on the Omarchy machine
 ```
 
 ## Built on PocketJS
@@ -235,8 +252,12 @@ the QuickJS runtime, the Rust core, the citro3d backend and the console
 toolchain. It arrives as the `vendor/pocketjs` submodule and is not edited
 here: a runtime change lands there first and this repository moves its pin.
 
-Two runtime fixes came out of building this shell and live upstream: an
-adjacent-swap reconcile bug in the universal renderer, and the guest's JS
-stack budget.
+Runtime work that came out of building these two apps lives upstream: an
+adjacent-swap reconcile bug in the universal renderer and the guest's JS
+stack budget (from the 3DS shell), and the legacy Apple hosts' network
+transport, a landscape presentation for a portrait panel, and per-codepoint
+fallback faces in the glyph baker (from the iPod companion).
 
-MIT licensed. The wallpapers are Omarchy's tokyo-night backgrounds.
+Licensed under the **GNU General Public License v3.0 or later**
+([LICENSE](LICENSE)); PocketJS itself stays MIT. The wallpapers are Omarchy's
+tokyo-night backgrounds.

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // bun scripts/setup.ts — link the runtime this product builds against.
 //
 // The guest is bundled by the vendored toolchain but resolved from THIS

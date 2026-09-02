@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // film/tape.ts — the scripted runs. One tape is a frame-indexed function from
 // frame number to buttons and touch contacts; the console's capture build
 // bakes it in and dumps one frame per index, so a run is a pure function of

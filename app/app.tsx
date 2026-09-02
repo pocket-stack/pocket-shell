@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // app/app.tsx — Pocket Shell: a tiling window shell for the
 // Nintendo 3DS, entirely on the console. The top screen is the stage —
 // Omarchy's tokyo-night wallpaper under dwindle- or scrolling-tiled windows —

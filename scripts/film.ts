@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // bun run film — the frame recorder: run a tape in the emulator, keep every
 // frame of it, and turn named ranges into the animations the README shows.
 //

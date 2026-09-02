@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // bun run guest — bundle the guest alone (no console toolchain, no Docker),
 // into the submodule's dist under the manifest's output name. That is where
 // the headless sim looks for a bundle it did not build itself, so this is the

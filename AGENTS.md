@@ -5,10 +5,22 @@ Pocket Shell is a product built on PocketJS, which arrives as the
 change lands in [pocket-stack/pocketjs](https://github.com/pocket-stack/pocketjs)
 first, and this repository moves its pin.
 
-**The only platform is the Nintendo 3DS.** The shell is written against two
-screens of fixed size, a resistive panel with one contact, a d-pad and
-shoulder buttons. Nothing here is a portability layer, and a change that only
-makes sense on some other machine does not belong in this repository.
+The repository holds **two independent applications**, and a change belongs
+to one of them:
+
+- `app/` — the 3DS shell. **Its only platform is the Nintendo 3DS**: two
+  screens of fixed size, a resistive panel with one contact, a d-pad and
+  shoulder buttons. Nothing there is a portability layer, and a change that
+  only makes sense on some other machine does not belong in it.
+- `ipod/` — Pocket Shell on the iPod touch 4, an Omarchy companion (a guest
+  app plus the daemon it talks to). Its own README carries the design.
+
+They share this repository, the runtime submodule and the licence. They share
+no code, and for now that is deliberate: how the two become one product is a
+question for later, not a refactor to anticipate.
+
+Everything here is **GPL-3.0-or-later** (`LICENSE`); PocketJS itself is MIT.
+New source files carry the SPDX line.
 
 ## Conventions
 
@@ -26,12 +38,23 @@ makes sense on some other machine does not belong in this repository.
 ## The loop
 
 ```sh
-bun run check                        # typecheck, window-manager tests, sim replay
+bun run check                        # typecheck + both apps' unit and sim tests
 bun run push --host <console-ip>     # rebuild the guest, hot-push it (~20 s)
 bun run shot --host <console-ip>     # a screenshot of both screens
 bun run 3ds                          # the full .3dsx — needed for a reflash
 bun run film                         # re-record media/ from the tapes
 bun run goldens                      # byte-compare the pinned frames
+```
+
+The iPod app has its own loop:
+
+```sh
+bun run ipod guest                        # bundle it (what the sim boots)
+POCKETJS_IPODTOUCH4_VIA=x1nano bun run ipod deploy   # build, link, install over usbmuxd
+bun run omarchy deploy-host x1nano        # the daemon and its pointer helper
+bun run omarchy logs x1nano               # what the daemon saw
+bun run omarchy menu x1nano               # regenerate ipod/menu.ts from the machine
+bun run omarchy shots media/ipod          # re-render its screens in the sim
 ```
 
 `app/` changes are hot pushes. A change under `vendor/pocketjs/hosts/3ds` is

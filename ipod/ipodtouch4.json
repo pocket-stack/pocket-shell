@@ -1,0 +1,14 @@
+{
+  "id": "ipod",
+  "projectRoot": "..",
+  "manifest": "ipod/pocket.json",
+  "bundleId": "dev.pocket-stack.shell",
+  "bundleName": "PocketShell.app",
+  "executable": "PocketShell",
+  "title": "Pocket Shell",
+  "scheme": "pocketjs-shell",
+  "receiptSlug": "pocketjs-shell",
+  "actionName": "shell_action",
+  "svcWire": true,
+  "keepAwake": true
+}

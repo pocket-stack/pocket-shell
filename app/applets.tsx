@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // app/applets.tsx — what the windows hold. Every applet is
 // self-contained on the console: pocketsh drives the window manager itself,
 // the clock reads the RTC, notes is a scratch pad, keys is the chord table,

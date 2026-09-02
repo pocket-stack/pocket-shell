@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // app/stage.tsx — the top screen: wallpaper, tiled windows,
 // the bar, and the key sheet. Window geometry comes from the store's
 // animated rects; the applet inside sizes from the settled placement so text

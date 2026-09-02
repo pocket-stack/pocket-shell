@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // bun run pair --host <ip> — pair with a console once, while ftpd is running
 // on it. The vendored tool uploads a key to the SD card and keeps its copy
 // inside the submodule; this brings that copy back into .pocket/devices/,

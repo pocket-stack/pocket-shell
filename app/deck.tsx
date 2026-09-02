@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // app/deck.tsx — the touch screen. Omarchy's SUPER key is a
 // key; here it is a surface. The deck always shows the workspace strip, a
 // live minimap of the top screen, and the dock, and it re-labels itself the

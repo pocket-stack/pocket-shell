@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // app/chords.ts — the modifier grammar, as one table.
 //
 // Omarchy binds every window action to SUPER plus one key and shows the whole

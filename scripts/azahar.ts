@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 // scripts/azahar.ts — run one tape in the emulator and hand back its frames.
 //
 // The console's capture build (`bun run 3ds --capture`) bakes a tape into the
