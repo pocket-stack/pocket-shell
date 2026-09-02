@@ -554,6 +554,35 @@ describe("pocket-shell in the sim", () => {
     expect(store.kbMods()).toEqual([]);
   });
 
+  test("super, then shift, then enter is Omarchy's browser chord", async () => {
+    const { world, store, sent } = await connected();
+    tap(world, MODE.x + MODE_HALF_W + 17, MODE.y + 11);
+    const key = (layer: "lower" | "upper", label: string) =>
+      keyboardKeys(layer).find((k) => k.def.label === label)!;
+    const press = (k: { x: number; y: number; w: number; h: number }) =>
+      tap(world, k.x + k.w / 2, k.y + k.h / 2, 5);
+
+    // Tapped one after another, each modifier stays armed for the next key.
+    press(key("lower", "super"));
+    expect(store.kbMods()).toEqual(["super"]);
+    press(key("lower", "shift"));
+    expect(store.kbMods()).toEqual(["super", "shift"]);
+    // Shift is the letter layer as well, so the keyboard is showing capitals.
+    expect(store.kbLayer()).toBe("upper");
+    press(key("upper", "return"));
+    expect(sent).toContainEqual({ t: "chord", k: "Return", mods: ["super", "shift"] });
+    expect(store.kbMods()).toEqual([]);
+    // Spent, so the letters come back down.
+    expect(store.kbLayer()).toBe("lower");
+
+    // A capital typed on its own carries its case: no shift on the wire.
+    sent.length = 0;
+    press(key("lower", "shift"));
+    press(key("upper", "H"));
+    expect(sent).toContainEqual({ t: "type", text: "H" });
+    expect(store.kbLayer()).toBe("lower");
+  });
+
   test("a hello that is still pending shows the approval screen", async () => {
     const world = await bootWorld("pocketshell-ipod", HZ, undefined, undefined, { width: 480, height: 320 });
     const store = (globalThis as { __pocketShellIpod?: CompanionStore }).__pocketShellIpod!;

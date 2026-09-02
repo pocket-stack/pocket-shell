@@ -757,6 +757,10 @@ export function createCompanionStore(svc: Svc | null = connectSvc()) {
     if (used || armedBefore.get(mod)) setKbMods(kbMods().filter((m) => m !== mod));
     armedBefore.delete(mod);
   };
+  /** Whether a finger is still on that modifier's key. The letter layer asks
+   *  about shift: a held shift keeps the upper layer up for a run of
+   *  capitals, while a tapped one drops after one character. */
+  const modHeld = (mod: Modifier): boolean => heldMods.has(mod);
   /** What to send with this key or click, and what that costs: a held
    *  modifier stays for the next one, a tapped one is spent. */
   const consumeMods = (): Modifier[] => {
@@ -1234,6 +1238,7 @@ export function createCompanionStore(svc: Svc | null = connectSvc()) {
     modDown,
     modUp,
     consumeMods,
+    modHeld,
     pressed,
     pressT,
     pressDown,

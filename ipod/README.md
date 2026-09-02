@@ -94,7 +94,13 @@ after a day the strokes are made without looking.
   it and it stays down for as many keys, taps or drags as the finger holds —
   which is how a file manager multi-selects) and hold-and-slide variants (hold
   `x` → `^X` `⌥X`, hold `1` → `F1` `^1`; release on the key itself types it
-  plain). **The modifiers reach the pointer too**: ctrl then a tap is a
+  plain). **shift is two things at once**: it raises the letter layer and arms
+  the shift modifier, so `super`, `shift`, `enter` tapped in turn is
+  SUPER+SHIFT+RETURN — Omarchy's browser — and shift+Tab and shift+↑ exist at
+  all. A character carries its own case, so a lone shift is not sent with one;
+  in a wider chord it rides along and the key goes out unshifted (ctrl+shift+t,
+  not ctrl+T). The layer drops as soon as the modifier is spent, and holds
+  while the finger holds shift. **The modifiers reach the pointer too**: ctrl then a tap is a
   ctrl-click, and ctrl with the click button held is a ctrl-drag. The band is
   a laptop's: the **trackpad** in the middle with palm rests either side, the
   **menu** and **click** keys stacked in the left one as two squares, and a

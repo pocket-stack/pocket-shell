@@ -1077,6 +1077,25 @@ describe("pocket-shell deck", () => {
     expect(keysymFor("Z")).toBeNull();
   });
 
+  test("shift is the layer AND a modifier: the case rides the character, the chord rides shift", () => {
+    // The upper layer IS the shift for a character, so a lone shift is not
+    // sent with one — but a named key has no case to carry it.
+    expect(keyToLine({ ch: "H" }, ["shift"])).toEqual({ t: "type", text: "H" });
+    expect(keyToLine({ key: "Tab" }, ["shift"])).toEqual({ t: "key", k: "Tab", mods: ["shift"] });
+    expect(keyToLine({ key: "Left" }, ["shift"])).toEqual({ t: "key", k: "Left", mods: ["shift"] });
+    // Part of a wider chord, the character goes out unshifted with shift in
+    // the modifiers: ctrl+shift+t, not ctrl+T.
+    expect(keyToLine({ ch: "T" }, ["ctrl", "shift"])).toEqual({ t: "key", k: "t", mods: ["ctrl", "shift"] });
+
+    // Both letter shifts arm the modifier; the symbol layer's leftmost key is
+    // a way back to the letters, so it is labelled and behaves as one.
+    const shiftOn = (layer: "lower" | "upper" | "sym") => keyboardKeys(layer).find((k) => k.def.label === "shift")?.def.act;
+    expect(shiftOn("lower")).toEqual({ layer: "upper", mod: "shift" });
+    expect(shiftOn("upper")).toEqual({ layer: "lower", mod: "shift" });
+    expect(shiftOn("sym")).toBeUndefined();
+    expect(keyboardKeys("sym").find((k) => k.def.label === "abc")?.def.act).toEqual({ layer: "lower" });
+  });
+
   test("held letters and digits offer variants as chips inside the screen", () => {
     const keys = keyboardKeys("lower");
     const x = keys.find((k) => k.def.label === "x")!;

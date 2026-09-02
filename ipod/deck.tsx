@@ -55,7 +55,10 @@ import { themed } from "./theme.ts";
 
 function Key(p: { store: CompanionStore; key: KeyRect }) {
   const id = () => `key:${p.key.row}:${p.key.col}`;
-  const armed = () => "mod" in p.key.def.act && p.store.kbMods().includes(p.key.def.act.mod);
+  const armed = () => {
+    const act = p.key.def.act;
+    return "mod" in act && act.mod !== undefined && p.store.kbMods().includes(act.mod);
+  };
   let root: NodeMirror | null = null;
   let glow: NodeMirror | null = null;
   createEffect(() => {
@@ -401,8 +404,14 @@ export function deckHandlers(store: CompanionStore): GestureHandlers {
     }
     if ("mod" in act) return; // modifiers act on their own down and up edges
     send(act);
-    // One-shot shift: the upper layer drops back after a character.
-    if ("ch" in act && store.kbLayer() === "upper") store.setKbLayer("lower");
+    // One-shot shift: the upper layer drops back as soon as the modifier is
+    // spent, whatever the key was (a capital, or the Return of
+    // SUPER+SHIFT+RETURN) — unless the finger is still on shift, since a
+    // held modifier stays down here too and a run of capitals needs one
+    // press.
+    if (store.kbLayer() === "upper" && !store.modHeld("shift") && !store.kbMods().includes("shift")) {
+      store.setKbLayer("lower");
+    }
   };
 
   return {
@@ -444,9 +453,13 @@ export function deckHandlers(store: CompanionStore): GestureHandlers {
           // several keys or clicks — ctrl held over three taps is three
           // ctrl-clicks, which is how a selection is extended.
           const act = target.key.def.act;
-          if ("mod" in act) {
+          if ("mod" in act && act.mod !== undefined) {
             modding = { id: c.id, mod: act.mod };
             store.modDown(act.mod);
+            // shift is both: the layer flips here on the down edge with the
+            // modifier, since the contact that holds a modifier never
+            // reaches press().
+            if ("layer" in act) store.setKbLayer(act.layer);
           }
           return;
         }

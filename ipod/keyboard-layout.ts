@@ -175,7 +175,14 @@ export function dpadAt(x: number, y: number): Direction4 | null {
 // the keys
 // ---------------------------------------------------------------------------
 
-export type KeyAction = { ch: string } | { key: string } | { layer: KbLayer } | { mod: Modifier };
+/**
+ * What a key does. `shift` does two things at once — it switches the letter
+ * layer AND arms the shift modifier — because the case of a character is not
+ * the only thing shift means: SUPER+SHIFT+RETURN opens Omarchy's browser and
+ * shift+Tab walks a list backwards, and neither is reachable from a key that
+ * only changes which letters are drawn.
+ */
+export type KeyAction = { ch: string } | { key: string } | { layer: KbLayer; mod?: Modifier } | { mod: Modifier };
 
 export interface KeyDef {
   label: string;
@@ -251,7 +258,7 @@ const ROWS: Record<KbLayer, KeyDef[][]> = {
     letters("qwertyuiop"),
     [...letters("asdfghjkl"), RETURN],
     [
-      { label: "shift", w: 1.25, act: { layer: "upper" }, dark: true },
+      { label: "shift", w: 1.25, act: { layer: "upper", mod: "shift" }, dark: true },
       ...letters("zxcvbnm"),
       { label: ",", w: 0.75, act: { ch: "," } },
       { label: ".", w: 0.75, act: { ch: "." } },
@@ -263,7 +270,7 @@ const ROWS: Record<KbLayer, KeyDef[][]> = {
     chars("QWERTYUIOP"),
     [...chars("ASDFGHJKL"), RETURN],
     [
-      { label: "shift", w: 1.25, act: { layer: "lower" }, dark: true },
+      { label: "shift", w: 1.25, act: { layer: "lower", mod: "shift" }, dark: true },
       ...chars("ZXCVBNM"),
       { label: "!", w: 0.75, act: { ch: "!" } },
       { label: "?", w: 0.75, act: { ch: "?" } },
@@ -275,7 +282,7 @@ const ROWS: Record<KbLayer, KeyDef[][]> = {
     chars("-/:;()$&@\""),
     [...chars("[]{}#%^*+"), RETURN],
     [
-      { label: "shift", w: 1.25, act: { layer: "lower" }, dark: true },
+      { label: "abc", w: 1.25, act: { layer: "lower" }, dark: true },
       ...chars("_\\|~<>!"),
       { label: "=", w: 0.75, act: { ch: "=" } },
       { label: "?", w: 0.75, act: { ch: "?" } },
@@ -414,7 +421,10 @@ export function keyToLine(
   mods: Modifier[],
 ): { t: "type"; text: string } | { t: "key"; k: string; mods?: Modifier[] } | null {
   if ("ch" in act) {
-    if (mods.length === 0) return { t: "type", text: act.ch };
+    // A character already carries its case, so a lone shift is not sent with
+    // it — the upper layer is the shift. It does ride along in a wider chord
+    // (ctrl+shift+t), where the key goes out as its unshifted self.
+    if (mods.filter((mod) => mod !== "shift").length === 0) return { t: "type", text: act.ch };
     const k = keysymFor(act.ch.toLowerCase());
     return k ? { t: "key", k, mods } : null;
   }
