@@ -756,26 +756,39 @@ interface UsbLink {
 }
 
 const usbLinks = new Map<string, UsbLink>();
-let usbToolMissing = false;
+/** Said once per quiet spell, so an unplugged cable does not fill the log. */
+let usbWarned = false;
+/** A device has been listed at least once in this process. udev starts
+ *  usbmuxd with the first device and stops it with the last (39-usbmuxd.rules
+ *  runs `usbmuxd -x` on remove), so a failing idevice_id is the ordinary
+ *  no-device state either way — the log used to read it as a broken install
+ *  after every unplug. */
+let usbEverSeen = false;
 
 function listUsbDevices(): Promise<string[]> {
   return new Promise((resolve) => {
     execFile("idevice_id", ["-l"], { timeout: 3000 }, (error, stdout) => {
       if (error) {
         const code = (error as NodeJS.ErrnoException).code;
-        if (!usbToolMissing) {
-          usbToolMissing = true;
+        if (!usbWarned) {
+          usbWarned = true;
           log(
             code === "ENOENT"
               ? "usb: idevice_id not installed; the cable path is off (pacman -S usbmuxd libimobiledevice)"
-              : `usb: idevice_id failed (${error.message.trim().split("\n")[0]}); is usbmuxd installed and running?`,
+              : usbEverSeen
+                ? "usb: nothing on the cable (usbmuxd exits with the last device)"
+                : "usb: no device on the cable (usbmuxd starts with one; `bun run omarchy doctor` if one is plugged in)",
           );
         }
         resolve([]);
         return;
       }
-      usbToolMissing = false;
-      resolve(stdout.split("\n").map((line) => line.trim()).filter((line) => /^[0-9a-f-]{20,}$/i.test(line)));
+      const ids = stdout.split("\n").map((line) => line.trim()).filter((line) => /^[0-9a-f-]{20,}$/i.test(line));
+      if (ids.length > 0) {
+        usbWarned = false;
+        usbEverSeen = true;
+      }
+      resolve(ids);
     });
   });
 }

@@ -372,6 +372,37 @@ the same out-of-tree shape `scripts/3ds.ts` uses for the console. Every
 device-side name differs from Pocket Clear's, so the two coexist on one
 iPod.
 
+## When the cable goes quiet
+
+`bun run omarchy doctor <host>` asks the three layers of the cable path in
+order and names the one that failed:
+
+1. **the kernel** — did the iPod enumerate on the bus at all
+   (`/sys/bus/usb/devices/*/idVendor` = `05ac`), and what the last
+   enumeration attempt on any port said
+2. **usbmuxd** — does `idevice_id -l` list it. udev starts usbmuxd when a
+   device attaches and stops it with the last one (`39-usbmuxd.rules`), so a
+   failing `idevice_id` with nothing plugged in is the normal state, not a
+   fault
+3. **the daemon** — is the unit active, is it listening on 8622, and what did
+   it last say about the cable
+
+Layer 1 is the one that cannot be repaired from here. `device not responding
+to setup address` / `error -71` / `unable to enumerate` means the port saw
+the iPod and could not talk to it — a worn 30-pin contact, a power-only
+cable, or a port that did not come back from suspend (`new full-speed USB
+device` for a device that is high-speed is the same signature). Reseat it,
+try the other port and another cable, hard-reset the iPod (Home + Power),
+and as a last resort rebind the controller.
+
+Nothing else needs doing by hand: the daemon rescans usbmuxd every three
+seconds and a cable connection is its own trust, so the device is back about
+five seconds after the kernel sees it — no approval dialog, no relaunch. The
+same is true after the machine suspends: the connection is dropped by the
+wire's ten-second liveness rule and re-dialled on the next scan. What does
+NOT survive is the login session: the unit is `PartOf=graphical-session.target`,
+so it stops when Hyprland does and starts with the next session.
+
 ## Landscape on a portrait panel
 
 The plan asks for 480x320 native. The host keeps the window at the panel's

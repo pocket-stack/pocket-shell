@@ -6,6 +6,7 @@
 //   bun run omarchy deploy-host <ssh host>   copy the daemon, build the pointer helper, install the user unit
 //   bun run omarchy logs <ssh host> [-n 80]  journal tail
 //   bun run omarchy status <ssh host>        unit status + listener
+//   bun run omarchy doctor <ssh host>        why the device is not connected, layer by layer
 //   bun run omarchy relay <ssh host>         ssh -L tunnel (local 8623) + LAN beacon from this Mac
 //   bun run omarchy client <host:port>       a scripted device, for checking a daemon
 //   bun run omarchy menu <ssh host>          regenerate ipod/menu.ts from the machine's own menu
@@ -117,6 +118,98 @@ function logs(host: string, lines: number): void {
 
 function status(host: string): void {
   console.log(ssh(host, `systemctl --user status ${UNIT} --no-pager 2>&1 | head -12; ss -ltn | grep -E ':${WIRE_PORT} ' || echo 'no listener on ${WIRE_PORT}'`));
+}
+
+/**
+ * Why the device is not connected. The cable path has three layers and each
+ * one fails differently, so this asks them in order and names the layer:
+ *
+ *   1. the kernel     did the iPod enumerate on the bus at all?
+ *   2. usbmuxd        does it list the device? (udev starts it on attach)
+ *   3. the daemon     is the unit up, listening, and has it dialled?
+ *
+ * A failure at layer 1 is not something software here can repair — it is a
+ * cable, a connector or a port that did not come back — and the daemon's own
+ * "is usbmuxd running?" line is a symptom of it, not the cause.
+ */
+function doctor(host: string): void {
+  const probe = [
+    "echo '#bus'",
+    // Apple's vendor id on the bus, whatever the product.
+    `for f in /sys/bus/usb/devices/*/idVendor; do [ "$(cat $f 2>/dev/null)" = "05ac" ] && echo "$(dirname $f | xargs basename) $(cat $(dirname $f)/product 2>/dev/null)"; done`,
+    "echo '#kernel'",
+    // The last enumeration attempt on any port, good or bad.
+    `journalctl -k --no-pager --since '-6h' 2>/dev/null | grep -E 'usb [0-9]+-[0-9]+:|usb usb[0-9]+-port[0-9]+:' | tail -6`,
+    "echo '#muxd'",
+    "idevice_id -l 2>&1 | head -4",
+    "echo '#unit'",
+    "systemctl --user is-active pocket-shell.service",
+    `ss -ltn 2>/dev/null | grep -c ':${WIRE_PORT} '`,
+    "echo '#log'",
+    "journalctl --user -u pocket-shell.service -n 6 --no-pager -o cat 2>/dev/null | grep -E 'usb|connection|allowed|listening' | tail -4",
+  ].join("; ");
+  const out = ssh(host, probe);
+  const part = (name: string): string[] => {
+    const from = out.indexOf(`#${name}`);
+    if (from < 0) return [];
+    const rest = out.slice(from + name.length + 1);
+    const to = rest.indexOf("\n#");
+    return (to < 0 ? rest : rest.slice(0, to)).split("\n").map((line) => line.trim()).filter(Boolean);
+  };
+
+  const bus = part("bus");
+  const kernel = part("kernel");
+  const muxd = part("muxd").filter((line) => /^[0-9a-f-]{20,}$/i.test(line));
+  const muxdError = part("muxd").filter((line) => !/^[0-9a-f-]{20,}$/i.test(line));
+  const unit = part("unit");
+  const active = unit[0] === "active";
+  const listening = (unit[1] ?? "0") !== "0";
+
+  console.log(`bus      ${bus.length ? bus.join(", ") : "no Apple device enumerated"}`);
+  console.log(`usbmuxd  ${muxd.length ? muxd.join(", ") : muxdError.join(" ") || "no devices"}`);
+  console.log(`daemon   ${active ? "active" : unit[0] ?? "?"}, ${listening ? `listening on ${WIRE_PORT}` : `NOT listening on ${WIRE_PORT}`}`);
+  for (const line of part("log")) console.log(`         ${line}`);
+
+  console.log("");
+  if (!active || !listening) {
+    console.log("The daemon is down. `systemctl --user restart pocket-shell` on the machine,");
+    console.log("or redeploy it: bun run omarchy deploy-host " + host);
+    return;
+  }
+  if (bus.length === 0) {
+    const failed = kernel.filter((line) => /error -\d+|not accepting address|unable to enumerate|not responding/.test(line));
+    if (failed.length) {
+      console.log("The KERNEL never enumerated the iPod, so usbmuxd was never started and the");
+      console.log("daemon has nothing to dial. The port saw it and could not talk to it:");
+      for (const line of failed.slice(-3)) console.log(`  ${line.replace(/^.*kernel: /, "")}`);
+      console.log("");
+      console.log("That is the cable, the 30-pin connector or a port that did not come back");
+      console.log("from suspend — nothing on this side can repair it. In order:");
+      console.log("  1. unplug, wake the iPod (Home), reseat it firmly; try the other port");
+      console.log("  2. another cable — `full-speed` in those lines means the data pair is");
+      console.log("     not handshaking, which a worn 30-pin contact does");
+      console.log("  3. hard-reset the iPod: Home + Power for ~10 s");
+      console.log("  4. if a port stays dead only after resume, rebind the controller:");
+      console.log("     sudo sh -c 'echo 0000:00:14.0 > /sys/bus/pci/drivers/xhci_hcd/unbind'");
+      console.log("     sudo sh -c 'echo 0000:00:14.0 > /sys/bus/pci/drivers/xhci_hcd/bind'");
+      console.log("     (that also blinks the camera, fingerprint reader, Bluetooth and WWAN)");
+    } else {
+      console.log("Nothing is on the bus and the kernel saw no attach at all: the iPod is not");
+      console.log("plugged in, is powered off, or the cable carries power only.");
+    }
+    console.log("");
+    console.log("Once the kernel enumerates it, nothing else is needed: the daemon rescans");
+    console.log("every 3 s and the cable is its own trust, so the device is back in ~5 s.");
+    return;
+  }
+  if (muxd.length === 0) {
+    console.log("On the bus but usbmuxd does not list it. udev starts usbmuxd on attach");
+    console.log("(39-usbmuxd.rules); replug, or start it: sudo systemctl start usbmuxd");
+    return;
+  }
+  console.log("Bus, usbmuxd and daemon are all fine. If the device still shows the connect");
+  console.log("screen, the app is not running on it: launch it with");
+  console.log(`  POCKETJS_IPODTOUCH4_VIA=${host} bun run ipod launch`);
 }
 
 /** The relay's local port: 8622 is often taken on a developer Mac (the
@@ -459,6 +552,7 @@ function usage(): void {
   bun run omarchy deploy-host <ssh host>
   bun run omarchy logs <ssh host> [-n N]
   bun run omarchy status <ssh host>
+  bun run omarchy doctor <ssh host>                   why the device is not connected, layer by layer
   bun run omarchy relay <ssh host> [--name <beacon name>] [--local-port 8623]
   bun run omarchy client <host[:port]> [--for seconds] [-- <json line>...]
   bun run omarchy menu <ssh host | omarchy-menu.jsonc> [--omarchy <version>]
@@ -471,6 +565,10 @@ async function main(args: string[]): Promise<void> {
     case "deploy-host":
       if (!target) throw new Error("deploy-host needs an ssh host");
       await deployHost(target);
+      break;
+    case "doctor":
+      if (!target) throw new Error("doctor needs an ssh host");
+      doctor(target);
       break;
     case "logs": {
       if (!target) throw new Error("logs needs an ssh host");
