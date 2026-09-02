@@ -374,6 +374,10 @@ iPod.
 
 ## When the cable goes quiet
 
+A live fault and what is left to do about it: `HANDOFF.md` in this
+directory, written for an agent on the machine itself.
+
+
 `bun run omarchy doctor <host>` asks the three layers of the cable path in
 order and names the one that failed:
 
