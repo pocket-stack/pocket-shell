@@ -1,17 +1,24 @@
 # Pocket Shell
 
-A tiling window shell for the **Nintendo 3DS**, running entirely on the
-console. Windows tile on the top screen; the touch screen is the control
-surface. There is no companion process, no phone, no PC — the shell, its
-window manager and its applets all run on the handheld.
+This repository contains two Pocket Shell applications with different roles.
 
-> **The 3DS is the only platform this shell runs on.** It is written against
-> the machine: two screens of fixed size, a resistive panel that reports one
+On the **Nintendo 3DS**, Pocket Shell is a **fully self-rendered tiling UI**
+that runs entirely on the console. The PocketJS guest draws the wallpaper,
+windows, status bar, touch deck, controls, keyboard and applets; it uses no
+native 3DS UI widgets. Windows tile on the top screen and the touch screen is
+the control surface.
+
+On the **iPod touch 4**, Pocket Shell is an **Omarchy companion screen**. It
+mirrors the desktop over USB or Wi-Fi and drives it through a small daemon on
+the Omarchy machine. The 3DS and iPod applications currently share this
+repository, the PocketJS runtime submodule and the licence, but no application
+code. **Further integration into one Pocket Shell product is WIP.**
+
+> **The 3DS application only runs on the 3DS.** It is written against the
+> machine: two screens of fixed size, a resistive panel that reports one
 > contact, a d-pad, four face buttons and two shoulders. It is not a
-> cross-platform shell with a 3DS backend, and there is no port to anything
-> else — see [Only the 3DS](#only-the-3ds). (The repository also holds an
-> Omarchy companion for the iPod touch, in `ipod/`; the two are independent —
-> see [Also here](#also-here).)
+> cross-platform shell with a 3DS backend — see
+> [Nintendo 3DS: fully self-rendered](#nintendo-3ds-fully-self-rendered).
 
 <img src="media/hw/tiled.png" width="400" alt="Pocket Shell on a Nintendo 3DS: three windows tiled on the top screen under a status bar, and the touch screen showing the workspace strip, a live minimap of the tiling, and the dock" />
 
@@ -136,7 +143,7 @@ Text applets type on a hand-laid touch keyboard (plain `SELECT` opens it) or
 on the face buttons: A enter, B backspace, X tab-complete, Y space, and the
 circle pad scrolls.
 
-## Only the 3DS
+## Nintendo 3DS: fully self-rendered
 
 The shell is built out of this machine's constraints, and they are load-bearing
 rather than incidental:
@@ -158,9 +165,9 @@ rather than incidental:
   derives civil time from the epoch by arithmetic; the story is in
   [docs/DESIGN.md](docs/DESIGN.md), "The clock".
 
-There is no other backend and no portability layer. A sibling product,
-[Pocket Term](https://github.com/pocket-stack/pocket-term), runs on the same
-console and shares nothing but the runtime.
+The 3DS application has no other backend and no portability layer. A sibling
+product, [Pocket Term](https://github.com/pocket-stack/pocket-term), runs on
+the same console and shares nothing but the runtime.
 
 ## Requirements
 
@@ -235,8 +242,8 @@ docs/         DESIGN.md (why it is shaped this way), CAPTURE.md (the recorder)
 `ipod/` is a second, independent application: **Pocket Shell on the iPod
 touch 4** — an Omarchy companion that mirrors the desktop over USB and drives
 it. It shares this repository, its runtime submodule and its licence with the
-3DS shell and nothing else; how the two might become one product is a
-question for later. Its own README covers the design, the wire and the
+3DS shell and nothing else today. **Further integration between the two
+applications is WIP.** Its own README covers the design, the wire and the
 daemon: [ipod/README.md](ipod/README.md).
 
 ```
