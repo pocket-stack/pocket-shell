@@ -103,3 +103,27 @@ The recorder is GUI-bound: Azahar has no headless mode, only advances the
 guest when it owns a window, ignores `SIGTERM`, and does not exit when the
 guest finishes — so the driver owns its lifetime and kills it on every path.
 Keep it out of CI.
+
+## The iPod companion: rendered, not filmed
+
+The iPod app is a guest, so nothing about a picture of it needs the device or
+the Omarchy machine: `hosts/sim` runs the same bundle the iPod runs, at the
+panel's own 480×320, and the daemon's half is a handful of JSON lines fed
+straight into the store (`applyMock` in `scripts/omarchy.ts` — one 1440×900
+monitor, five windows over three workspaces, one floating).
+
+```sh
+bun run omarchy shots media/ipod    # every screen as a PNG
+bun run omarchy films media/ipod    # every animation as a GIF
+```
+
+A cut scripts touches against the app's own layout tables rather than
+hard-coded points, so a moved key or a resized popup moves the finger with it.
+Every frame is kept and encoded at 30 fps — half the sim's rate, the same
+half-speed the console's animations use, and for the same reason: the easing is
+what is being shown. `--only <cut>` records one.
+
+There is no clock on that panel and no live daemon in the loop, so a render is
+a pure function of the script. What it cannot show is the desktop's own
+response: where a real daemon would echo new geometry, the cut applies the
+snapshot the daemon would have sent.

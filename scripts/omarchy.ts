@@ -11,6 +11,7 @@
 //   bun run omarchy client <host:port>       a scripted device, for checking a daemon
 //   bun run omarchy menu <ssh host>          regenerate ipod/menu.ts from the machine's own menu
 //   bun run omarchy shots <dir>              render every screen in the headless sim
+//   bun run omarchy films <dir>              record every animation in the headless sim
 //
 // Why a relay: Omarchy ships ufw with incoming DROP (only ssh is open), so the
 // iPod cannot reach tcp 8622 on the laptop directly. The relay forwards the
@@ -24,7 +25,7 @@ import { connect } from "node:net";
 import { hostname } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { normalizeMenu, parseMenuJsonc, type MenuEntry } from "../ipod/host/menu-source.ts";
 import { SHELL_APP, SHELL_PROTO, type ClientLine, type HostLine, parseLines } from "../ipod/protocol.ts";
 import {
@@ -398,49 +399,32 @@ ${rows.join("\n")}
 }
 
 // ---------------------------------------------------------------------------
-// shots: the screens, rendered in the headless sim
+// the headless panel: every picture of the iPod app is rendered, not filmed
 // ---------------------------------------------------------------------------
+//
+// The app is a guest, so the sim runs the same bundle the device runs and the
+// daemon's half is a handful of JSON lines fed straight into the store. That
+// makes a screen or an animation a pure function of this script — and it does
+// not need the Omarchy machine to be awake, or the iPod to be on a cable.
+
+type Store = import("../ipod/store.ts").CompanionStore;
+
+const PANEL_W = 480;
+const PANEL_H = 320;
+
+/** The applications the daemon pages over from the machine's XDG entries. */
+const MOCK_APPS = [
+  "Chromium", "Files", "Foot", "GIMP", "Ghostty", "Localsend", "Neovim", "Nautilus",
+  "Signal", "Spotify", "Steam", "Text Editor", "Thunderbird", "Zed",
+].map((name) => ({ i: name.toLowerCase().replace(/ /g, "-"), n: name }));
 
 /**
- * Boot the built bundle in the sim, feed it a desktop the way the daemon
- * would, walk it through its states and write each as a PNG. What the README
- * shows, and what a change is checked against by eye before it is flashed.
+ * The desktop every picture is made from: one 1440x900 monitor, five windows
+ * over three workspaces with the player floating, Wi-Fi up and something
+ * playing. Exactly the shape of a live daemon's lines, with none of its
+ * variance — no clock on this panel, so a render is reproducible.
  */
-async function shots(outDir: string): Promise<void> {
-  const { bootWorld } = await import("../vendor/pocketjs/hosts/sim/sim.ts");
-  const { encodePNG } = await import("../vendor/pocketjs/tests/png.ts");
-  const { STAGE, TAB_W, CC_BUTTON, MODE, MODE_HALF_W, SHEET_LIST, sheetRowRect, BALL_HOME } = await import("../ipod/layout.ts");
-  const APPS = [
-    "Chromium", "Files", "Foot", "GIMP", "Ghostty", "Localsend", "Neovim", "Nautilus",
-    "Signal", "Spotify", "Steam", "Text Editor", "Thunderbird", "Zed",
-  ].map((name) => ({ i: name.toLowerCase().replace(/ /g, "-"), n: name }));
-  const { keyboardKeys } = await import("../ipod/keyboard-layout.ts");
-  type Store = import("../ipod/store.ts").CompanionStore;
-  const { mkdirSync } = await import("node:fs");
-  mkdirSync(outDir, { recursive: true });
-
-  const world = await bootWorld("pocketshell-ipod", 60, undefined, undefined, { width: 480, height: 320 });
-  const store = (globalThis as { __pocketShellIpod?: Store }).__pocketShellIpod;
-  if (!store) throw new Error("the bundle did not publish its store");
-  const pack = (x: number, y: number, id = 0): number => (id << 18) | (y << 9) | x;
-  const frames = (n: number, touches: number[] = []) => {
-    for (let i = 0; i < n; i += 1) world.frame(0, undefined, touches);
-  };
-  const tap = (x: number, y: number) => {
-    frames(2, [pack(x, y)]);
-    frames(1);
-  };
-  const hold = (x: number, y: number, n = 30) => {
-    frames(n, [pack(x, y)]);
-  };
-  const shot = (name: string) => {
-    const pixels = world.render();
-    writeFileSync(join(outDir, `${name}.png`), encodePNG(Buffer.from(pixels), 480, 320));
-    console.log(`  ${name}.png`);
-  };
-
-  frames(1);
-  shot("connect");
+function applyMock(store: Store): void {
   store.applyLine({ t: "hello", proto: SHELL_PROTO, name: "x1nano-omarchy", omarchy: "4.0.1-1", auth: "ok" });
   store.applyLine({ t: "levels", vol: 0.55, bri: 0.7 });
   store.applyLine({
@@ -449,7 +433,7 @@ async function shots(outDir: string): Promise<void> {
     media: { st: "playing", title: "Blue in Green", artist: "Miles Davis" },
   });
   store.applyLine({ t: "menu", hide: ["system.hibernate", "trigger.capture.screenrecord.stop"], check: ["setup.default.terminal.foot", "update.channel.stable"] });
-  store.applyLine({ t: "apps", seq: 0, a: APPS });
+  store.applyLine({ t: "apps", seq: 0, a: MOCK_APPS });
   store.applyLine({
     t: "state",
     mon: { w: 1440, h: 900 },
@@ -465,6 +449,81 @@ async function shots(outDir: string): Promise<void> {
       { a: "0x5", c: "nvim", ti: "layout.ts", ws: 2, x: 12, y: 38, w: 1416, h: 850 },
     ],
   });
+}
+
+interface Panel {
+  store: Store;
+  render(): Uint8Array;
+  pack(x: number, y: number, id?: number): number;
+  frames(n: number, touches?: number[]): void;
+  tap(x: number, y: number): void;
+  hold(x: number, y: number, n?: number): void;
+  /** Keep a copy of every frame advanced inside `body`. */
+  record(sink: Uint8Array[], body: () => void): void;
+}
+
+/** The built bundle in the sim at the panel's own size, nothing applied. */
+async function simPanel(): Promise<Panel> {
+  const { bootWorld } = await import("../vendor/pocketjs/hosts/sim/sim.ts");
+  const world = await bootWorld("pocketshell-ipod", 60, undefined, undefined, { width: PANEL_W, height: PANEL_H });
+  const store = (globalThis as { __pocketShellIpod?: Store }).__pocketShellIpod;
+  if (!store) throw new Error("the bundle did not publish its store");
+  let sink: Uint8Array[] | null = null;
+  const pack = (x: number, y: number, id = 0): number => (id << 18) | (y << 9) | x;
+  const frames = (n: number, touches: number[] = []) => {
+    for (let i = 0; i < n; i += 1) {
+      world.frame(0, undefined, touches);
+      // render() hands back the framebuffer it reuses, so a recording has to
+      // take a copy of each frame.
+      if (sink) sink.push(Uint8Array.from(world.render()));
+    }
+  };
+  return {
+    store,
+    render: () => world.render(),
+    pack,
+    frames,
+    tap: (x, y) => {
+      frames(2, [pack(x, y)]);
+      frames(1);
+    },
+    hold: (x, y, n = 30) => frames(n, [pack(x, y)]),
+    record: (into, body) => {
+      sink = into;
+      try {
+        body();
+      } finally {
+        sink = null;
+      }
+    },
+  };
+}
+
+// ---------------------------------------------------------------------------
+// shots: the screens, rendered in the headless sim
+// ---------------------------------------------------------------------------
+
+/**
+ * Walk the app through its states and write each as a PNG. What the READMEs
+ * show, and what a change is checked against by eye before it is flashed.
+ */
+async function shots(outDir: string): Promise<void> {
+  const { encodePNG } = await import("../vendor/pocketjs/tests/png.ts");
+  const { STAGE, TAB_W, CC_BUTTON, MODE, MODE_HALF_W, SHEET_LIST, sheetRowRect, BALL_HOME } = await import("../ipod/layout.ts");
+  const { keyboardKeys } = await import("../ipod/keyboard-layout.ts");
+  const { mkdirSync } = await import("node:fs");
+  mkdirSync(outDir, { recursive: true });
+
+  const panel = await simPanel();
+  const { store, pack, frames, tap, hold } = panel;
+  const shot = (name: string) => {
+    writeFileSync(join(outDir, `${name}.png`), encodePNG(Buffer.from(panel.render()), PANEL_W, PANEL_H));
+    console.log(`  ${name}.png`);
+  };
+
+  frames(1);
+  shot("connect");
+  applyMock(store);
   frames(40);
   shot("stage");
 
@@ -546,6 +605,198 @@ async function shots(outDir: string): Promise<void> {
   console.log(`wrote ${outDir}`);
 }
 
+// ---------------------------------------------------------------------------
+// films: the same panel, kept frame by frame and encoded as GIFs
+// ---------------------------------------------------------------------------
+
+/** Every frame is kept and played at half the sim's rate: GIF's centisecond
+ *  delays cannot express 60 fps, and eased geometry is the thing being
+ *  shown. */
+const FILM_FPS = 30;
+
+interface Cut {
+  name: string;
+  /** Printed with the file, and the line the README's caption is built on. */
+  note: string;
+  /** Everything before the recording: settle the panel into its start. */
+  before?(panel: Panel, at: PanelParts): void;
+  run(panel: Panel, at: PanelParts): void;
+}
+
+/** The geometry a cut needs, resolved once against the app's own layout. */
+interface PanelParts {
+  layout: typeof import("../ipod/layout.ts");
+  keys: typeof import("../ipod/keyboard-layout.ts");
+}
+
+const CUTS: Cut[] = [
+  {
+    name: "mirror",
+    note: "the strip switches workspace and the tiles ease to their new places",
+    before: (panel) => panel.frames(40),
+    run: (panel, { layout }) => {
+      const tab = (i: number) => 6 + layout.TAB_W * i + layout.TAB_W / 2;
+      panel.frames(6);
+      panel.tap(tab(1), 14);
+      panel.frames(28);
+      panel.tap(tab(0), 14);
+      panel.frames(30);
+    },
+  },
+  {
+    name: "tile",
+    note: "a held tile opens its popup and the same finger picks a row",
+    before: (panel) => panel.frames(40),
+    run: (panel, { layout }) => {
+      const fit = panel.store.fit()!;
+      const from = {
+        x: Math.round(fit.ox + (900 + 210) * fit.s),
+        y: Math.round(fit.oy + (500 + 130) * fit.s),
+      };
+      panel.frames(34, [panel.pack(from.x, from.y)]);
+      const place = panel.store.popup()!.place;
+      const row = { x: place.x + 40, y: place.y + layout.POPUP_PAD + layout.POPUP_ROW_H / 2 };
+      for (let i = 1; i <= 8; i += 1) {
+        panel.frames(1, [panel.pack(
+          Math.round(from.x + ((row.x - from.x) * i) / 8),
+          Math.round(from.y + ((row.y - from.y) * i) / 8),
+        )]);
+      }
+      panel.frames(4, [panel.pack(row.x, row.y)]);
+      panel.frames(8);
+      // What the daemon echoes back a moment later: the player is no longer
+      // floating, so the right column is a three-way split and every tile
+      // eases to where it now belongs.
+      panel.store.applyLine({
+        t: "state",
+        mon: { w: 1440, h: 900 },
+        ws: [{ id: 1, n: 4 }, { id: 2, n: 1 }, { id: 3, n: 0 }],
+        active: 1,
+        focus: "0x4",
+        layout: "dwindle",
+        win: [
+          { a: "0x1", c: "foot", ti: "evan@x1nano-omarchy:~", ws: 1, x: 12, y: 38, w: 701, h: 850 },
+          { a: "0x2", c: "chromium", ti: "Omarchy Manual", ws: 1, x: 725, y: 38, w: 703, h: 278 },
+          { a: "0x3", c: "nautilus", ti: "Downloads", ws: 1, x: 725, y: 324, w: 703, h: 278 },
+          { a: "0x4", c: "mpv", ti: "Blue in Green", ws: 1, x: 725, y: 610, w: 703, h: 278 },
+          { a: "0x5", c: "nvim", ti: "layout.ts", ws: 2, x: 12, y: 38, w: 1416, h: 850 },
+        ],
+      });
+      panel.frames(34);
+    },
+  },
+  {
+    name: "menu",
+    note: "the ball opens Omarchy's own menu as a sheet, and a submenu opens in place",
+    before: (panel) => panel.frames(40),
+    run: (panel, { layout }) => {
+      panel.frames(4);
+      panel.tap(layout.BALL_HOME.x + 22, layout.BALL_HOME.y + 22);
+      panel.frames(22);
+      // A fling: the list carries on under its own kinetics.
+      const x = layout.SHEET_LIST.x + 120;
+      panel.frames(3, [panel.pack(x, layout.SHEET_LIST.y + 150)]);
+      for (let i = 1; i <= 8; i += 1) {
+        panel.frames(1, [panel.pack(x, layout.SHEET_LIST.y + 150 - i * 11)]);
+      }
+      panel.frames(1);
+      panel.frames(26);
+      // A row the fling left on screen: off the list, the tap would be a tap
+      // outside the sheet, which dismisses it.
+      const at = panel.store.sheetRows().findIndex((row) => row.id === "setup");
+      const r = layout.sheetRowRect(at);
+      const y = layout.SHEET_LIST.y + r.y + 20 - panel.store.sheetScroller.offset();
+      if (y < layout.SHEET_LIST.y || y > layout.SHEET_LIST.y + layout.SHEET_LIST.h) {
+        throw new Error(`the sheet scrolled the row out of view (y=${y})`);
+      }
+      panel.tap(layout.SHEET_LIST.x + r.x + 60, y);
+      panel.frames(28);
+    },
+  },
+  {
+    name: "deck",
+    note: "the mode switch turns the panel into a laptop's C surface, and the keys go straight to the desktop",
+    before: (panel) => panel.frames(40),
+    run: (panel, { layout, keys }) => {
+      panel.frames(4);
+      panel.tap(layout.MODE.x + layout.MODE_HALF_W + 17, layout.MODE.y + 11);
+      panel.frames(18);
+      for (const label of ["h", "i"]) {
+        const key = keys.keyboardKeys("lower").find((k) => k.def.label === label)!;
+        panel.frames(4, [panel.pack(key.x + key.w / 2, key.y + key.h / 2)]);
+        panel.frames(8);
+      }
+      // Held, the variants fan out of the key; the slide picks one and the
+      // release sends it (^F here, not an f).
+      const f = keys.keyboardKeys("lower").find((k) => k.def.label === "f")!;
+      const from = { x: f.x + f.w / 2, y: f.y + f.h / 2 };
+      panel.frames(46, [panel.pack(from.x, from.y)]);
+      const chip = keys.chipRects(f, 2)[0]!;
+      const to = { x: chip.x + chip.w / 2, y: chip.y + chip.h / 2 };
+      for (let i = 1; i <= 6; i += 1) {
+        panel.frames(1, [panel.pack(
+          Math.round(from.x + ((to.x - from.x) * i) / 6),
+          Math.round(from.y + ((to.y - from.y) * i) / 6),
+        )]);
+      }
+      panel.frames(6, [panel.pack(to.x, to.y)]);
+      panel.frames(1);
+      panel.frames(14);
+      // The d-pad answers by direction, over its whole square.
+      panel.frames(10, [panel.pack(keys.DPAD_ARMS.r.x + 16, keys.DPAD_ARMS.r.y + 14)]);
+      panel.frames(1);
+      panel.frames(10);
+    },
+  },
+];
+
+/**
+ * ffmpeg twice over one raw stream: a palette from the whole cut, then the
+ * GIF. One shared palette is what keeps a flat UI from banding, and `bayer`
+ * dithering keeps flat panels flat instead of speckled — the same recipe the
+ * console's recorder uses (scripts/film.ts).
+ */
+function encodeGif(frames: Uint8Array[], name: string, dir: string, work: string): void {
+  const stream = join(work, `${name}.rgba`);
+  const palette = join(work, `${name}.palette.png`);
+  const output = join(dir, `${name}.gif`);
+  writeFileSync(stream, Buffer.concat(frames.map((frame) => Buffer.from(frame.buffer, frame.byteOffset, frame.byteLength))));
+  const input = ["-f", "rawvideo", "-pix_fmt", "rgba", "-s", `${PANEL_W}x${PANEL_H}`, "-r", String(FILM_FPS), "-i", stream];
+  const run = (argv: string[]): void => {
+    const result = Bun.spawnSync(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", ...argv], { stdout: "pipe", stderr: "pipe" });
+    if (result.exitCode !== 0) throw new Error(`ffmpeg failed: ${result.stderr.toString().trim()}`);
+  };
+  run([...input, "-vf", "palettegen=max_colors=128:stats_mode=full", palette]);
+  run([...input, "-i", palette, "-lavfi", "paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle", "-loop", "0", output]);
+  rmSync(stream, { force: true });
+  rmSync(palette, { force: true });
+  const bytes = readFileSync(output).byteLength;
+  console.log(`  ${name}.gif  ${frames.length} frames, ${(bytes / 1024).toFixed(0)} KiB — ${CUTS.find((cut) => cut.name === name)!.note}`);
+}
+
+/** One world per cut, so a recording cannot inherit another one's state. */
+async function films(outDir: string, only?: string): Promise<void> {
+  if (!Bun.which("ffmpeg")) throw new Error("ffmpeg not found (brew install ffmpeg) — it encodes the animations");
+  const parts: PanelParts = {
+    layout: await import("../ipod/layout.ts"),
+    keys: await import("../ipod/keyboard-layout.ts"),
+  };
+  const work = join(REPOSITORY, "dist/film/ipod");
+  mkdirSync(outDir, { recursive: true });
+  mkdirSync(work, { recursive: true });
+  for (const cut of CUTS) {
+    if (only && cut.name !== only) continue;
+    const panel = await simPanel();
+    panel.frames(1);
+    applyMock(panel.store);
+    cut.before?.(panel, parts);
+    const frames: Uint8Array[] = [];
+    panel.record(frames, () => cut.run(panel, parts));
+    encodeGif(frames, cut.name, outDir, work);
+  }
+  console.log(`wrote ${outDir}`);
+}
+
 function usage(): void {
   console.log(`Pocket Shell — the Omarchy side
 
@@ -556,7 +807,8 @@ function usage(): void {
   bun run omarchy relay <ssh host> [--name <beacon name>] [--local-port 8623]
   bun run omarchy client <host[:port]> [--for seconds] [-- <json line>...]
   bun run omarchy menu <ssh host | omarchy-menu.jsonc> [--omarchy <version>]
-  bun run omarchy shots <out dir>                     render the screens in the headless sim`);
+  bun run omarchy shots <out dir>                     render the screens in the headless sim
+  bun run omarchy films <out dir> [--only <cut>]      record the animations in the headless sim`);
 }
 
 async function main(args: string[]): Promise<void> {
@@ -589,6 +841,12 @@ async function main(args: string[]): Promise<void> {
         at >= 0 ? (args[at + 1] ?? hostname()) : `${target} via ${hostname().replace(/\.local$/, "")}`,
         portAt >= 0 ? Number(args[portAt + 1]) : RELAY_PORT,
       );
+      break;
+    }
+    case "films": {
+      if (!target) throw new Error("films needs an output directory");
+      const at = args.indexOf("--only");
+      await films(target, at >= 0 ? args[at + 1] : undefined);
       break;
     }
     case "shots":
