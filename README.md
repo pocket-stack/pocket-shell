@@ -22,9 +22,43 @@ code. **Further integration into one Pocket Shell product is WIP.**
 
 <img src="media/hw/tiled.png" width="400" alt="Pocket Shell on a Nintendo 3DS: three windows tiled on the top screen under a status bar, and the touch screen showing the workspace strip, a live minimap of the tiling, and the dock" />
 
-*Photographed off the console over the dev wire — every screenshot in this
-file is, and every animation is assembled frame by frame from a scripted run.
+*Photographed off the console over the dev wire — every 3DS screenshot here
+is, and every 3DS animation is assembled frame by frame from a scripted run on
+the console's own GPU. The iPod's are rendered in the headless simulator,
+which runs the same guest bundle the device runs.
 [How the pictures were made](docs/CAPTURE.md).*
+
+## The iPod touch: the desktop in one hand
+
+The companion is a **480×320 landscape panel** that mirrors the focused
+monitor and drives it. Windows arrive as a snapshot from the daemon and become
+tiles; a tap focuses, a hold opens the actions, a drag moves a floating window
+on the laptop. The panel has two modes: the **stage**, a live miniature of the
+monitor, and the **deck**, a laptop's C surface — five rows of keys over a
+trackpad with palm rests, a click button and a d-pad. **Nothing on the wire is
+a command string**: the device names an action id or a row of Omarchy's own
+menu and the daemon looks it up, so a SUPER chord runs whatever the machine's
+own binding files bind it to.
+
+<img src="media/ipod/stage.png" width="480" alt="the stage on the iPod touch: workspace tabs, the mode switch and the control centre across the top, a live miniature of the monitor with three tiled windows and a floating player, and Terminal, Browser and Files along the bottom" />
+
+| the stage follows the desktop | one gesture per action |
+|---|---|
+| <img src="media/ipod/mirror.gif" width="320" alt="tapping the workspace strip switches workspace on the laptop and the tiles ease from one layout to the next" /> | <img src="media/ipod/tile.gif" width="320" alt="holding a tile opens a popup at the finger, sliding onto Tile and releasing un-floats the window, and the daemon's echo eases every tile into the new split" /> |
+| Tapping a tab switches workspace on the laptop; the tiles ease from one layout into the next rather than cutting. The tabs are a fixed 1..N because Hyprland destroys an empty workspace. | **Hold a tile** and the popup opens at the finger — Tile, Full screen, Open another, Close. The finger that opened it picks a row: slide on and let go, one gesture. The echo from the daemon is what moves the tiles. |
+
+| Omarchy's own menu | the deck |
+|---|---|
+| <img src="media/ipod/menu.gif" width="320" alt="the floating ball opens Omarchy's menu as a centred sheet, the list flings under its own kinetics, and tapping Setup opens that submenu in place with a back chevron" /> | <img src="media/ipod/deck.gif" width="320" alt="the mode switch turns the panel into a keyboard over a trackpad, two keys are typed, holding f fans out its control and alt variants, and the d-pad lights the arm under the finger" /> |
+| The ball opens **SUPER+SPACE as a sheet**: the same rows in the same order with the same glyphs, one column, scrolling, and the daemon evaluates each row's `when` and `checked` live. A submenu opens in place. | The mode switch turns the panel into a keyboard over a trackpad. Keys go to the desktop as they are pressed; **hold one and its variants fan out** (`^F`, `⌥F`) for the slide to pick. |
+
+Those four are recordings of a scripted run in the headless simulator at the
+panel's own 480×320, **every frame kept and played at half speed** — the app
+is a guest, so the sim runs the same bundle the device runs and the daemon's
+half is a handful of JSON lines. Its own README carries the design, the wire
+and the daemon: [ipod/README.md](ipod/README.md).
+
+## The 3DS: the chord table lives on the panel
 
 The interaction model is [Omarchy](https://omarchy.org)'s: every window action
 is one modifier plus one key, and the modifier's own table is one keystroke
@@ -239,16 +273,16 @@ docs/         DESIGN.md (why it is shaped this way), CAPTURE.md (the recorder)
 
 ## Also here
 
-`ipod/` is a second, independent application: **Pocket Shell on the iPod
-touch 4** — an Omarchy companion that mirrors the desktop over USB and drives
-it. It shares this repository, its runtime submodule and its licence with the
-3DS shell and nothing else today. **Further integration between the two
-applications is WIP.** Its own README covers the design, the wire and the
-daemon: [ipod/README.md](ipod/README.md).
+`ipod/` is the second application, [shown above](#the-ipod-touch-the-desktop-in-one-hand):
+its guest, its Omarchy daemon and its own README. It shares this repository,
+the runtime submodule and the licence with the 3DS shell and nothing else
+today — **further integration between the two applications is WIP.**
 
 ```
 bun run ipod deploy       # build and install on the iPod (POCKETJS_IPODTOUCH4_VIA=<host> when it is plugged elsewhere)
 bun run omarchy deploy-host x1nano   # the daemon on the Omarchy machine
+bun run omarchy shots media/ipod     # its screens, rendered in the headless sim
+bun run omarchy films media/ipod     # its animations, recorded there frame by frame
 ```
 
 ## Built on PocketJS
