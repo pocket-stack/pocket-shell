@@ -14,7 +14,7 @@
 //
 // USB: when the device is plugged into this machine, usbmuxd (the usbmuxd
 // package) lists it and iproxy can forward a host port to the device's
-// listener (hosts/iphone2g/svcwire.c, port 8624). The daemon polls for
+// listener (hosts/ios-legacy/svcwire.c, port 8624). The daemon polls for
 // devices, forwards a port per device and connects to it — the wire is the
 // same, only who dials is reversed, and a device on the cable is trusted:
 // physical possession is the pairing.
@@ -742,7 +742,7 @@ if (options.beacon) {
 // usb (usbmuxd): forward a host port to each plugged device's listener and dial it
 // ---------------------------------------------------------------------------
 
-/** hosts/iphone2g/svcwire.c POCKET_SVC_LISTEN_PORT. */
+/** hosts/ios-legacy/svcwire.c POCKET_SVC_LISTEN_PORT. */
 const USB_DEVICE_PORT = 8624;
 const USB_LOCAL_PORT_BASE = 8630;
 

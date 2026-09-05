@@ -4,6 +4,7 @@
 //
 //   bun run ipod build          bundle the guest and link the app bundle
 //   bun run ipod deploy         build, then install over usbmuxd
+//   bun run ipod uninstall      remove the app and its data container
 //   bun run ipod launch         open it on the device
 //   bun run ipod status         the device's acceptance record
 //   bun run ipod doctor         what the toolchain is missing

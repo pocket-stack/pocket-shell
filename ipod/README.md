@@ -16,7 +16,7 @@ of this repository (`../LICENSE`).
  iPod touch 4 (480x320 landscape)      USB (usbmuxd)      Omarchy machine
  ┌────────────────────────────────┐    PKNT/TCP      ┌──────────────────────────┐
  │ ipod/ (Solid)                  │◀───────────────▶│ host/serve.ts (Node)     │
- │ hosts/iphone2g/svcwire.c       │  or WiFi+beacon  │  .socket.sock  requests  │
+ │ hosts/ios-legacy/svcwire.c    │  or WiFi+beacon  │  .socket.sock  requests  │
  └────────────────────────────────┘                  │  .socket2.sock events    │
                                                      │  omarchy-* / wtype       │
                                                      │  pocket-pointer (wl)     │
@@ -303,7 +303,7 @@ uinput, no root, no extra daemon.
 
 Spec ops 30–32 (`svcOpen`/`svcPoll`/`svcSend`) over the SVC WIRE (PKNT) TCP
 transport, exactly the mailbox the PSP, Vita and 3DS companions speak.
-`hosts/iphone2g/svcwire.c` is the legacy Apple hosts' transport — a port of
+`hosts/ios-legacy/svcwire.c` is the legacy Apple hosts' transport — a port of
 the 3DS one (non-blocking BSD sockets pumped once per guest frame, no
 threads) — compiled in only when `POCKET_SVC_WIRE` is defined.
 
@@ -430,3 +430,26 @@ touches in the view's rotated space.
   advances the world by one touchless frame and would end the hold.)
 - `bun scripts/omarchy.ts client 127.0.0.1:8623 --for 4` — a scripted
   device against a live daemon.
+
+## Installation on iOS 6
+
+**`bun run ipod deploy` installs a removable User application** through the
+vendored PocketJS MobileInstallation tool. The device needs AppSync Unified
+and its Cydia Substrate dependencies for these local self-signed builds.
+`bun run ipod doctor` checks the device and toolchain prerequisites.
+
+```sh
+POCKETJS_IPODTOUCH4_UDID=<device-udid> bun run ipod deploy
+POCKETJS_IPODTOUCH4_UDID=<device-udid> bun run ipod launch
+POCKETJS_IPODTOUCH4_UDID=<device-udid> bun run ipod uninstall
+```
+
+An update preserves the User container’s data. Long-press the SpringBoard
+icon and use the native delete badge, or run `uninstall`, to remove the app
+and its container. The deployment tool migrates older System installations
+with a recovery backup and verifies the installed bundle before removing it.
+The icon artwork fills the square canvas; iOS supplies the rounded mask and
+shadow without a second baked border.
+
+The runtime submodule tracks PocketJS `main`. The committed submodule hash
+selects the exact toolchain used by a checkout.
