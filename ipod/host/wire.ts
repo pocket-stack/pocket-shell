@@ -2,7 +2,7 @@
 // ipod/host/wire.ts — the host side of the SVC WIRE (PKNT)
 // protocol: framing, the device hello, the discovery beacon. Byte layouts
 // come from contracts/spec/spec.ts "SVC WIRE protocol" and must stay
-// bit-identical to engine/core/src/wire.rs and hosts/iphone2g/svcwire.c.
+// bit-identical to engine/core/src/wire.rs and hosts/ios-legacy/svcwire.c.
 //
 // The constants are repeated here rather than imported so the daemon can be
 // copied to the Omarchy machine as one small directory with no repository
