@@ -69,7 +69,7 @@ animations in `media/`, the byte-exact frames in `test/goldens/3ds/`, and the
 headless replay in `test/sim.test.ts`. Add a behaviour worth showing to a tape
 rather than filming by hand, and it becomes documentation and a test at once.
 
-**A guest crash on a shared SD card looks like the wrong app booting.** The
-runtime's recovery chain falls back to the last-good package, which on a card
-that also holds another Pocket product is that other product. Read
-`/pocketjs/runtime/status.txt` before believing a packaging problem.
+**Recovery state is isolated per app.** Pocket Shell uses
+`/pocketjs/runtime/apps/552d35dd1578b13f/`. Read its `status.txt` and
+`last-error.txt` when investigating guest boot or rollback. Legacy shared
+`/pocketjs/runtime/state` does not belong to this app slot.
