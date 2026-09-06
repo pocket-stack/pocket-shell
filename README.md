@@ -28,6 +28,12 @@ the console's own GPU. The iPod's are rendered in the headless simulator,
 which runs the same guest bundle the device runs.
 [How the pictures were made](docs/CAPTURE.md).*
 
+The runtime submodule pins merged PocketJS main at `10aee589`. **3DS builds
+embed independently drawn 24×24 and 48×48 HBL icons**, using the same assets
+as Pocket Doc. Pocket Shell keeps its recovery state under
+`/pocketjs/runtime/apps/552d35dd1578b13f/`; hold **L+R+START** to return to HBL.
+See [runtime upgrade validation](docs/RUNTIME-UPGRADE.md).
+
 ## The iPod touch: the desktop in one hand
 
 The companion is a **480×320 landscape panel** that mirrors the focused
