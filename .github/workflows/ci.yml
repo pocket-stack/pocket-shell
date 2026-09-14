@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  macos:
+    name: All shells + macOS desktop
+    timeout-minutes: 30
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: recursive
+      - uses: oven-sh/setup-bun@v2
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - run: bun run setup
+      - run: bun run check
+      - run: bun run desktop test:rust
+      - run: bun run desktop build
+
+  linux-web:
+    name: Linux distribution + WASM preview
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: recursive
+      - name: Install native window dependencies
+        run: >-
+          sudo apt-get update && sudo apt-get install -y --no-install-recommends
+          clang cmake pkg-config libwayland-dev libx11-dev libx11-xcb-dev
+          libxkbcommon-dev libxkbcommon-x11-dev libudev-dev libdrm-dev libgbm-dev
+          libxcb-shape0-dev libxcb-xfixes0-dev xvfb xauth libvulkan1 mesa-vulkan-drivers
+      - uses: oven-sh/setup-bun@v2
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            vendor/pocketjs/engine/crates/pocket-text
+            vendor/pocketjs/hosts/desktop
+            vendor/pocketjs/engine/wasm
+      - run: bun run setup
+      - run: bun run check
+      - run: bun run desktop test:rust
+      - run: bun run desktop package:linux
+      - uses: browser-actions/setup-chrome@v2
+        id: setup-chrome
+      - name: Exercise the interactive WASM System preview
+        env:
+          CHROME_BIN: ${{ steps.setup-chrome.outputs.chrome-path }}
+        run: bun run desktop test:web
+      - name: Build and verify the product site
+        env:
+          CHROME_BIN: ${{ steps.setup-chrome.outputs.chrome-path }}
+        run: bun run --cwd shells/desktop build:site --reuse-preview && bun run desktop test:site
+      - name: Launch the packaged System under X11
+        run: >-
+          timeout 30s xvfb-run -a
+          shells/desktop/dist/linux-app/PocketDesktop/bin/pocket-desktop --quit-after 20
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pocket-shell-desktop-linux-web
+          path: |
+            shells/desktop/dist/linux-app/pocket-desktop-linux-*.tar.gz
+            shells/desktop/dist/web
+            shells/desktop/dist/web-smoke.png
+            shells/desktop/dist/site-smoke.png
+            shells/desktop/dist/site
+          if-no-files-found: error

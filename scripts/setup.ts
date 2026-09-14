@@ -3,7 +3,7 @@
 //
 // The guest is bundled by the vendored toolchain but resolved from THIS
 // repository: an import of "solid-js" or "@pocketjs/framework/components" in
-// app/ walks up to ./node_modules, not into the submodule. So the packages
+// shells/*/src walks up to ./node_modules, not into the submodule. So the packages
 // vendor/pocketjs already installed are linked here rather than installed a
 // second time, which also guarantees one copy of Solid — two would give the
 // app a reactive graph the framework does not own.
@@ -22,6 +22,9 @@ const links = new Map<string, string>([
   ["node_modules/@napi-rs/canvas", "vendor/pocketjs/node_modules/@napi-rs/canvas"],
   ["node_modules/bun-types", "vendor/pocketjs/node_modules/bun-types"],
   ["node_modules/typescript", "vendor/pocketjs/node_modules/typescript"],
+  ["node_modules/@types/bun", "vendor/pocketjs/node_modules/@types/bun"],
+  ["node_modules/@types/opentype.js", "vendor/pocketjs/node_modules/@types/opentype.js"],
+  ["node_modules/opentype.js", "vendor/pocketjs/node_modules/opentype.js"],
 ]);
 
 for (const [destination, source] of links) {

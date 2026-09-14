@@ -1,5 +1,11 @@
 node_modules/
 dist/
 .pocket/
+.pocket-build/
+.wrangler/
 .DS_Store
 *.log
+
+# Deterministic desktop assets: keep generators and original font inputs.
+/shells/desktop/src/system-ui/icons/
+/shells/desktop/src/system-ui/fonts/

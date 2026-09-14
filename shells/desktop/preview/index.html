@@ -1,0 +1,31 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pocket Shell Desktop · Web preview</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./preview.css">
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <p class="eyebrow">Pocket System · WASM preview</p>
+        <h1>Pocket Shell Desktop</h1>
+      </div>
+      <p class="status" id="status">Loading isolated AppInstances…</p>
+    </header>
+    <section class="frame" aria-label="Interactive Pocket Shell Desktop preview">
+      <canvas id="desktop" width="800" height="600"></canvas>
+    </section>
+    <p class="help">
+      Double-click a Pocket app icon to create its isolated JavaScript Realm.
+      Arrow keys and Z/X/A/S control the focused app.
+    </p>
+    <pre id="log" aria-live="polite"></pre>
+  </main>
+  <script type="module" src="./preview.js"></script>
+</body>
+</html>

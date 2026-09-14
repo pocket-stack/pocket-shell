@@ -3,26 +3,37 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "license": "GPL-3.0-or-later",
-  "description": "A tiling window shell for the Nintendo 3DS, and an Omarchy companion for the iPod touch",
+  "license": "GPL-3.0-only",
+  "description": "Pocket Shell for Nintendo 3DS, iPod touch and desktop operating systems",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pocket-stack/pocket-shell.git"
   },
   "scripts": {
-    "setup": "git submodule update --init && bun install --cwd vendor/pocketjs && bun scripts/setup.ts",
-    "3ds": "bun scripts/3ds.ts",
-    "ipod": "bun scripts/ipod.ts",
-    "omarchy": "bun scripts/omarchy.ts",
-    "guest": "bun scripts/guest.ts",
-    "pair": "bun scripts/pair.ts",
-    "push": "bun scripts/push.ts",
-    "probe": "bun scripts/probe.ts",
-    "shot": "bun scripts/shot.ts",
-    "film": "bun scripts/film.ts",
-    "goldens": "bun scripts/film.ts --check",
-    "typecheck": "bun vendor/pocketjs/node_modules/typescript/bin/tsc --noEmit",
-    "test": "bun scripts/test.ts",
-    "check": "bun run typecheck && bun run test"
+    "setup": "bun install --frozen-lockfile && git submodule update --init && bun install --cwd vendor/pocketjs --frozen-lockfile && bun scripts/setup.ts",
+    "3ds": "bun run --cwd shells/3ds 3ds",
+    "ipod": "bun run --cwd shells/ipod ipod",
+    "omarchy": "bun run --cwd shells/ipod omarchy",
+    "guest": "bun run --cwd shells/3ds guest",
+    "pair": "bun run --cwd shells/3ds pair",
+    "push": "bun run --cwd shells/3ds push",
+    "probe": "bun run --cwd shells/3ds probe",
+    "shot": "bun run --cwd shells/3ds shot",
+    "film": "bun run --cwd shells/3ds film",
+    "goldens": "bun run --cwd shells/3ds goldens",
+    "typecheck": "bun vendor/pocketjs/node_modules/typescript/bin/tsc --noEmit && bun run --cwd shells/3ds typecheck && bun run --cwd shells/ipod typecheck && bun run --cwd shells/desktop typecheck",
+    "test": "bun run --cwd shells/3ds test && bun run --cwd shells/ipod test && bun run --cwd shells/desktop test && bun run --cwd shells/desktop test:sim && bun run --cwd shells/desktop test:wrap && bun run --cwd shells/desktop test:text",
+    "check": "bun run check:assets && bun run typecheck && bun run test",
+    "desktop": "bun scripts/desktop.ts",
+    "check:3ds": "bun run --cwd shells/3ds check",
+    "check:ipod": "bun run --cwd shells/ipod check",
+    "check:desktop": "bun run --cwd shells/desktop check",
+    "check:assets": "bun scripts/check-assets.ts"
+  },
+  "workspaces": [
+    "shells/*"
+  ],
+  "devDependencies": {
+    "wrangler": "4.125.0"
   }
 }

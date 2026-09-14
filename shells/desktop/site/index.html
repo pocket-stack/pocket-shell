@@ -1,0 +1,163 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pocket Shell Desktop — one process, a complete Pocket System</title>
+  <meta name="description" content="A native Pocket System that runs isolated JavaScript applications in one process, with Linux, macOS and WebAssembly hosts.">
+  <meta name="theme-color" content="#07130f">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Pocket Shell Desktop — one process, a complete Pocket System">
+  <meta property="og:description" content="Isolated Pocket apps, one native process and one coherent compositor.">
+  <meta property="og:image" content="https://desktop.pocketlab.build/assets/xp-theme.png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/site.css">
+  <script type="module" src="/site.js"></script>
+</head>
+<body>
+  <nav class="top-nav">
+    <a class="brand" href="/" aria-current="page"><img src="/favicon.svg" width="28" height="28" alt=""><span>Pocket<br>Shell</span></a>
+    <div class="nav-links"><a href="/docs/">Docs</a><a href="/docs/architecture/">Architecture</a><a href="/docs/themes/">Themes</a><a href="https://github.com/pocket-stack/pocket-shell">GitHub ↗</a></div>
+    <a class="nav-launch" href="/play/">Launch <span>↗</span></a>
+  </nav>
+  <main>
+    <section class="hero shell-grid">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span class="status-dot"></span>Pocket System for desktop</div>
+        <h1>One process.<br><span>A whole desktop.</span></h1>
+        <p class="lede">Pocket Shell Desktop runs a complete System UI and isolated Pocket apps through one generic native host. Every app gets its own JavaScript Realm. The native compositor keeps the pixels, clipping, focus and scheduling coherent.</p>
+        <div class="button-row">
+          <a class="button primary" href="#live">Run it in your browser <span>↗</span></a>
+          <a class="button secondary" href="/docs/architecture/">Read the architecture</a>
+        </div>
+        <div class="hero-facts" aria-label="Pocket Shell Desktop facts">
+          <div><strong>1</strong><span>native process</span></div>
+          <div><strong>12</strong><span>isolated AppInstances</span></div>
+          <div><strong>3</strong><span>host targets</span></div>
+        </div>
+      </div>
+      <div class="hero-stage reveal delay-1" aria-label="Pocket Shell Desktop with the XP theme">
+        <div class="stage-glow"></div>
+        <div class="desktop-frame">
+          <div class="frame-bar"><span></span><span></span><span></span><em>pocket-desktop</em></div>
+          <img src="/assets/xp-theme.png" width="960" height="720" alt="Pocket Shell Desktop running the XP theme" fetchpriority="high">
+        </div>
+        <div class="floating-tag tag-realm"><b>Realm 07</b><span>Hero · running</span></div>
+        <div class="floating-tag tag-compositor"><b>Compositor</b><span>surface · focus · clip</span></div>
+      </div>
+    </section>
+
+    <section class="trust-strip" aria-label="Supported targets">
+      <span>Native on <b>macOS</b></span><i></i><span>Packaged for <b>Linux</b></span><i></i><span>Previewed through <b>WebAssembly</b></span>
+    </section>
+
+    <section class="section shell-grid" id="architecture">
+      <div class="section-heading reveal">
+        <div class="eyebrow">System architecture</div>
+        <h2>Isolation without an operating-system process per app.</h2>
+        <p>The resolved System plan gives the host one System UI and an installed app catalog. AppSupervisor creates independent AppInstances; the compositor owns their visible surfaces and input focus.</p>
+      </div>
+      <div class="architecture-map reveal delay-1">
+        <div class="arch-source"><small>ResolvedSystemPlan</small><b>Product intent</b><span>roles · packages · policy</span></div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-host">
+          <header><small>generic native host</small><b>One process</b></header>
+          <div class="arch-columns">
+            <div class="arch-stack"><small>AppSupervisor</small><span>System UI Realm</span><span>Hero Realm</span><span>Settings Realm</span><span>Music Realm</span></div>
+            <div class="arch-stack compositor"><small>Compositor</small><span>surface</span><span>clipping</span><span>painter order</span><span>input focus</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section process-section">
+      <div class="section-heading compact reveal">
+        <div class="eyebrow">From component to pixel</div>
+        <h2>One scheduling lane, not four disconnected pipelines.</h2>
+        <p>The comparison shows Pocket app JavaScript scheduling. The host may use platform service threads, but app Realms advance through one supervised lane inside one native process.</p>
+      </div>
+      <div class="process-compare reveal delay-1">
+        <article class="process-card preferred">
+          <header><span class="pill">Pocket Shell Desktop</span><b>1 process / 1 app scheduling thread</b></header>
+          <div class="lane lane-one">
+            <div class="cube c1"><small>P1 · T1</small><b>Component</b></div><div class="flow">→</div>
+            <div class="cube c2"><small>P1 · T1</small><b>Realm</b></div><div class="flow">→</div>
+            <div class="cube c3"><small>P1 · T1</small><b>DrawList</b></div><div class="flow">→</div>
+            <div class="cube c4"><small>P1 · T1</small><b>Pixel</b></div>
+          </div>
+        </article>
+        <article class="process-card fragmented">
+          <header><span class="pill muted">Process-per-app</span><b>4 processes / 4 scheduling threads</b></header>
+          <div class="lane lane-four">
+            <div class="cube c1"><small>P1 · T1</small><b>Component</b></div><div class="flow">↗</div>
+            <div class="cube c2"><small>P2 · T2</small><b>IPC</b></div><div class="flow">↘</div>
+            <div class="cube c3"><small>P3 · T3</small><b>Compose</b></div><div class="flow">↗</div>
+            <div class="cube c4"><small>P4 · T4</small><b>Pixel</b></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section themes shell-grid">
+      <div class="section-heading reveal">
+        <div class="eyebrow">Themeable System UI</div>
+        <h2>Change the chrome.<br>Keep the system.</h2>
+        <p>Theme selection changes geometry, colors, controls and surfaces inside the System UI boundary. It does not change the System manifest, app packages or native host.</p>
+        <div class="theme-switch" role="group" aria-label="Theme screenshot">
+          <button class="active" data-theme-shot="xp">XP</button>
+          <button data-theme-shot="classic">Classic 98</button>
+          <button data-theme-shot="aqua">Aqua</button>
+        </div>
+      </div>
+      <div class="theme-shot reveal delay-1">
+        <img id="theme-screenshot" src="/assets/xp-theme.png" width="960" height="720" alt="Pocket Shell Desktop XP theme">
+        <span id="theme-caption">XP theme · Luna gradients · 30px taskbar</span>
+      </div>
+    </section>
+
+    <section class="section live-section" id="live">
+      <div class="live-copy reveal">
+        <div class="eyebrow light">Complete WebAssembly preview</div>
+        <h2>This is the actual System.</h2>
+        <p>The browser host resolves the same catalog, starts one iframe Realm per AppInstance and composites child rasters under the System UI. Double-click an app after launch.</p>
+        <button class="button light" id="launch-preview">Launch live desktop <span>→</span></button>
+      </div>
+      <div class="live-monitor reveal delay-1" id="preview-mount">
+        <img src="/assets/classic-theme.png" width="960" height="720" alt="Pocket Shell Desktop classic theme before starting the live preview">
+        <div class="monitor-scan"></div>
+      </div>
+    </section>
+
+    <section class="section benchmark">
+      <div class="section-heading centered reveal">
+        <div class="eyebrow">Measured classic baseline</div>
+        <h2>A complete desktop, counted.</h2>
+        <p>Release build on Apple M3 Max. Ten process-cold, cache-warm launches; memory sampled after the System settled.</p>
+      </div>
+      <div class="metric-grid reveal delay-1">
+        <article><strong>25.35 <small>MiB</small></strong><span>complete installed runtime</span></article>
+        <article><strong>179.62 <small>ms</small></strong><span>median spawn → first paint</span></article>
+        <article><strong>86.73 <small>MiB</small></strong><span>settled process-tree RSS</span></article>
+        <article><strong>1</strong><span>maximum process-tree count</span></article>
+      </div>
+      <p class="benchmark-link"><a href="/docs/architecture/#benchmark">Read the protocol and raw-result context →</a></p>
+    </section>
+
+    <section class="section get-started shell-grid">
+      <div class="section-heading reveal"><div class="eyebrow">Build and distribute</div><h2>Native where it matters. Portable where it helps.</h2></div>
+      <div class="target-grid reveal delay-1">
+        <a href="/docs/run/#macos"><span class="target-icon">⌘</span><b>macOS</b><small>Rust GPU host</small></a>
+        <a href="/docs/run/#linux"><span class="target-icon">λ</span><b>Linux</b><small>relocatable archive</small></a>
+        <a href="/play/"><span class="target-icon">W</span><b>WebAssembly</b><small>complete preview</small></a>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div><div class="eyebrow light">GNU GPL version 3</div><h2>Pocket Shell for desktop operating systems.</h2><p>The desktop shell is distributed under GPLv3. Code, themes, tests and build tools are maintained in the Pocket Shell repository.</p></div>
+      <div class="button-row"><a class="button light" href="/docs/contributing/">Contribute</a><a class="button ghost-light" href="https://github.com/pocket-stack/pocket-shell">View source ↗</a></div>
+    </section>
+  </main>
+  <footer><a class="brand footer-brand" href="/"><img src="/favicon.svg" width="24" height="24" alt=""><span>Pocket Shell Desktop</span></a><p>The desktop OS shell in Pocket Shell.</p><div><a href="/docs/">Docs</a><a href="https://github.com/pocket-stack/pocket-shell">Source</a><a href="/docs/contributing/">GPLv3</a></div></footer>
+</body>
+</html>
